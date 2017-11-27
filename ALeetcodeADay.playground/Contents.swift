@@ -4,7 +4,7 @@ import UIKit
 
 class Solution {
     
-    // 14. Longest Common Prefix
+    // No.14 Longest Common Prefix
     func longestCommonPrefix(_ strs: [String]) -> String {
         guard strs.count > 0 else {
             return ""
@@ -42,10 +42,43 @@ class Solution {
      
          return prefix
      }
- 
      */
     
-
+    
+    // No.20 Valid Parentheses
+    func isValid(_ s: String) -> Bool {
+            var string = s
+            var expectedEndings = ""
+        
+            while !string.isEmpty {
+                let currentChar = String(string.prefix(1))
+                switch currentChar {
+                case "(", "{", "[":
+                    expectedEndings += currentChar
+                case ")":
+                    if expectedEndings.isEmpty || String(expectedEndings.suffix(1)) != ")" {
+                        return false
+                    }
+                    expectedEndings = String(expectedEndings.dropLast())
+                case "}":
+                    if expectedEndings.isEmpty || String(expectedEndings.suffix(1)) != "}" {
+                        return false
+                    }
+                    expectedEndings = String(expectedEndings.dropLast())
+                case "]":
+                    if expectedEndings.isEmpty || String(expectedEndings.suffix(1)) != "]" {
+                        return false
+                    }
+                    expectedEndings = String(expectedEndings.dropLast())
+                default:
+                    break
+                }
+                string = String(string.dropFirst())
+            }
+        
+            return expectedEndings.isEmpty
+    }
+    
 }
 
 extension String {
