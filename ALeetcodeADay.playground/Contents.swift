@@ -79,6 +79,24 @@ class Solution {
             return expectedEndings.isEmpty
     }
     
+    // 28. Implement strStr()
+    func strStr(_ haystack: String, _ needle: String) -> Int {
+        if needle.count > haystack.count {
+            return -1
+        }
+        
+        var tempString = haystack
+        
+        for i in 0...(haystack.count - needle.count) {
+            if String(tempString.prefix(needle.count)) == needle {
+                return i
+            } else {
+                tempString = String(tempString.dropFirst())
+            }
+        }
+        return -1
+    }
+    
 }
 
 extension String {
