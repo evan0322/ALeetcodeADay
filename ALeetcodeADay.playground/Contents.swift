@@ -97,7 +97,30 @@ class Solution {
         return -1
     }
     
+    //3. Longest Substring Without Repeating Characters
+    func lengthOfLongestSubstring(_ s: String) -> Int {
+        var longest = ""
+        for i in 0..<s.count {
+            for j in i..<s.count {
+                let currentString = String(Array(s)[i...j])
+                if allUnique(string: currentString) && currentString.count>longest.count {
+                    longest = currentString
+                }
+            }
+        }
+        return longest.count
+    }
+    
+    func allUnique(string: String) -> Bool {
+        let char = Array(string)
+        return Set(char).count == char.count
+    }
 }
+
+let solution = Solution()
+solution.lengthOfLongestSubstring("abcabcd")
+
+print(String("test".prefix(1)))
 
 extension String {
     func stringAtIndex(index: Int) -> String? {
