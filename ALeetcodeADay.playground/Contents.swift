@@ -98,29 +98,78 @@ class Solution {
     }
     
     //3. Longest Substring Without Repeating Characters
+    //Brutal force
+    //    func lengthOfLongestSubstring(_ s: String) -> Int {
+    //        var longest = ""
+    //        for i in 0..<s.count {
+    //            for j in i..<s.count {
+    //                let currentString = String(Array(s)[i...j])
+    //                if allUnique(string: currentString) && currentString.count>longest.count {
+    //                    longest = currentString
+    //                }
+    //            }
+    //        }
+    //        return longest.count
+    //    }
+    //
+    //    func allUnique(string: String) -> Bool {
+    //        let char = Array(string)
+    //        return Set(char).count == char.count
+    //    }
+    
     func lengthOfLongestSubstring(_ s: String) -> Int {
-        var longest = ""
-        for i in 0..<s.count {
-            for j in i..<s.count {
-                let currentString = String(Array(s)[i...j])
-                if allUnique(string: currentString) && currentString.count>longest.count {
-                    longest = currentString
+        //Sliding window
+        
+        if s.count < 2 {
+            return s.count
+        }
+        
+        var i = 0
+        var j = 0
+        var longest = 0
+        var sArray = Array(s)
+        
+        
+        while i < s.count && j < s.count {
+            for k in i...j {
+                if sArray[k] == sArray[j] {
+                    i = k + 1
+                    if j - i + 1 > longest {
+                        longest = j - i + 1
+                    }
+                    break
                 }
             }
+            j += 1
         }
-        return longest.count
+        return max(longest - 1, j - i)
     }
     
-    func allUnique(string: String) -> Bool {
-        let char = Array(string)
-        return Set(char).count == char.count
+    
+    // 171. Excel Sheet Column Number
+    func titleToNumber(_ s: String) -> Int {
+        var string = Array(s.uppercased())
+        var dict = [Character: Int]()
+        
+        let charArray = Array("ABCDEFGHIJKLMNOPQRSTUVWXYZ")
+        for i in 0..<charArray.count {
+            dict[charArray[i]] = i + 1
+        }
+        
+        var i = 1
+        var ans = 0
+        while !string.isEmpty {
+            let char = string.last!
+            ans += dict[char]!*i
+            i = i*26
+            string = Array(string.dropLast())
+        }
+        return ans
     }
 }
 
 let solution = Solution()
-solution.lengthOfLongestSubstring("abcabcd")
 
-print(String("test".prefix(1)))
 
 extension String {
     func stringAtIndex(index: Int) -> String? {
@@ -129,6 +178,13 @@ extension String {
         }
         let stringArray = Array(self)
         return String(stringArray[index])
+    }
+    
+    func stringFrom(index:Int, toIndex:Int) -> String? {
+        if index >= self.count || toIndex >= self.count || toIndex < index {
+            return nil
+        }
+        return String(Array(self)[index...toIndex])
     }
 }
 
