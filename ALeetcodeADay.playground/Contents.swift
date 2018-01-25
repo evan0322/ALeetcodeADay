@@ -166,6 +166,38 @@ class Solution {
         }
         return ans
     }
+    
+    //39. Combination Sum. use depth first search. Use [2, 3, 6, 7] as an example. 2's neighbor is 2, 3, 6, 7. Visit these nodes until the target - current  < 0, then return.
+    
+    var result = [[Int]]()
+    
+    
+    func combinationSum(_ candidates: [Int], _ target: Int) -> [[Int]] {
+        if candidates.count == 0 {
+            return [[]]
+        } else {
+            candidates.sorted(by: {$0 < $1})
+            candidates
+            findCombineSum(array: candidates, target: target, index: 0, path: [Int]())
+        }
+        return result
+    }
+    
+    
+    func findCombineSum(array:[Int], target: Int, index: Int, path: [Int]) {
+        if target == 0 {
+            result.append(path)
+            print("append")
+            return
+        } else if target < 0 {
+            return
+        } else {
+            for i in index..<array.count {
+                print(path)
+                findCombineSum(array: array, target: target - array[i], index: i, path: path + [array[i]])
+            }
+        }
+    }
 }
 
 let solution = Solution()
