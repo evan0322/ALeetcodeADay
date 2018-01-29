@@ -198,6 +198,29 @@ class Solution {
             }
         }
     }
+    
+    //78 Subsets Similar to 39. Contruct a depth-first tree the the rules: Let's say [1,2,3]. Start with empty array, with children 1, 2, 3, then 1 has children 2,3. 2 has child 3. 3 has no child. We visit each node an put the path to the result (Unlike 39, with only logs when reaches the leaf). Then for each children for current node, we continue to explore.
+    var subsetsResult = [[Int]]()
+    
+    func subsets(_ nums: [Int]) -> [[Int]] {
+        
+        func explore(array: [Int], index: Int, path: [Int]) {
+            if index == array.count {
+                return
+            } else {
+                for i in index..<array.count {
+                    subsetsResult.append(path + [array[i]])
+                    explore(array: array, index: i + 1, path: path + [array[i]])
+                }
+            }
+        }
+        
+        
+        explore(array: nums, index: 0, path: [Int]())
+        
+        return subsetsResult + []
+        
+    }
 }
 
 let solution = Solution()
