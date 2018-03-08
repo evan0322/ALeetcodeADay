@@ -221,6 +221,28 @@ class Solution {
         return subsetsResult + []
         
     }
+    
+    //387. First Unique Character in a String O(2N)
+    func firstUniqChar(_ s: String) -> Int {
+        var harshTable = [Character: Int]()
+        for char in Array(s) {
+            if let count = harshTable[char] as? Int {
+                harshTable[char] = count + 1
+            } else {
+                harshTable[char] = 1
+            }
+        }
+        
+        for i in 0..<s.count {
+            if let count = harshTable[Array(s)[i]] as? Int {
+                if count == 1 {
+                    return i
+                }
+            }
+        }
+        
+        return -1
+    }
 }
 
 let solution = Solution()
