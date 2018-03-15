@@ -243,6 +243,28 @@ class Solution {
         
         return -1
     }
+    
+    
+    //583. Delete Operation for Two Strings
+    //Use memory to reduce the time complexity. reduce from 2^max(m,n) to m*n
+    var memo = Array(repeating:Array(repeating: -1, count:500), count:500)
+    
+    func minDistance(_ word1: String, _ word2: String) -> Int {
+        return word1.count + word2.count - 2 * lcsCount(word1: Array(word1), m: word1.count - 1, word2: Array(word2), n: word2.count - 1)
+    }
+    
+    func lcsCount(word1:[Character], m:Int, word2:[Character], n:Int) -> Int {
+        if m < 0 || n < 0  {
+            return 0
+        } else if memo[m][n] != -1 {
+            return memo[m][n]
+        } else if word1[m] == word2[n] {
+            return 1 + lcsCount(word1:word1, m:m - 1, word2: word2, n:n - 1)
+        } else {
+            memo[m][n] = max(lcsCount(word1:word1, m:m, word2:word2, n:n - 1), lcsCount(word1: word1, m: m - 1, word2:word2, n: n))
+            return memo[m][n]
+        }
+    }
 }
 
 let solution = Solution()
