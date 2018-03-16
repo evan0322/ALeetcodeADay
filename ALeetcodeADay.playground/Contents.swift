@@ -265,6 +265,49 @@ class Solution {
             return memo[m][n]
         }
     }
+    
+    //5. Longest Palindromic Substring
+    //Use memory to reduce the time complexity. the time complextity is 2N * N/2 = N^2
+    
+    var memo = [String: String]()
+    
+    func longestPalindrome(_ s: String) -> String {
+        let result = palindrom(s: Array(s), i: 0, j: s.count - 1)
+        return String(result)
+    }
+    
+    func palindrom(s: [Character], i: Int, j: Int) -> [Character] {
+        if i == j {
+            return [s[i]]
+        } else if let memory = memo[String(Array(s[i...j]))] {
+            return Array(memory)
+        } else if isPalindrome(s:Array(s[i...j])) == true {
+            return Array(s[i...j])
+        } else {
+            let s1 = palindrom(s: s, i: i + 1, j: j)
+            let s2 = palindrom(s: s, i: i, j: j - 1)
+            if s1.count > s2.count {
+                memo[String(Array(s[i...j]))] = String(s1)
+                return s1
+            } else {
+                memo[String(Array(s[i...j]))] = String(s2)
+                return s2
+            }
+        }
+    }
+    
+    func isPalindrome(s: [Character]) -> Bool {
+        if s.count == 0 {
+            return true
+        } else {
+            for i in 0..<s.count/2 {
+                if s[i] != s[s.count - 1 - i] {
+                    return false
+                }
+            }
+            return true
+        }
+    }
 }
 
 let solution = Solution()
