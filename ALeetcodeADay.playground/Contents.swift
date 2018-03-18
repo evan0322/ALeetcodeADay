@@ -335,6 +335,45 @@ class Solution {
         }
         return helper(nums: nums, target: target)
     }
+    
+    //322. Coin Change Similar recursive problem. This tricky because the relationship between f(n) and f(n-1) is complecated.
+    // let nums = [a1, a2, ... , an], target = t
+    //f(t) = min(f(t-a1), f(t-a2), f(t-a3),...,f(t-an)) where f(t-ax) > 0
+    //So just take whatever the return value from f(t-ax) is then perform the logic check.
+    // The key is pretend that you already know the result of f(t-ax)!
+    func coinChange(_ coins: [Int], _ amount: Int) -> Int {
+        var memo = Array(repeating: -100, count: amount + 1)
+        
+        func helper(coins: [Int], amount: Int) -> Int {
+            if amount == 0 {
+                return 0
+            } else if amount < 0 {
+                return -1
+            } else if memo[amount] != -100 {
+                return memo[amount]
+            } else {
+                var min = Int.max
+                for coin in coins {
+                    var current = 0
+                    let temp = helper(coins: coins, amount: amount - coin)
+                    if temp >= 0 {
+                        current = temp + 1
+                    }
+                    
+                    if current > 0 && current < min {
+                        min = current
+                    }
+                }
+                
+                let result = min == Int.max ? -1 : min
+                memo[amount] = result
+                return result
+            }
+            
+        }
+        
+        return helper(coins: coins, amount: amount)
+    }
 }
 
 let solution = Solution()
