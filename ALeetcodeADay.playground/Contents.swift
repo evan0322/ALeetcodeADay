@@ -308,6 +308,33 @@ class Solution {
             return true
         }
     }
+    
+    
+    // 337. Combination Sum IV
+    // For DP questions, we need to give a precise equation of the relation ship between n and n - x.
+    // For example, in this case
+    // let nums = [a1, a2, ... , an], target = t
+    // then c(nums, t) = c(nums, t-a1) + c(nums, t-a2) +...+c(nums,t-an)
+    func combinationSum4(_ nums: [Int], _ target: Int) -> Int {
+        var memo = Array(repeating: -1, count: target + 1)
+        func helper(nums: [Int], target: Int) -> Int {
+            if target == 0 {
+                return 1
+            } else if target < 0 {
+                return 0
+            } else if memo[target] != -1 {
+                return memo[target]
+            } else {
+                var count = 0
+                for num in nums {
+                    count += helper(nums: nums, target: target - num)
+                }
+                memo[target] = count
+                return count
+            }
+        }
+        return helper(nums: nums, target: target)
+    }
 }
 
 let solution = Solution()
