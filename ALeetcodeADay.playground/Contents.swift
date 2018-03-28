@@ -421,7 +421,28 @@ class Solution {
         
         return findUniqueP(m: m, n: n)
     }
-
+    
+    //64. Minimum Path Sum: Similar question to 62
+    func minPathSum(_ grid: [[Int]]) -> Int {
+        if grid.count == 0 || grid.first == nil {
+            return -1
+        }
+        var memo = Array(repeating: Array(repeating: -1, count: grid.first!.count), count: grid.count)
+        
+        func minSum(m: Int, n: Int) -> Int {
+            if m < 0 || n < 0 {
+                return Int.max
+            } else if m == 0 && n == 0 {
+                return grid[0][0]
+            } else if memo[m][n] != -1 {
+                return memo[m][n]
+            } else {
+                memo[m][n] = grid[m][n] + min(minSum(m:m - 1, n:n), minSum(m:m, n:n - 1))
+                return memo[m][n]
+            }
+        }
+        return minSum(m:grid.count - 1, n:grid.first!.count - 1)
+    }
 }
 
 
