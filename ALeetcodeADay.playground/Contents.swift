@@ -402,6 +402,25 @@ class Solution {
         
         return lis(nums: nums, index: 0)
     }
+    
+    //62. Unique Paths
+    func uniquePaths(_ m: Int, _ n: Int) -> Int {
+        var memo = Array(repeating: Array(repeating: -1, count:n + 1), count: m + 1)
+        func findUniqueP(m: Int, n: Int) -> Int {
+            if m < 0 || n < 0 {
+                return 0
+            } else if m == 1 && n == 1 {
+                return 1
+            } else if memo[m][n] != -1 {
+                return memo[m][n]
+            } else {
+                memo[m][n] = findUniqueP(m:m-1, n:n) + findUniqueP(m:m, n:n-1)
+                return memo[m][n]
+            }
+        }
+        
+        return findUniqueP(m: m, n: n)
+    }
 
 }
 
