@@ -374,7 +374,76 @@ class Solution {
         
         return helper(coins: coins, amount: amount)
     }
+    
+    // 300 Longest Increasing Subsequence review this with binary search
+    // https://leetcode.com/problems/longest-increasing-subsequence/solution/
+    func lengthOfLIS(_ nums: [Int]) -> Int {
+        if nums.count <= 1 {
+            return nums.count
+        }
+        
+        var memo = Array(repeating: 1, count: nums.count)
+        var maxLIS = 1
+        func lis(nums:[Int], index:Int) -> Int {
+            if index == nums.count {
+                return maxLIS
+            } else if memo[index] > 1 {
+                return memo[index]
+            } else {
+                for i in 0...index {
+                    if nums[i] < nums[index] {
+                        memo[index] = max(memo[index], memo[i] + 1)
+                        maxLIS = max(memo[index], maxLIS)
+                    }
+                }
+                return lis(nums: nums, index: index + 1)
+            }
+        }
+        
+        return lis(nums: nums, index: 0)
+    }
+
 }
+
+
+//Extra
+
+//Eight queen problem The eight queens puzzle is the problem of placing eight chess queens on an 8×8 chessboard so that no two queens threaten each other. Thus, a solution requires that no two queens share the same row, column, or diagonal. The eight queens puzzle is an example of the more general n queens problem of placing n non-attacking queens on an n×n chessboard, for which solutions exist for all natural numbers n with the exception of n=2 and n=3
+typealias chess = (r:Int, c:Int)
+
+let totalSize = 8
+
+var result = [[chess]]()
+
+func isPlacable(chesses:[chess], row: Int) -> Bool {
+    for i in 0..<chesses.count {
+        if row == chesses[i].r - chesses.count + i ||
+            row == chesses[i].r + chesses.count - i ||
+            row == chesses[i].r {
+            return false
+        }
+    }
+    return true
+}
+
+
+func placeChess(placedChessses:[chess], c: Int) {
+    if placedChessses.count == totalSize {
+        result.append(placedChessses)
+    } else {
+        for i in 0..<totalSize {
+            if isPlacable(chesses: placedChessses, row: i) {
+                let newChesses = placedChessses + [chess(i, c)]
+                placeChess(placedChessses: newChesses, c: c + 1)
+            }
+        }
+    }
+}
+
+//placeChess(placedChessses: [chess](), c: 0)
+
+
+
 
 let solution = Solution()
 
