@@ -443,6 +443,29 @@ class Solution {
         }
         return minSum(m:grid.count - 1, n:grid.first!.count - 1)
     }
+    
+    //198 House Robber. Recursive, Result is 
+    func rob(_ nums: [Int]) -> Int {
+        
+        var memo = Array(repeating: -1, count: nums.count)
+        
+        func maxUntil(index: Int) -> Int {
+            if index < 0 {
+                return 0
+            } else if index == 1 {
+                return max(nums[0], nums[1])
+            } else if memo[index] != -1 {
+                return memo[index]
+            } else {
+                memo[index] = max(maxUntil(index:index - 2) + nums[index], maxUntil(index:index - 1))
+                return memo[index]
+            }
+        }
+        
+        return maxUntil(index: nums.count - 1)
+        
+    }
+
 }
 
 
