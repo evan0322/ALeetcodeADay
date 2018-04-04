@@ -444,7 +444,7 @@ class Solution {
         return minSum(m:grid.count - 1, n:grid.first!.count - 1)
     }
     
-    //198 House Robber. Recursive, Result is 
+    //198 House Robber. Recursive, Result is
     func rob(_ nums: [Int]) -> Int {
         
         var memo = Array(repeating: -1, count: nums.count)
@@ -463,6 +463,34 @@ class Solution {
         }
         
         return maxUntil(index: nums.count - 1)
+        
+    }
+    
+    // 646. Maximum Length of Pair Chain( sort the array first is the key)
+
+    func findLongestChain(_ pairs: [[Int]]) -> Int {
+        var memo = Array(repeating: 1, count: pairs.count)
+        let sortedPairs = pairs.sorted(by: {$0.first! < $1.first!})
+        
+        
+        func findChain(index:Int) -> Int {
+            if index == 0 {
+                return 1
+            } else if memo[index] != 1 {
+                return memo[index]
+            } else {
+                var maxChain = 1
+                for i in 0..<index {
+                    if sortedPairs[index].first! > sortedPairs[i].last! {
+                        maxChain = max(maxChain, findChain(index: i) + 1)
+                    }
+                }
+                memo[index] = maxChain
+                return maxChain
+            }
+        }
+        
+        return findChain(index: sortedPairs.count - 1)
         
     }
 
