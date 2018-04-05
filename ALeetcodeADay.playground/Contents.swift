@@ -493,6 +493,22 @@ class Solution {
         return findChain(index: sortedPairs.count - 1)
         
     }
+    
+    //455. Assign Cookies
+    func findContentChildren(_ g: [Int], _ s: [Int]) -> Int {
+        let sortedG = g.sorted(by:{$0 < $1})
+        let sortedS = s.sorted(by:{$0 < $1})
+        var i = 0
+        var j = 0
+        while i < sortedG.count && j < sortedS.count {
+            if sortedG[i] <= sortedS[j] {
+                i += 1
+            }
+            j += 1
+        }
+        
+        return i
+    }
 
 }
 
