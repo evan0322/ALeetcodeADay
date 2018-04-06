@@ -509,6 +509,29 @@ class Solution {
         
         return i
     }
+    
+    
+    //455. Minimum Number of Arrows to Burst Balloons
+    func findMinArrowShots(_ points: [[Int]]) -> Int {
+        guard points.count > 0 else {
+            return 0
+        }
+        
+        let sortedPoints = points.sorted(by:{$0.first! < $1.first!})
+        var common = [0, Int.max]
+        var count = 1
+        
+        for point in sortedPoints {
+            if point.first! > common.last! {
+                count += 1
+                common = point
+            } else {
+                common = [point.first!, min(point.last!, common.last!)]
+            }
+        }
+        
+        return count
+    }
 
 }
 
