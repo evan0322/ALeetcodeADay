@@ -532,6 +532,22 @@ class Solution {
         
         return count
     }
+    //406. Queue Reconstruction by Height
+    //Notice the double sort. Otherwise it will fail
+    func reconstructQueue(_ people: [[Int]]) -> [[Int]] {
+        var result = [[Int]]()
+        let sortedP = people.sorted(by:{
+            if $0.first! == $1.first! {
+                return $0.last! < $1.last!
+            } else {
+                return $0.first! > $1.first!
+            }
+        })
+        for i in 0..<sortedP.count {
+            result.insert(sortedP[i], at:sortedP[i].last!)
+        }
+        return Array(result[0..<people.count])
+    }
 
 }
 
