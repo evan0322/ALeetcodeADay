@@ -548,7 +548,38 @@ class Solution {
         }
         return Array(result[0..<people.count])
     }
-
+    
+    //581. Shortest Unsorted Continuous Subarray
+    func findUnsortedSubarray(_ nums: [Int]) -> Int {
+        if nums.count == 0 {
+            return 0
+        }
+        
+        
+        var lowIndex = 0
+        var highIndex = nums.count - 1
+        var find = false
+        
+        let sortedNums = nums.sorted(by:{$0 < $1})
+        
+        for i in 0..<nums.count {
+            if sortedNums[i] != nums[i] {
+                lowIndex = i
+                find = true
+                break
+            }
+        }
+        
+        for i in (0..<nums.count).reversed() {
+            if sortedNums[i] != nums[i] {
+                highIndex = i
+                find = true
+                break
+            }
+        }
+        
+        return find ? highIndex - lowIndex + 1 : 0
+    }
 }
 
 
