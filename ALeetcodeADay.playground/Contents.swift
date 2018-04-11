@@ -617,6 +617,35 @@ func placeChess(placedChessses:[chess], c: Int) {
     }
 }
 
+
+// knapsack. Give n item with values and weights, a backpack with capacity weightLimit. Try to figure out the best solution to pack the backpack with bigest value
+// Each item has two states: packed and not packed. If it is packed, the new weight limit will be weightLimit  - weights[index] but value will be increased by values[index]. We need to find the maximum between these two senario
+
+
+// Following is DP without memo. Complexity 2^n
+//func knapsack(weightLimit:Int, weights:[Int], values:[Int], index: Int) -> Int {
+//
+//    if weightLimit <= 0 || index == 0 {
+//        return 0
+//    } else {
+//        return max(knapsack(weightLimit: weightLimit,
+//                            weights: weights,
+//                            values: values,
+//                            index: index - 1), knapsack(weightLimit: weightLimit  - weights[index],
+//                                                        weights: weights,
+//                                                        values: values,
+//                                                        index: index - 1) + values[index])
+//    }
+//
+//}
+
+//let weights = [20, 10, 30]
+//let values = [100, 110, 120]
+//let weightLimit = 55
+//
+//knapsack(weightLimit: weightLimit, weights: weights, values: values, index: values.count - 1)
+
+
 //placeChess(placedChessses: [chess](), c: 0)
 
 
