@@ -639,6 +639,38 @@ func placeChess(placedChessses:[chess], c: Int) {
 //
 //}
 
+
+//Here is the solustion with memo. complexity Wn 
+func knapsack(W:Int,ws:[Int],vs:[Int]) -> Int {
+    var memo = Array(repeating: Array(repeating:-1, count:ws.count), count: W + 1)
+    
+    func knapsackDP(weightLimit:Int, weights:[Int], values:[Int], index: Int) -> Int {
+        
+        if weightLimit <= 0 || index == 0 {
+            return 0
+        } else if memo[weightLimit][index] != -1 {
+            print("return mmo")
+            return memo[weightLimit][index]
+        } else {
+            memo[weightLimit][index] = max(knapsackDP(weightLimit: weightLimit,
+                                                      weights: weights,
+                                                      values: values,
+                                                      index: index - 1), knapsackDP(weightLimit: weightLimit  - weights[index],
+                                                                                    weights: weights,
+                                                                                    values: values,
+                                                                                    index: index - 1) + values[index])
+            return memo[weightLimit][index]
+        }
+        
+        
+        
+    }
+    
+    return knapsackDP(weightLimit: W, weights: ws, values: vs, index: ws.count - 1)
+    
+    
+}
+
 //let weights = [20, 10, 30]
 //let values = [100, 110, 120]
 //let weightLimit = 55
