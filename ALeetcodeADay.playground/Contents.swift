@@ -620,6 +620,21 @@ class Solution {
         }
         return dp[nums.count - 1][sum]
     }
+    
+    
+    //520. Detect Capital
+    func detectCapitalUse(_ word: String) -> Bool {
+        if word == word.uppercased() {
+            return true
+        } else if word == word.lowercased() {
+            return true
+        } else {
+            var input = word
+            let firstLetter = input.removeFirst()
+            input = String(firstLetter).uppercased() + input.lowercased()
+            return input == word
+        }
+    }
 }
 
 
