@@ -635,6 +635,30 @@ class Solution {
             return input == word
         }
     }
+    
+    // 746.  Min Cost Climbing Stairs
+    func minCostClimbingStairs(_ cost: [Int]) -> Int {
+        var dp = Array(repeating:-1 ,count:cost.count + 1)
+        
+        // dp[n], the final cost of climbing nth stair.
+        
+        //[1, 100, 1, 1, 1, 100, 1, 1, 100, 1]
+        
+        dp[0] = cost[0]
+        dp[1] = cost[1]
+        
+        if cost.count < 2 {
+            return 0
+        } else if cost.count == 2 {
+            return min(cost[0], cost[1])
+        }
+        
+        for i in 2..<cost.count {
+            dp[i] = cost[i] + min(dp[i - 1], dp[i - 2])
+        }
+        
+        return min(dp[cost.count - 1], dp[cost.count - 2])
+    }
 }
 
 
