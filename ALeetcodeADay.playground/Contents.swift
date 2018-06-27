@@ -659,6 +659,24 @@ class Solution {
         
         return min(dp[cost.count - 1], dp[cost.count - 2])
     }
+    
+    //70. Climbing Stairs
+    func climbStairs(_ n: Int) -> Int {
+        if n < 3 {
+            return n
+        }
+        
+        var dp = Array(repeating: -1, count:n + 1)
+        dp[0] = 0
+        dp[1] = 1
+        dp[2] = 2
+        
+        for i in 3...n {
+            dp[i] = dp[i - 1] + dp[i - 2]
+        }
+        
+        return dp[n]
+    }
 }
 
 
