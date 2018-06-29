@@ -677,6 +677,37 @@ class Solution {
         
         return dp[n]
     }
+    
+    //516. Longest Palindromic Subsequence
+    //dp[i][j]: longest palindromic subsequence between index i and index j
+    //Note here: the i and j does not nessary represents different context (e.g. index and weight in kpacksack problem). In this case it is index of the array
+    func longestPalindromeSubseq(_ s: String) -> Int {
+        var dp = Array(repeating: Array(repeating: 0, count: s.count + 1), count: s.count + 1)
+        if s.count < 2 {
+            return s.count
+        }
+        
+        let sArray = s.map{ String($0) }
+        
+        //Initial state
+        for i in 0..<dp.count {
+            dp[i][i] = 1
+        }
+        
+        
+        //This is the tricky part. If you traverse from i in 0...s.count - 1 and j in 0...s.count - 1, you will soon find that sometimes dp[i][j] cannot be calculated because dp[i + 1][j] or dp[i][j - 1] is not calculated yet. However if you traverse in this sequnce it will work. I guess you have to try different combination before you choose your way to build up the dp.
+        for i in (0...s.count - 2).reversed() {
+            for j in i + 1..<s.count{
+                if sArray[i] == sArray[j] {
+                    // This is hard to think. 
+                    dp[i][j] = dp[i + 1][j - 1] + 2
+                } else {
+                    dp[i][j] = max(dp[i + 1][j], dp[i][j - 1])
+                }
+            }
+        }
+        return dp[0][s.count - 1]
+    }
 }
 
 
