@@ -708,6 +708,57 @@ class Solution {
         }
         return dp[0][s.count - 1]
     }
+    
+    //494. Target Sum
+    // In this problem, the hard part is how to translate the problem into our known question.
+    // We assume that we have a group of num Sp with positive symbol and Sn with negative symbol.
+    // Sp - Sn = t
+    // Sp - Sn + Sp + Sn = t + Sp + Sn
+    // Sp = (t + Sum(nums))/2
+    // The question then translate: find the num of ways that construct a sub set of S so that sum[sub] == (t + Sum(nums))/2
+    //Then it becomes 1-0 knapsack problem.
+    func findTargetSumWays(_ nums: [Int], _ S: Int) -> Int {
+        //NOTE: This is probably working it will fail on large test cases. However the O(n) is S*nums
+        // And it is probably fastest. I believe it is due to swift as a none-script language.
+        var sum = 0
+        
+        for num in nums {
+            sum += num
+        }
+        
+        if S > sum ||  (sum + S)%2 != 0 {
+            return 0
+        }
+        
+        
+        
+        let target = (sum + S)/2
+        
+        var dp = Array(repeating:Array(repeating:0, count: target + 1), count:nums.count + 1)
+        
+        dp[0][0] = 1
+        
+        for j in 1..<dp[0].count {
+            dp[0][j] = 0
+        }
+        
+        for i in 1..<dp.count {
+            dp[i][0] = 1
+        }
+        
+        for i in 1..<dp.count {
+            for j in 0..<dp[0].count {
+                if nums[i - 1] == 0 {
+                    dp[i][j] = dp[i - 1][j] * 2
+                } else if j > nums[i - 1] || j == nums[i - 1] {
+                    dp[i][j] = dp[i - 1][j - nums[i - 1]] + dp[i - 1][j]
+                } else {
+                    dp[i][j] = dp[i - 1][j]
+                }
+            }
+        }
+        return dp[nums.count][target]
+    }
 }
 
 
