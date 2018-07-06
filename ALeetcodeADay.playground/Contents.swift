@@ -467,31 +467,27 @@ class Solution {
     }
     
     // 646. Maximum Length of Pair Chain( sort the array first is the key)
+    // Greed solution. First we sort the array based on the last number. we only put the num that has the smallest last digit into the chain to make the chain as big as possible.
+    // O(n) = nlogn (The complexity of sort)
 
     func findLongestChain(_ pairs: [[Int]]) -> Int {
-        var memo = Array(repeating: 1, count: pairs.count)
-        let sortedPairs = pairs.sorted(by: {$0.first! < $1.first!})
+        if pairs.count <= 1 {
+            return pairs.count
+        }
         
+        var sortedPair = pairs
+        sortedPair.sort{ $0[1] < $1[1] }
         
-        func findChain(index:Int) -> Int {
-            if index == 0 {
-                return 1
-            } else if memo[index] != 1 {
-                return memo[index]
-            } else {
-                var maxChain = 1
-                for i in 0..<index {
-                    if sortedPairs[index].first! > sortedPairs[i].last! {
-                        maxChain = max(maxChain, findChain(index: i) + 1)
-                    }
-                }
-                memo[index] = maxChain
-                return maxChain
+        var count = 0
+        var lastNum = Int.min
+        for pair in sortedPair {
+            if pair[0] > lastNum {
+                lastNum = pair[1]
+                count += 1
             }
         }
         
-        return findChain(index: sortedPairs.count - 1)
-        
+        return count
     }
     
     //455. Assign Cookies
@@ -759,6 +755,47 @@ class Solution {
         }
         return dp[nums.count][target]
     }
+    
+   // 859. Buddy Strings
+    func buddyStrings(_ A: String, _ B: String) -> Bool {
+        
+        if A.count != B.count {
+            return false
+        }
+        
+        let aArray = A.map{ String($0) }
+        let bArray = B.map{ String($0) }
+        
+        var diffs = [String]()
+        var dups = [String: Int]()
+        
+        for i in 0..<A.count {
+            if aArray[i] != bArray[i] {
+                diffs.append(aArray[i])
+                diffs.append(bArray[i])
+                if diffs.count > 4 {
+                    return false
+                }
+            } else {
+                if let count = dups[aArray[i]] {
+                    dups[aArray[i]] = count + 1
+                    if count + 1 == 2 {
+                        return true
+                    }
+                } else {
+                    dups[aArray[i]] = 1
+                }
+            }
+        }
+        if diffs.count == 4 {
+            return (diffs[0] == diffs[3] && diffs[1] == diffs[2])
+        }  else {
+            return false
+        }
+        
+    }
+    
+
 }
 
 
