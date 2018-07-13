@@ -403,6 +403,41 @@ class Solution {
         return lis(nums: nums, index: 0)
     }
     
+    /*
+    The follow solustion is the alternative solution for longest increasing subsequence (bottom up)
+     We dp should be defined as "d[i]" the longest increasing subsequence that ends with num[i]
+     Then we go through each num in nums. With each num, we review all the d[j] that j<i. if nums[i] > nums[j] then numbs[i] can be part of the nums[j] LIS. We also need to keep track on the current max LIS with current i. After the result is finished, then we go through each nums again to find the largest LIS.
+     
+     BigO = 1 + 2 + 3 .... + n = O(n^2)
+    
+    */
+    func lengthOfLIS_V2(_ nums: [Int]) -> Int {
+        if nums.count == 0 {
+            return 0
+        }
+        
+        var dp = Array(repeating: 1, count: nums.count)
+        
+        dp[0] = 1
+        
+        for i in 0..<nums.count {
+            var currentMax = 1
+            for j in 0..<i {
+                if nums[i] > nums[j] {
+                    currentMax = max(dp[j] + 1, currentMax)
+                }
+            }
+            dp[i] = currentMax
+        }
+        
+        var maxLength = Int.min
+        for element in dp {
+            maxLength = max(maxLength,element)
+        }
+        
+        return maxLength
+    }
+    
     //62. Unique Paths
     func uniquePaths(_ m: Int, _ n: Int) -> Int {
         var memo = Array(repeating: Array(repeating: -1, count:n + 1), count: m + 1)
