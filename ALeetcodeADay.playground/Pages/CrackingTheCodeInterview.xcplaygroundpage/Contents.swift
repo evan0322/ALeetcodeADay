@@ -67,4 +67,31 @@ func maxHeightOfBoxes(boxes:[[Int]]) -> Int {
     
 }
 
-maxHeightOfBoxes(boxes: [[6,9,10], [8,10, 12], [1, 13, 9], [4,2,4], [2, 14,11]])
+//maxHeightOfBoxes(boxes: [[6,9,10], [8,10, 12], [1, 13, 9], [4,2,4], [2, 14,11]])
+
+
+//8.11 coins
+func coins(n: Int) -> Int {
+    var memo = Array(repeating: Array(repeating: 0, count: 5), count: n + 1)
+    
+    func make(cents:Int, coins:[Int], index: Int) -> Int {
+        if index == coins.count - 1 {
+             // When the index reaches the last coin option(e.g. coint with 1 cent) We always have 1 way to present the cents (i.e. all 1 cents)
+            return 1
+        } else if memo[cents][index] > 0{
+            return memo[cents][index]
+        } else {
+            var ways = 0
+            var i = 0
+            while i*coins[index] <= cents {
+                ways += make(cents: cents - i*coins[index], coins: coins, index: index + 1)
+                i += 1
+            }
+            memo[cents][index] = ways
+            return ways
+        }
+    }
+    
+    
+    return make(cents: n, coins: [25, 10, 5, 1], index: 0)
+}
