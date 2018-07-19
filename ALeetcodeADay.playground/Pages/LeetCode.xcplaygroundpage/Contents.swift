@@ -830,6 +830,46 @@ class Solution {
         
     }
     
+    
+    //368. Largest Divisible Subset
+    /* Similar to #LIS problem
+ 
+     */
+    func largestDivisibleSubset(_ nums: [Int]) -> [Int] {
+        if nums.count == 0 {
+            return [Int]()
+        }
+        
+        // We sort the array to ensure we did not go backwards
+        var sortedNums = nums.sorted()
+        
+        // dp[i] largest divisible subset ends with num[i]
+        var dp = Array(repeating:[Int](), count:sortedNums.count)
+        for i in 0..<sortedNums.count {
+            dp[i] = [sortedNums[i]]
+        }
+        
+        var totalMax = dp[0]
+        
+        //Be careful about the index,
+        for i in 1..<sortedNums.count {
+            //Becareful here, max is at least dp[i] not [Int]()
+            var max = dp[i]
+            for j in 0..<i {
+                // If a numb and divd the last in the list , it can divide each one of them.
+                // Added it to the largest list and compare.
+                if sortedNums[i] % dp[j].last! == 0 {
+                    let temp = dp[j] + [sortedNums[i]]
+                    max = max.count > temp.count ? max : temp
+                }
+            }
+            dp[i] = max
+            totalMax = totalMax.count > dp[i].count ? totalMax : dp[i]
+        }
+        
+        return totalMax
+    }
+    
 
 }
 
