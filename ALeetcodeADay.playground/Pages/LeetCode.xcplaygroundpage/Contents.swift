@@ -870,6 +870,39 @@ class Solution {
         return totalMax
     }
     
+    // 647. Palindromic Substrings
+    func countSubstrings(_ s: String) -> Int {
+        if s.count == 0 {
+            return 0
+        }
+        
+        let sArray = s.map{ String($0) }
+        
+        //dp[i][j]: If the subString s[i...j] is palindromic string
+        //The tricky part is not to directly set d[i][j] to the num of palindromic string between s[i...j]
+        //Because it is very difficult to find the state equation in that case.
+        var dp = Array(repeating:Array(repeating:false, count: sArray.count), count:sArray.count)
+        var count = 0
+        for i in (0..<sArray.count).reversed() {
+            for j in i..<sArray.count {
+                if sArray[i] == sArray[j] {
+                    
+                    if j - i < 3 {
+                        print("\(i) \(j) are the same")
+                        
+                        dp[i][j] = true
+                    } else {
+                        dp[i][j] = dp[i + 1][j - 1]
+                    }
+                }
+                if dp[i][j] {
+                    count += 1
+                }
+            }
+        }
+        return count
+    }
+    
 
 }
 
