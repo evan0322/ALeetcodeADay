@@ -903,6 +903,25 @@ class Solution {
         return count
     }
     
+    //203. Remove Linked List Elements
+    func removeElements(_ head: ListNode?, _ val: Int) -> ListNode? {
+        let fakeNode = ListNode(-1)
+        fakeNode.next = head
+        
+        var currentNode: ListNode? = fakeNode
+        
+        while currentNode != nil {
+            if currentNode!.next?.val == val {
+                currentNode!.next = currentNode!.next?.next
+            }
+            currentNode = currentNode!.next
+        }
+        
+        return fakeNode.next
+        
+        
+    }
+    
 
 }
 
@@ -1024,6 +1043,15 @@ extension String {
             return nil
         }
         return String(Array(self)[index...toIndex])
+    }
+}
+
+public class ListNode {
+    public var val: Int
+    public var next: ListNode?
+    public init(_ val: Int) {
+        self.val = val
+        self.next = nil
     }
 }
 
