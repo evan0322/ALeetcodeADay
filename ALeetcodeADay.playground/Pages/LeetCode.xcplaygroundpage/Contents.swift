@@ -922,6 +922,30 @@ class Solution {
         
     }
     
+    //387. First Unique Character in a String
+
+    func firstUniqChar(_ s: String) -> Int {
+        var countDict = [String: Int]()
+        var stringArray = s.map{ String($0) }
+        
+        for char in stringArray {
+            if let count = countDict[char] {
+                countDict[char] = count + 1
+            } else {
+                countDict[char] = 1
+            }
+        }
+        
+        for i in 0..<stringArray.count {
+            if let finalCount = countDict[stringArray[i]] {
+                if finalCount == 1 {
+                    return  i
+                }
+            }
+        }
+        return -1
+    }
+    
 
 }
 
