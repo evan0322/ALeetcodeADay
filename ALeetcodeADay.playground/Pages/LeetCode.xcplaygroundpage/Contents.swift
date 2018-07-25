@@ -951,6 +951,26 @@ class Solution {
         let reversedArray = s.map{ String( $0 ) }
         return reversedArray.reversed().joined()
     }
+    
+    //22. Generate parenthese
+    // Build the string from left to right. Think about the rules that should be applied to the algorithm.
+    func generateParenthesis(_ n: Int) -> [String] {
+        var result = [String]()
+        func build(index:Int, l: Int, r: Int, current: [String]) {
+            if l > r || l < 0 {
+                return
+            } else if index == n * 2 {
+                result.append(current.joined())
+                return
+            } else {
+                build(index:index + 1, l: l - 1, r: r, current: current + ["("])
+                build(index:index + 1, l: l, r: r - 1, current: current + [")"])
+            }
+        }
+        
+        build(index: 0, l: n, r: n, current: [String]())
+        return result
+    }
 
 }
 
