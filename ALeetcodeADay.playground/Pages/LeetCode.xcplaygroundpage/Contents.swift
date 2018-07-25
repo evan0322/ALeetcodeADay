@@ -946,6 +946,11 @@ class Solution {
         return -1
     }
     
+    //344. Reverse String
+    func reverseString(_ s: String) -> String {
+        let reversedArray = s.map{ String( $0 ) }
+        return reversedArray.reversed().joined()
+    }
 
 }
 
