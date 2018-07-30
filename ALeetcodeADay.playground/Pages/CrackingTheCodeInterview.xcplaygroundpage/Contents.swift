@@ -95,3 +95,62 @@ func coins(n: Int) -> Int {
     
     return make(cents: n, coins: [25, 10, 5, 1], index: 0)
 }
+
+//Chapter 2 Linked List
+
+public class ListNode {
+    public var val: Int
+    public var next: ListNode?
+    
+    init(_ val: Int) {
+        self.val = val
+        self.next = nil
+    }
+}
+
+extension ListNode: CustomStringConvertible{
+    public var description: String {
+        var msg = "\(val)"
+        var node = self.next
+        while node != nil {
+            msg = msg + ("->\(node!.val)")
+            node = node?.next
+        }
+        return msg
+    }
+}
+
+//convenient function to create linked list
+func createList(values:[Int]) -> ListNode? {
+    let fakeHead = ListNode(0)
+    var node: ListNode? = fakeHead
+    for value in values {
+        let newNode = ListNode(value)
+        node?.next = newNode
+        node = newNode
+    }
+    return fakeHead.next
+}
+
+
+//2.1 Remove duplicates
+
+func removeDuplicate(head: ListNode) -> ListNode {
+    var checkDict = [Int: Int]()
+    
+    var previous = head
+    
+    var node = head.next
+    
+    while node != nil {
+        if checkDict[node!.val] != nil {
+            // This is the tricky part. If some node is removed, the previous stay the same but n moves to next node.
+            previous.next = node!.next
+        } else {
+            checkDict[node!.val] = 1
+            previous = node!
+        }
+        node = node!.next
+    }
+    return head
+}

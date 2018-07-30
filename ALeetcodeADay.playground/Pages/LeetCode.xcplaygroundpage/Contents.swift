@@ -971,6 +971,30 @@ class Solution {
         build(index: 0, l: n, r: n, current: [String]())
         return result
     }
+    
+    //459.
+    
+    func repeatedSubstringPattern(_ s: String) -> Bool {
+        if s.count == 1 {
+            return false
+        }
+        
+        let sArray = s.map{ String($0) }
+        for i in 0..<sArray.count/2 where sArray.count%(i + 1) == 0 {
+            let repeatingCount = sArray.count/(i + 1)
+            var repeatingWholeString = ""
+            var repeatingString = sArray[0...i].joined()
+            for _ in 1...repeatingCount {
+                repeatingWholeString.append(repeatingString)
+            }
+            
+            if repeatingWholeString == s {
+                return true
+            }
+        }
+        
+        return false
+    }
 
 }
 
