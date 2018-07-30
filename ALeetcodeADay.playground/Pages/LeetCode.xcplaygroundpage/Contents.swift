@@ -2,6 +2,15 @@
 
 import UIKit
 
+public class ListNode {
+    public var val: Int
+    public var next: ListNode?
+    public init(_ val: Int) {
+        self.val = val
+        self.next = nil
+    }
+}
+
 class Solution {
     
     // No.14 Longest Common Prefix
@@ -995,6 +1004,38 @@ class Solution {
         
         return false
     }
+    
+    //21 Merge Two sorted link list
+    // This could be solved also by iterlary way
+    func mergeTwoLists(_ l1: ListNode?, _ l2: ListNode?) -> ListNode? {
+        
+        let fakeNode = ListNode(0)
+        
+        func merge(l: ListNode?, r: ListNode?, current: ListNode) {
+            guard let lCurrent = l else {
+                current.next = r
+                return
+            }
+            
+            guard let rCurrent = r else {
+                current.next = l
+                return
+            }
+            
+            if lCurrent.val <= rCurrent.val {
+                current.next = ListNode(lCurrent.val)
+                return merge(l: lCurrent.next,r: rCurrent, current: current.next! )
+            } else {
+                current.next = ListNode(rCurrent.val)
+                return merge(l: lCurrent,r: rCurrent.next, current: current.next! )
+                
+            }
+        }
+        
+        merge(l:l1, r:l2, current:fakeNode)
+        return fakeNode.next
+        
+    }
 
 }
 
@@ -1119,12 +1160,5 @@ extension String {
     }
 }
 
-public class ListNode {
-    public var val: Int
-    public var next: ListNode?
-    public init(_ val: Int) {
-        self.val = val
-        self.next = nil
-    }
-}
+
 
