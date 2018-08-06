@@ -1036,6 +1036,47 @@ class Solution {
         return fakeNode.next
         
     }
+    
+    //234.Palindrome Linked List
+    
+    func isPalindrome(_ head: ListNode?) -> Bool {
+        var array = [Int]()
+        
+        var node = head
+        
+        while node != nil {
+            array.append(node!.val)
+            node = node!.next
+        }
+        
+        var i = 0
+        while i < array.count/2 {
+            if array[i] != array[array.count - i - 1] {
+                return false
+            }
+            i += 1
+        }
+        return true
+    }
+    
+    //24. Swap Nodes in Pairs
+    func swapPairs(_ head: ListNode?) -> ListNode? {
+        let fakeHead = ListNode(0)
+        fakeHead.next = head
+        var p1: ListNode? = fakeHead.next
+        var p2: ListNode? = fakeHead.next?.next
+        var previous: ListNode? = fakeHead
+        while p1 != nil && p2 != nil {
+            p1!.next = p2!.next
+            p2!.next = p1
+            previous!.next = p2
+            previous = p1
+            p2 = p1!.next?.next
+            p1 = p1!.next
+            
+        }
+        return fakeHead.next
+    }
 
 }
 
