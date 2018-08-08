@@ -11,6 +11,32 @@ public class ListNode {
     }
 }
 
+public class TreeNode {
+    public var val: Int
+    public var left: TreeNode?
+    public var right: TreeNode?
+    public init(_ val: Int) {
+        self.val = val
+        self.left = nil
+        self.right = nil
+    }
+}
+
+extension TreeNode: CustomStringConvertible {
+    public var description: String {
+        
+        if self.left == nil && self.right == nil {
+            return "\(self.val)"
+        } else if self.left == nil {
+            return "\(String(self.val)) -> (\(self.right!.description))"
+        } else if self.right == nil {
+            return "(\(self.left!.description)) <-  \(String(self.val))"
+        } else {
+            return "(\(left!.description)) <-  \(String(self.val)) -> (\(right!.description))"
+        }
+    }
+}
+
 class Solution {
     
     // No.14 Longest Common Prefix
@@ -1076,6 +1102,36 @@ class Solution {
             
         }
         return fakeHead.next
+    }
+    
+    //572. Subtree of Another Tree
+    func isSubtree(_ s: TreeNode?, _ t: TreeNode?) -> Bool {
+
+        func isSameTree(t1: TreeNode?, t2: TreeNode?) -> Bool {
+            if t1 == nil && t2 == nil {
+                return true
+            } else if t1 == nil || t2 == nil {
+                return false
+            } else if t1!.val == t2!.val {
+                return isSameTree(t1: t1!.left, t2: t2!.left) && isSameTree(t1: t1!.right, t2: t2!.right)
+            } else {
+                return false
+            }
+        }
+        
+        guard let tTree = t else {
+            return true
+        }
+        
+        guard let sTree = s else {
+            return false
+        }
+        
+        if isSameTree(t1:tTree, t2: sTree) {
+            return true
+        }
+        
+        return isSubtree(sTree.left, tTree) || isSubtree(sTree.right, tTree)
     }
 
 }
