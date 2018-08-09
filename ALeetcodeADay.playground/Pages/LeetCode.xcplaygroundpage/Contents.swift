@@ -1146,6 +1146,30 @@ class Solution {
             return false
         }
     }
+    
+    //513. Find Bottom Left Tree Value
+    //This is a typical example of tree traverse. Be carful to always visit left node first to ensure that the left most is captured
+    func findBottomLeftValue(_ root: TreeNode?) -> Int {
+        var depth = -1
+        var helper = [Int: Int]()
+        
+        func traverse(node: TreeNode?, cDepth: Int) {
+            guard let cNode = node else {
+                return
+            }
+            
+            if helper[cDepth] == nil && cDepth > depth {
+                helper[cDepth] = cNode.val
+                depth = cDepth
+            }
+            
+            traverse(node:cNode.left, cDepth:cDepth + 1)
+            traverse(node:cNode.right, cDepth:cDepth + 1)
+        }
+        
+        traverse(node: root, cDepth:0)
+        return helper[depth]!
+    }
 
 }
 
