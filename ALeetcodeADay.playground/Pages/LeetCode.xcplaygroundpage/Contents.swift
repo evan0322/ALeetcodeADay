@@ -1170,6 +1170,34 @@ class Solution {
         traverse(node: root, cDepth:0)
         return helper[depth]!
     }
+    
+    
+    //257. Binary Tree Paths
+    func binaryTreePaths(_ root: TreeNode?) -> [String] {
+        var tPath = [String]()
+        
+        guard let rootNode = root else {
+            return [String]()
+        }
+        
+        func findPath(node: TreeNode, cPath: String) {
+            if node.left == nil && node.right == nil {
+                tPath.append(cPath + "\(node.val)")
+                return
+            } else if node.left == nil {
+                return findPath(node: node.right!, cPath:cPath + "\(node.val)->")
+            } else if node.right == nil {
+                return findPath(node: node.left!, cPath:cPath + "\(node.val)->")
+            } else {
+                findPath(node: node.left!, cPath:cPath + "\(node.val)->")
+                findPath(node: node.right!, cPath:cPath + "\(node.val)->")
+                return
+            }
+        }
+        
+        findPath(node: rootNode, cPath:"")
+        return tPath
+    }
 
 }
 
