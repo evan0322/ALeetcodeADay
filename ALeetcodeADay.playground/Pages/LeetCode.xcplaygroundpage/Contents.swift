@@ -1198,6 +1198,44 @@ class Solution {
         findPath(node: rootNode, cPath:"")
         return tPath
     }
+    
+    //105. Construct Binary Tree from Preorder and Inorder Traversal
+    
+    //This is totally fine runing on the app. however it triggers compiling error on LeetCode.
+    func buildTree(_ preorder: [Int], _ inorder: [Int]) -> TreeNode? {
+        if preorder.count == 0 || inorder.count == 0 {
+            return nil
+        } else if preorder.count == 1 {
+            return TreeNode(preorder[0])
+        }
+        
+        let rootNode = TreeNode(preorder[0])
+        
+        var i = 0
+        while i < inorder.count {
+            if inorder[i] == rootNode.val {
+                break
+            }
+            i += 1
+        }
+        
+        //Find the first one in preorder, it must be the root of the all the element in the array.
+        //Then find the corresponding location in inorder, its left numbers are all its left child and vice versa.
+        //Build the tree recursively.
+        
+        if i == preorder.count {
+            rootNode.left = buildTree(Array(preorder[1..<i + 1]), Array(inorder[0..<i]))
+            rootNode.right = nil
+        } else if i == 0 {
+            rootNode.left = nil
+            rootNode.right = buildTree(Array(preorder[i + 1..<preorder.count]), Array(inorder[i + 1..<inorder.count]))
+        } else {
+            rootNode.left = buildTree(Array(preorder[1..<i + 1]), Array(inorder[0..<i]))
+            rootNode.right = buildTree(Array(preorder[i + 1..<preorder.count]), Array(inorder[i + 1..<inorder.count]))
+        }
+        
+        return rootNode
+    }
 
 }
 
