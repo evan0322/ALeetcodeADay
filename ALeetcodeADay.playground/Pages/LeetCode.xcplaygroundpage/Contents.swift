@@ -1236,6 +1236,37 @@ class Solution {
         
         return rootNode
     }
+    //652. Find Duplicate Subtrees
+    // This is a problem actually can be solved by serialize a tree properly. We traverse the tree while getting the serialize presentation of each node, use a dictionary to track if the serialized result exists before.
+    
+    //The important thing is when you serialize a tree, always use post order or pre order to avaoid confusion
+    //https://leetcode.com/problems/find-duplicate-subtrees/discuss/106011/Java-Concise-Postorder-Traversal-Solution
+    func findDuplicateSubtrees(_ root: TreeNode?) -> [TreeNode?] {
+        var dict = [String: Int]()
+        var result = [TreeNode?]()
+        
+        func traverse(t: TreeNode?) -> String {
+            guard let node = t else {
+                return ""
+            }
+            
+            var code = "\(node.val),\(traverse(t:node.left)),\(traverse(t:node.right))"
+            if let count = dict[code] {
+                if count == 1 {
+                    result.append(node)
+                }
+                
+                dict[code] = count + 1
+            } else {
+                dict[code] = 1
+            }
+            
+            return code
+        }
+        
+        traverse(t: root)
+        return result
+    }
 
 }
 
