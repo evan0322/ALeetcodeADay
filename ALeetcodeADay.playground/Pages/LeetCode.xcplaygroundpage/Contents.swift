@@ -1267,7 +1267,37 @@ class Solution {
         traverse(t: root)
         return result
     }
-
+    // 102. Binary Tree Level Order Traversal
+    func levelOrder(_ root: TreeNode?) -> [[Int]] {
+        var result = [[Int]]()
+        var maxLevel = 0
+        var helper = [Int: [Int]]()
+        
+        func traverseTree(tree:TreeNode?, cLevel:Int) {
+            guard let node = tree else {
+                return
+            }
+            
+            if var nodes = helper[cLevel] {
+                nodes.append(node.val)
+                helper[cLevel] = nodes
+            } else {
+                helper[cLevel] = [node.val]
+            }
+            
+            maxLevel = max(maxLevel, cLevel)
+            
+            traverseTree(tree:node.left, cLevel: cLevel + 1)
+            traverseTree(tree:node.right, cLevel: cLevel + 1)
+        }
+        traverseTree(tree:root, cLevel:0)
+        for i in 0...maxLevel {
+            if let nodes = helper[i] {
+                result.append(nodes)
+            }
+        }
+        return result
+    }
 }
 
 
