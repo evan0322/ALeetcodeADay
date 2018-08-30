@@ -1298,6 +1298,45 @@ class Solution {
         }
         return result
     }
+    
+    //222. Count Complete Tree Nodes
+    
+    // This is a tricky one. We first calculate the depth of the left node and right node, if it is complete binary tree. calculate the node number. otherwise return 1 + left node number + right node number
+    func countNodes(_ root: TreeNode?) -> Int {
+        
+        guard let rootNode = root else {
+            return 0
+        }
+        
+        let leftD = leftDepth(root:rootNode)
+        let rightD = rightDepth(root:rootNode)
+        
+        if leftD == rightD {
+            return Int(pow(Double(2),Double(leftD))) - 1
+        } else {
+            return 1 + countNodes(rootNode.left) + countNodes(rootNode.right)
+        }
+    }
+    
+    func rightDepth(root: TreeNode?) -> Int {
+        var count = 0
+        var rootNode = root
+        while rootNode != nil {
+            rootNode = rootNode?.right
+            count += 1
+        }
+        return count
+    }
+    
+    func leftDepth(root: TreeNode?) -> Int {
+        var count = 0
+        var rootNode = root
+        while rootNode != nil {
+            rootNode = rootNode?.left
+            count += 1
+        }
+        return count
+    }
 }
 
 
