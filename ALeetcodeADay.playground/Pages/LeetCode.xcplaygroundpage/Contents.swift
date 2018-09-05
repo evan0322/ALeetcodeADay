@@ -1337,6 +1337,31 @@ class Solution {
         }
         return count
     }
+    
+    //543. Diameter of Binary Tree
+    //For this question, we calculate the max depth of a tree as normal. The difference is that we use             ans = max(ans, maxL + maxR) to memorize the max length between the max depth of the node's left child and its right child.
+
+    func diameterOfBinaryTree(_ root: TreeNode?) -> Int {
+        
+        var ans = 0
+        func maxDepth(node: TreeNode?) -> Int {
+            guard let n = node else {
+                return 0
+            }
+            
+            let maxL = maxDepth(node:n.left)
+            let maxR = maxDepth(node:n.right)
+            
+            
+            ans = max(ans, maxL + maxR)
+            return max(maxL,maxR) + 1
+        }
+        
+        
+        
+        maxDepth(node:root)
+        return ans
+    }
 }
 
 
