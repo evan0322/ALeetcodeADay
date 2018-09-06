@@ -1393,6 +1393,32 @@ class Solution {
         
         return result
     }
+    
+    // 96. Unique Binary Search Trees
+    // assume dp[n] is the number of unique BSTs that stores 1...n
+    // dp[0] = 1 dp[1] = 1 dp[2] = 2 dp[3] = 5
+    // take [1, 2, 3, 4] for example, if we take 1 as root, then we need to find the number of BSTs that
+    // stores [2, 3, 4]. Apparrently the number is the same as [1, 2, 3] which is dp[3]. so the result is dp[0]*dp[3]
+    // Samilarly. if we take 2 as root then result is dp[1] * dp[2]
+    // dp[4] = dp[0] * dp[3] + dp[1] * dp[2] + dp[2] * dp[1] + dp[3] * dp[0] = 14
+    // dp[n] = dp[0] * dp[n - 1] + ... + dp[n-1] * dp[1]
+    func numTrees(_ n: Int) -> Int {
+       
+        
+        var dp = [Int:Int]()
+        
+        dp[0] = 1
+        dp[1] = 1
+        
+        for i in 1...n {
+            var temp = 0
+            for j in 1...i{
+                temp += dp[i - j]! * dp[j - 1]!
+            }
+            dp[i] = temp
+        }
+        return dp[n]!
+    }
 }
 
 
