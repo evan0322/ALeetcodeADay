@@ -1362,6 +1362,37 @@ class Solution {
         maxDepth(node:root)
         return ans
     }
+    
+    //199. Binary Tree Right Side View
+    // The trick here is that with preorder traverse, the right node is always visited last. So that if you overwirte the value, it will be the right side view.
+    func rightSideView(_ root: TreeNode?) -> [Int] {
+        var memo = [Int: Int]()
+        var maxLevel = 0
+        
+        
+        func traverse(node:TreeNode?, cLevel: Int) {
+            guard let n = node else {
+                return
+            }
+            
+            memo[cLevel] = n.val
+            maxLevel = max(maxLevel, cLevel)
+            traverse(node:n.left,cLevel:cLevel + 1)
+            traverse(node:n.right,cLevel:cLevel + 1)
+        }
+        
+        traverse(node:root, cLevel:0)
+        
+        var result = [Int]()
+        
+        for i in 0...maxLevel {
+            if let val = memo[i] {
+                result.append(val)
+            }
+        }
+        
+        return result
+    }
 }
 
 
