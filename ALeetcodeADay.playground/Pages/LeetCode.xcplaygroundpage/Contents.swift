@@ -1444,6 +1444,25 @@ class Solution {
         }
         return dp[n]!
     }
+    
+    
+    //230. Kth Smallest Element in a BST
+    // The trick is that in BST if you in order traverse then the value will be in sorted descend order.
+    // So we build the array then then nth smallest number is memo[n - 1]
+    func kthSmallest(_ root: TreeNode?, _ k: Int) -> Int {
+        var memo = [Int]()
+        func traverse(root: TreeNode?) {
+            guard let n = root else {
+                return
+            }
+            traverse(root:n.left)
+            memo.append(n.val)
+            traverse(root:n.right)
+        }
+        
+        traverse(root:root)
+        return memo[k - 1]
+    }
 }
 
 
