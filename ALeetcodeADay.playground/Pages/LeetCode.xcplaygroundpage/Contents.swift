@@ -1463,6 +1463,28 @@ class Solution {
         traverse(root:root)
         return memo[k - 1]
     }
+    
+    //538. Convert BST to Greater Tree
+    // Similar to 230. The trick here is that if you taverse a BST right - self - left, you will get the ascend
+    // order of the value. then use a temp variable to track the value that is currently large, add it to next visited node.
+    func convertBST(_ root: TreeNode?) -> TreeNode? {
+        var temp = 0
+        
+        func traverse(root: TreeNode?) {
+            guard let n = root else {
+                return
+            }
+            
+            traverse(root: n.right)
+            n.val = n.val + temp
+            temp = n.val
+            traverse(root: n.left)
+        }
+        
+        traverse(root: root)
+        
+        return root
+    }
 }
 
 
