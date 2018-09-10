@@ -1485,6 +1485,32 @@ class Solution {
         
         return root
     }
+    
+    //617. Merge Two Binary Trees
+    func mergeTrees(_ t1: TreeNode?, _ t2: TreeNode?) -> TreeNode? {
+        func buildNode(t1: TreeNode?, t2: TreeNode?) -> TreeNode? {
+            if t1 == nil && t2 == nil {
+                return nil
+            } else if t1 == nil {
+                return TreeNode(t2!.val)
+            } else if t2 == nil {
+                return TreeNode(t1!.val)
+            } else {
+                return TreeNode(t1!.val + t2!.val)
+            }
+        }
+        
+        
+        guard let node = buildNode(t1:t1, t2:t2) else {
+            return nil
+        }
+        
+        node.left = mergeTrees(t1?.left, t2?.left)
+        node.right = mergeTrees(t1?.right, t2?.right)
+        
+        return node
+        
+    }
 }
 
 
