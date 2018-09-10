@@ -1394,6 +1394,31 @@ class Solution {
         return result
     }
     
+    //113. Path Sum II
+    // Note the sum is not neccessarily positive
+
+    func pathSum(_ root: TreeNode?, _ sum: Int) -> [[Int]] {
+        var result = [[Int]]()
+        
+        
+        func traverse(root: TreeNode?, sum: Int, path: [Int]) {
+            guard let node = root else {
+                return
+            }
+            
+            if node.left == nil && node.right == nil && sum == node.val {
+                result.append(path + [node.val])
+                return
+            }
+            
+            traverse(root:node.left, sum: sum - node.val, path:path + [node.val])
+            traverse(root:node.right, sum: sum - node.val, path:path + [node.val])
+        }
+        
+        traverse(root: root, sum: sum, path: [Int]())
+        return result
+    }
+    
     // 96. Unique Binary Search Trees
     // assume dp[n] is the number of unique BSTs that stores 1...n
     // dp[0] = 1 dp[1] = 1 dp[2] = 2 dp[3] = 5
