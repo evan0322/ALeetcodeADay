@@ -1535,6 +1535,7 @@ class Solution {
     }
     //692. Top K Frequent Words
     // Pay attention to how to use sort to sort the set.
+    // Big O: N + NlogN = NlogN
     func topKFrequent(_ words: [String], _ k: Int) -> [String] {
         var dict = [String: Int]()
         
