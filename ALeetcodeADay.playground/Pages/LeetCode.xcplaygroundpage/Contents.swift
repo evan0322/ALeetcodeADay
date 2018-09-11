@@ -1511,6 +1511,28 @@ class Solution {
         return node
         
     }
+    
+    //129. Sum Root to Leaf Numbers
+    func sumNumbers(_ root: TreeNode?) -> Int {
+        var result = 0
+        
+        func traverse(root: TreeNode?, cValue: Int) {
+            guard let n = root else {
+                return
+            }
+            
+            if n.left == nil && n.right == nil {
+                result += cValue * 10 + n.val
+                return
+            }
+            
+            traverse(root:n.left, cValue: cValue * 10 + n.val)
+            traverse(root:n.right, cValue: cValue * 10 + n.val)
+        }
+        
+        traverse(root:root, cValue:0)
+        return result
+    }
 }
 
 
