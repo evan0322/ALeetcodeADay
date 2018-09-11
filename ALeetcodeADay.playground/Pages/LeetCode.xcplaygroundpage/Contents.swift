@@ -1558,6 +1558,39 @@ class Solution {
         return Array(wordsSet[0...k - 1])
         
     }
+    
+    // 637. Average of Levels in Binary Tree
+    func averageOfLevels(_ root: TreeNode?) -> [Double] {
+        var dict = [Int: (Int, Int)]()
+        var maxLevel = 0
+        var result = [Double]()
+        
+        func traverse(root: TreeNode?, cLevel: Int) {
+            guard let n = root else {
+                return
+            }
+            
+            if let temp = dict[cLevel] {
+                dict[cLevel] = (temp.0 + n.val, temp.1 + 1)
+            } else {
+                dict[cLevel] = (n.val, 1)
+            }
+            
+            maxLevel = max(maxLevel,cLevel)
+            
+            traverse(root:n.left, cLevel:cLevel + 1)
+            traverse(root:n.right, cLevel:cLevel + 1)
+        }
+        
+        traverse(root: root, cLevel: 0)
+        
+        for i in 0...maxLevel {
+            result.append(Double(dict[i]!.0)/Double(dict[i]!.1))
+        }
+        
+        return result
+        
+    }
 }
 
 
