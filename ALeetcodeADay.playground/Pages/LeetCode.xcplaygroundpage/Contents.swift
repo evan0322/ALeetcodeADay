@@ -1533,6 +1533,30 @@ class Solution {
         traverse(root:root, cValue:0)
         return result
     }
+    //692. Top K Frequent Words
+    // Pay attention to how to use sort to sort the set.
+    func topKFrequent(_ words: [String], _ k: Int) -> [String] {
+        var dict = [String: Int]()
+        
+        for word in words {
+            dict[word] = dict[word, default: 0] + 1
+        }
+        
+        var wordsSet = Array(Set(words))
+        
+        wordsSet.sort{
+            if dict[$0]! > dict[$1]! {
+                return true
+            } else if dict[$0]! == dict[$1]! {
+                return $0 < $1
+            } else {
+                return false
+            }
+        }
+        
+        return Array(wordsSet[0...k - 1])
+        
+    }
 }
 
 
