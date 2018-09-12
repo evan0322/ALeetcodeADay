@@ -1591,6 +1591,25 @@ class Solution {
         return result
         
     }
+    
+    //101. Symmetric Tree
+    //TODO: Figure this out
+    func isSymmetric(_ root: TreeNode?) -> Bool {
+        
+        
+        func isMirror(m: TreeNode?, n: TreeNode?) -> Bool {
+            if m == nil && n == nil {
+                return true
+            } else if m == nil || n == nil {
+                return false
+            } else {
+                return m!.val == n!.val && isMirror(m:m!.left, n:n!.right) && isMirror(m:m!.right, n:n!.left)
+            }
+        }
+        
+        return isMirror(m:root, n:root)
+        
+    }
 }
 
 
