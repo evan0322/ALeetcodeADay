@@ -1610,6 +1610,31 @@ class Solution {
         return isMirror(m:root, n:root)
         
     }
+    
+    //328. Odd Even Linked List
+    // The node convention is very complex. Note "even != nil && even!.next != nil"
+
+    func oddEvenList(_ head: ListNode?) -> ListNode? {
+        guard let headNode = head else {
+            return nil
+        }
+        
+        var odd: ListNode? = headNode
+        var even: ListNode? = headNode.next
+        var evenHead: ListNode? = headNode.next
+        
+        while even != nil && even!.next != nil {
+            odd!.next = even!.next
+            odd = odd!.next
+            even!.next = odd!.next
+            even = even!.next
+        }
+        
+        odd!.next = evenHead
+        
+        return headNode
+        
+    }
 }
 
 
