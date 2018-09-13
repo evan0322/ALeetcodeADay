@@ -1635,6 +1635,22 @@ class Solution {
         return headNode
         
     }
+    
+    //633. Sum of Square Numbers
+    // Note if you are using double loop it will time out
+    
+    func judgeSquareSum(_ c: Int) -> Bool {
+        var i = 0
+        
+        while i * i <= c {
+            let j = Int(sqrt(Double(c - i * i)))
+            if j * j + i * i == c {
+                return true
+            }
+            i += 1
+        }
+        return false
+    }
 }
 
 
