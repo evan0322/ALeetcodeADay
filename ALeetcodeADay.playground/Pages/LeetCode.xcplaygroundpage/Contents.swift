@@ -1651,6 +1651,30 @@ class Solution {
         }
         return false
     }
+    
+    //643. Maximum Average Subarray I
+    func findMaxAverage(_ nums: [Int], _ k: Int) -> Double {
+        var head = 0
+        var end = k - 1
+        var currentSum: Double = 0
+        
+        let doubleNums = nums.map({ Double($0) })
+        
+        for i in head...end {
+            currentSum += doubleNums[i]
+        }
+        
+        var result = Double(currentSum)/Double(k)
+        
+        while end + 1 < doubleNums.count {
+            currentSum = currentSum - doubleNums[head] + doubleNums[end + 1]
+            result = max(currentSum/Double(k), result)
+            head += 1
+            end += 1
+        }
+        
+        return result
+    }
 }
 
 
