@@ -1675,6 +1675,36 @@ class Solution {
         
         return result
     }
+    
+    // 554. Brick Wall
+    // hash map is the key!
+    func leastBricks(_ wall: [[Int]]) -> Int {
+        //Note: This should be accepted because this is exactly the same solution as the the answer. However due to the nature of swift (AKA slow). The excution time out. : (
+        var dict = [Int:Int]()
+        var total = wall[0].reduce(0,+)
+        var result = 0
+        
+        for line in wall {
+            var numReached = 0
+            for brick in line {
+                numReached = numReached + brick
+                if let reached = dict[numReached] {
+                    dict[numReached] = reached + 1
+                } else {
+                    dict[numReached] = 1
+                }
+            }
+        }
+        
+        for i in 1..<total {
+            if let brickPassed = dict[i] {
+                result = max(result,brickPassed)
+            }
+        }
+        
+        return wall.count - result
+        
+    }
 }
 
 
