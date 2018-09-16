@@ -1705,6 +1705,31 @@ class Solution {
         return wall.count - result
         
     }
+    
+    //462. Minimum Moves to Equal Array Elements II
+    func minMoves2(_ nums: [Int]) -> Int {
+        /*
+         We need to sort the array first, then
+         Take a = [1, 3, 4, 5, 6, 8] for example, var i = 0, var j = a.count - 1.
+         Assume the num we are looking for is a[x]. Then the steps that need to
+         tranfer a[i] and a[j] to a[x] is a[x] - a[i] + a[j] - a[x] = a[j] - a[i].
+         then we narray i and j to get the total steps
+         */
+        
+        var i = 0
+        var j = nums.count - 1
+        var result = 0
+        
+        let sortedNums = nums.sorted(by:{ $0 < $1 })
+        
+        while i < j {
+            result += sortedNums[j] - sortedNums[i]
+            i += 1
+            j -= 1
+        }
+        
+        return result
+    }
 }
 
 
