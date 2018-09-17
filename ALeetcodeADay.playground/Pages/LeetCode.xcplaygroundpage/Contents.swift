@@ -1754,7 +1754,43 @@ class Solution {
         }
     }
     
-    insertNode(node:root, val:val)
+    //389. Find the Difference
+    func findTheDifference(_ s: String, _ t: String) -> Character {
+        var sArray = s.sorted(by:{ $0 < $1 })
+        var tArray = t.sorted(by:{ $0 < $1 })
+        
+        for i in 0..<sArray.count {
+            if sArray[i] != tArray[i] {
+                return tArray[i]
+            }
+        }
+        
+        return tArray.last!
+    }
+    
+    //83. Remove Duplicates from Sorted List
+    //Must draw picture for linked list problems!!
+    func deleteDuplicates(_ head: ListNode?) -> ListNode? {
+        guard let n = head else {
+            return head
+        }
+        
+        var cNode: ListNode? = n
+        
+        while cNode != nil {
+            if let nNode = cNode!.next {
+                if nNode.val == cNode!.val {
+                    cNode!.next = nNode.next
+                } else {
+                    cNode = cNode!.next
+                }
+            } else {
+                cNode = cNode!.next
+            }
+        }
+        
+        return n
+    }
 }
 
 
