@@ -1730,6 +1730,31 @@ class Solution {
         
         return result
     }
+    
+    //701. Insert into a Binary Search Tree
+    func insertNode(node:TreeNode?, val:Int) {
+        guard let n = node else {
+            return
+        }
+        
+        if val < n.val {
+            if n.left == nil {
+                n.left = TreeNode(val)
+                return
+            } else {
+                return insertNode(node:n.left!, val: val)
+            }
+        } else if val > n.val {
+            if n.right == nil {
+                n.right = TreeNode(val)
+                return
+            } else {
+                return insertNode(node:n.right!, val: val)
+            }
+        }
+    }
+    
+    insertNode(node:root, val:val)
 }
 
 
