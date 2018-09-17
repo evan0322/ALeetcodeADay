@@ -1791,6 +1791,28 @@ class Solution {
         
         return n
     }
+    
+    //409. Longest Palindrome
+    func longestPalindrome(_ s: String) -> Int {
+        var memo = [Character: Bool]()
+        var result = 0
+        for char in s {
+            if memo[char] == true {
+                result += 2
+                memo[char] = false
+            } else {
+                memo[char] = true
+            }
+        }
+        
+        for char in s {
+            if memo[char] == true {
+                result += 1
+                break
+            }
+        }
+        return result
+    }
 }
 
 
