@@ -1831,6 +1831,43 @@ class Solution {
         
         return false
     }
+    
+    //486. Predict the Winner
+    func PredictTheWinner(_ nums: [Int]) -> Bool {
+        guard nums.count > 1 else {
+            return true
+        }
+        
+        let winScore = nums.reduce(0,+)
+        
+        var dp = Array(repeating:Array(repeating:0,count:nums.count), count:nums.count)
+        // dp[i][j] The max score A can get between index i and index j
+        // Note that dp[i][j] can also represent the max core B can get, as  A and B will both choose the same method
+        // e.g. they are equally smart
+        // dp[i][i] = nums[i]
+        // if i is taken, then dp[i][j] = sum(i + 1, j) - d[i + 1][j] + num[i] = sum(i, j) - d[i + 1][j]
+        // if j is taken, then dp[i][j] = sum(i, j - 1) - d[i][j - 1] + num[j] = sum(i, j) - d[i][j - 1]
+        // as a result dp[i][j] = max(sum(i, j) - d[i + 1][j],  sum(i, j) - d[i][j - 1])
+        // Draw a block diagram then we can see, the best way to fill the dp is
+        // i -> nums.count - 1...0
+        // j -> i...0
+        
+        for j in 0..<nums.count {
+            var sum = 0
+            for i in (0...j).reversed() {
+                sum += nums[i]
+                if i == j {
+                    // This is a good example to avoid pre calculate the values and at the same time save
+                    // The headache to figureout the boundarys
+                    dp[i][j] = nums[j]
+                } else {
+                    dp[i][j] = max(sum - dp[i + 1][j],  sum - dp[i][j - 1])
+                }
+            }
+        }
+        
+        return dp[0][nums.count - 1] * 2 >= winScore
+    }
 }
 
 
