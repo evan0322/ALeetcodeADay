@@ -1813,6 +1813,24 @@ class Solution {
         }
         return result
     }
+    
+    //334. Increasing Triplet Subsequence
+    func increasingTriplet(_ nums: [Int]) -> Bool {
+        var c1 = Int.max
+        var c2 = Int.max
+        
+        for num in nums {
+            if num <= c1 {
+                c1 = num // The smallest candidate
+            } else if num <= c2 {
+                c2 = num // The second smallest candidate
+            } else {
+                return true // If any number is larger than 2 numbers, then it is true
+            }
+        }
+        
+        return false
+    }
 }
 
 
