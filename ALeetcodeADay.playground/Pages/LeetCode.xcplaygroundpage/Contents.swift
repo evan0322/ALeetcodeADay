@@ -1947,6 +1947,23 @@ class Solution {
         
         
     }
+    
+    //876. Middle of the Linked List
+    func middleNode(_ head: ListNode?) -> ListNode? {
+        
+        guard let n = head else {
+            return nil
+        }
+        
+        var p1: ListNode? = n
+        var p2: ListNode? = n
+        
+        while p2?.next != nil {
+            p1 = p1?.next
+            p2 = p2?.next?.next
+        }
+        return p1
+    }
 }
 
 
