@@ -1922,6 +1922,31 @@ class Solution {
         }
         return result
     }
+    //796. Rotate String
+    func rotateString(_ A: String, _ B: String) -> Bool {
+        
+        guard A.count == B.count else {
+            return false
+        }
+        
+        guard A.count > 0 else {
+            return true
+        }
+        
+        var temp = A.map{ String($0) }
+        
+        for i in 0...A.count {
+            temp = Array(temp.dropFirst() + [temp.first!])
+            var newString = temp.joined(separator:"")
+            if newString == B {
+                return true
+            }
+        }
+        
+        return false
+        
+        
+    }
 }
 
 
