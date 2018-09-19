@@ -1868,6 +1868,60 @@ class Solution {
         
         return dp[0][nums.count - 1] * 2 >= winScore
     }
+    
+    //438. Find All Anagrams in a String
+    
+    //Use sliding window
+    func findAnagrams(_ s: String, _ p: String) -> [Int] {
+        guard s.count > 0 && p.count > 0 && p.count < s.count else {
+            return [Int]()
+        }
+        
+        let sArray = s.map{ String($0) }
+        let pArray = p.map{ String($0) }
+        var memo = [String: Int]()
+        var result = [Int]()
+        var begin = 0
+        var end = 0
+        
+        var count = pArray.count
+        
+        //Record all chars needed to find
+        for c in pArray {
+            memo[c] = memo[c, default: 0] + 1
+        }
+        
+        while end < s.count {
+            //If c is needed and needed at lest 1, count - 1
+            if let c = memo[sArray[end]]
+            {
+                memo[sArray[end]] = c - 1
+                if c - 1 >= 0 {
+                    count -= 1
+                }
+            }
+            
+            if count == 0 {
+                result.append(begin)
+            }
+            
+            // while end reach the window limit, we drop the begin. If begin contains
+            // char needed, add it back to needed list
+            if end - begin + 1 == pArray.count {
+                if let c = memo[sArray[begin]]
+                {
+                    memo[sArray[begin]] = c + 1
+                    if c + 1 > 0 {
+                        count += 1
+                    }
+                }
+                begin += 1
+            }
+            
+            end += 1
+        }
+        return result
+    }
 }
 
 
