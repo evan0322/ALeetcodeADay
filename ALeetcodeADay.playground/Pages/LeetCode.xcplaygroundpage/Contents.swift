@@ -1964,6 +1964,27 @@ class Solution {
         }
         return p1
     }
+    
+    //137. Single Number II
+    func singleNumber(_ nums: [Int]) -> Int {
+        guard nums.count > 0 else {
+            return 0
+        }
+        
+        var temp = [Int: Int]()
+        
+        for num in nums {
+            temp[num] = temp[num, default: 0] + 1
+        }
+        
+        for key in temp.keys {
+            if temp[key]! == 1 {
+                return key
+            }
+        }
+        
+        return 0
+    }
 }
 
 
