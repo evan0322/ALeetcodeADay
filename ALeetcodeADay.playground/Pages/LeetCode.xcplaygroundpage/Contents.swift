@@ -1985,6 +1985,26 @@ class Solution {
         
         return 0
     }
+    //168. Excel Sheet Column Title
+    func convertToTitle(_ n: Int) -> String {
+        guard n > 0 else {
+            return ""
+        }
+        
+        let temp = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".map{ String($0) }
+        
+        var result = [String]()
+        
+        var num = n
+        
+        while num > 0 {
+            //Note the num - 1 instead of num
+            result.append(temp[(num - 1)%26])
+            num = (num - 1)/26
+        }
+        
+        return result.reversed().joined(separator:"")
+    }
 }
 
 
