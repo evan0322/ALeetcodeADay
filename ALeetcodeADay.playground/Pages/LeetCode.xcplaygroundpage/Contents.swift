@@ -2066,6 +2066,25 @@ class Solution {
         return result
         
     }
+    
+    //766. Toeplitz Matrix
+
+    func isToeplitzMatrix(_ matrix: [[Int]]) -> Bool {
+        guard matrix.count > 0 else {
+            return true
+        }
+        
+        for i in 0..<matrix[0].count - 1 {
+            for j in 0..<matrix.count - 1 {
+                if matrix[j][i] != matrix[j + 1][i + 1] {
+                    return false
+                }
+            }
+        }
+        
+        return true
+        
+    }
 }
 
 
