@@ -2005,6 +2005,35 @@ class Solution {
         
         return result.reversed().joined(separator:"")
     }
+    
+    
+    //713. Subarray Product Less Than K
+    //Another sliding window problem
+    func numSubarrayProductLessThanK(_ nums: [Int], _ k: Int) -> Int {
+        guard nums.count > 0 else {
+            return 0
+        }
+        
+        var result = 0
+        
+        var begin = 0
+        var end = 0
+        var prod = 1
+        
+        while end < nums.count {
+            prod *= nums[end]
+            //Note begin could be 1 larger than end. then end - beign = -1, any number that larger than k will be disqualified
+            while begin <= end && prod >= k {
+                prod = prod/nums[begin]
+                begin += 1
+            }
+            
+            result += end - begin + 1
+            end += 1
+        }
+        
+        return result
+    }
 }
 
 
