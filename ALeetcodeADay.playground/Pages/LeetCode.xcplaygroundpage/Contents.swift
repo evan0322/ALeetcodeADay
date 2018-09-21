@@ -2034,6 +2034,38 @@ class Solution {
         
         return result
     }
+    
+    //784. Letter Case Permutation
+
+    func letterCasePermutation(_ S: String) -> [String] {
+        var result = [""]
+        var number = "0123456789"
+        
+        var sArray = S.map({ String($0) })
+        
+        for char in sArray {
+            if number.contains(char) {
+                for i in 0..<result.count {
+                    result[i] += char
+                }
+            } else {
+                var s1 = result
+                var s2 = result
+                
+                for i in 0..<result.count {
+                    s1[i] += char.lowercased()
+                }
+                
+                for i in 0..<result.count {
+                    s2[i] += char.uppercased()
+                }
+                result = s1 + s2
+            }
+        }
+        
+        return result
+        
+    }
 }
 
 
