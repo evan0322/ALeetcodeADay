@@ -2130,6 +2130,25 @@ class Solution {
         return nums[begin]
         
     }
+    
+    //383. Ransom Note
+
+    func canConstruct(_ ransomNote: String, _ magazine: String) -> Bool {
+        var memo = [Character: Int]()
+        for char in magazine {
+            memo[char] = memo[char, default:0] + 1
+        }
+        for char in ransomNote {
+            guard
+                let count = memo[char],
+                count > 0
+                else {
+                    return false
+            }
+            memo[char] = count - 1
+        }
+        return true
+    }
 }
 
 
