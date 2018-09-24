@@ -2072,6 +2072,8 @@ class Solution {
     func isToeplitzMatrix(_ matrix: [[Int]]) -> Bool {
         guard matrix.count > 0 else {
             return true
+            
+            
         }
         
         for i in 0..<matrix[0].count - 1 {
@@ -2084,6 +2086,25 @@ class Solution {
         
         return true
         
+    }
+    
+    //55. Jump Game
+    func canJump(_ nums: [Int]) -> Bool {
+        guard nums.count > 1 else {
+            return true
+        }
+        
+        var cStep = Int.min + 1
+        
+        for i in 0..<nums.count - 1 {
+            cStep -= 1
+            cStep = max(nums[i], cStep)
+            if cStep <= 0 {
+                return false
+            }
+        }
+        
+        return true
     }
 }
 
