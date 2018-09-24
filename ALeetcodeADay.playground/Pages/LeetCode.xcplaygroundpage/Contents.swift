@@ -2184,6 +2184,70 @@ class Solution {
         return false
         
     }
+    
+    //167. Two Sum II - Input array is sorted
+    // AC answer O(nlogn)
+    func twoSumBad(_ numbers: [Int], _ target: Int) -> [Int] {
+        func binarySearch(nums:[Int], t:Int) -> Int {
+            var begin = 0
+            var end = nums.count - 1
+            
+            while begin <= end {
+                var mid = (end + begin)/2
+                if t > nums[mid] {
+                    begin = mid + 1
+                } else if t < nums[mid] {
+                    end = mid - 1
+                } else {
+                    return mid
+                }
+            }
+            
+            return -1
+            
+        }
+        
+        
+        for i in 0..<numbers.count {
+            var temp = numbers
+            temp.remove(at:i)
+            
+            var index = binarySearch(nums:temp, t:target - numbers[i])
+            
+            if index >= 0 {
+                if index >= i {
+                    index += 1
+                }
+                
+                return [i + 1, index + 1]
+            }
+        }
+        
+        return [Int]()
+        
+    }
+    
+    //Better answer O(n)
+    func twoSum(_ numbers: [Int], _ target: Int) -> [Int] {
+        guard numbers.count > 0 else {
+            return [Int]()
+        }
+        var begin = 0
+        var end = numbers.count - 1
+        
+        while begin < end {
+            if numbers[begin] + numbers[end] > target {
+                end -= 1
+            } else if numbers[begin] + numbers[end] < target {
+                begin += 1
+            } else {
+                return [begin + 1, end + 1]
+            }
+        }
+        
+        return [Int]()
+    }
+    
 }
 
 
