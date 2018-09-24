@@ -2106,6 +2106,30 @@ class Solution {
         
         return true
     }
+    //153. Find Minimum in Rotated Sorted Array
+
+    func findMin(_ nums: [Int]) -> Int {
+        
+        var begin = 0
+        var end = nums.count - 1
+        
+        while begin < end {
+            if nums[begin] < nums[end] {
+                return nums[begin]
+            } else {
+                var mid = (end + begin)/2
+                if nums[mid] >= nums[begin] {
+                    begin = mid + 1
+                } else {
+                    //notice that mid should not be end - 1
+                    end = mid
+                }
+            }
+        }
+        
+        return nums[begin]
+        
+    }
 }
 
 
