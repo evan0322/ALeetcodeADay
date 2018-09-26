@@ -2270,6 +2270,43 @@ class Solution {
         
     }
     
+    //200. Number of Islands
+
+    func numIslands(_ grid: [[Character]]) -> Int {
+        guard grid.count > 0 else {
+            return 0
+        }
+        
+        var visited = Array(repeating:Array(repeating:false, count:grid[0].count), count:grid.count)
+        var result = 0
+        
+        
+        func visit(i:Int, j:Int) {
+            if i >= grid.count || j >= grid[0].count || i < 0 || j < 0 || visited[i][j] == true || grid[i][j] == "0" {
+                return
+            } else {
+                visited[i][j] = true
+                visit(i:i - 1, j:j)
+                visit(i:i + 1, j: j)
+                visit(i:i, j:j + 1)
+                visit(i:i, j:j - 1)
+            }
+        }
+        
+        
+        for i in 0..<grid.count {
+            for j in 0..<grid[0].count {
+                if grid[i][j] == "1" && visited[i][j] == false {
+                    result += 1
+                    visit(i:i, j:j)
+                }
+            }
+        }
+        
+        
+        return result
+    }
+    
 }
 
 
