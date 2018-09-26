@@ -2248,6 +2248,28 @@ class Solution {
         return [Int]()
     }
     
+    //19. Remove Nth Node From End of List
+
+    func removeNthFromEnd(_ head: ListNode?, _ n: Int) -> ListNode? {
+        //Stupid leet code bug. This is actually working
+        var begin = head
+        var end = head
+        
+        for i in 0..<n {
+            end = end?.next
+        }
+        
+        while end?.next != nil {
+            begin = begin?.next
+            end = end?.next
+        }
+        
+        begin?.next = begin?.next?.next
+        
+        return head
+        
+    }
+    
 }
 
 
