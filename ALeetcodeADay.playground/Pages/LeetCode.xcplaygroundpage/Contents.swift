@@ -2307,6 +2307,37 @@ class Solution {
         return result
     }
     
+    //13. Roman to Integer
+
+    func romanToInt(_ s: String) -> Int {
+        var sArray = s.map{String($0)}
+        
+        var value = [String: Int]()
+        
+        var result = 0
+        value["I"] = 1
+        value["V"] = 5
+        value["X"] = 10
+        value["L"] = 50
+        value["C"] = 100
+        value["D"] = 500
+        value["M"] = 1000
+        
+        for i in 0..<sArray.count {
+            result += value[sArray[i]]!
+            
+            if (sArray[i] == "V" || sArray[i] == "X") && i - 1 >= 0 && sArray[i - 1] == "I" {
+                result -= 2
+            } else if (sArray[i] == "L" || sArray[i] == "C") && i - 1 >= 0 && sArray[i - 1] == "X" {
+                result -= 20
+            } else if (sArray[i] == "D" || sArray[i] == "M") && i - 1 >= 0 && sArray[i - 1] == "C" {
+                result -= 200
+            }
+        }
+        
+        return result
+    }
+    
 }
 
 
