@@ -2338,6 +2338,55 @@ class Solution {
         return result
     }
     
+   // 15. 3Sum
+    /*
+     We want traverse the array, for each element, we look for uniqu num[j] + num[k] = -num[i]
+     The tricky part is we use two pointer to go through the candicate for num[i], ignore the duplicate nums, then append them to the result
+ */
+    func threeSum(_ nums: [Int]) -> [[Int]] {
+        if nums.count < 3 {
+            return []
+        }
+        
+        let sortedNum = nums.sorted(by: {$0<$1})
+        
+        var result = [[Int]]()
+        
+        
+        for i in 0..<sortedNum.count - 2 {
+            if i == 0 || (sortedNum[i] != sortedNum[i - 1]) {
+                var low = i + 1
+                var high = sortedNum.count - 1
+                var sum = 0 - sortedNum[i]
+                
+                while low < high {
+                    if sortedNum[low] + sortedNum[high] == sum {
+                        result.append([sortedNum[i], sortedNum[low], sortedNum[high]])
+                        while low < high && sortedNum[low] == sortedNum[low + 1] {
+                            low += 1
+                        }
+                        
+                        while low < high && sortedNum[high] == sortedNum[high - 1] {
+                            high -= 1
+                        }
+                        
+                        low += 1
+                        high -= 1
+                    } else if sortedNum[low] + sortedNum[high] < sum {
+                        low += 1
+                    } else {
+                        high -= 1
+                    }
+                }
+                
+                
+            }
+        }
+        
+        return result
+        
+    }
+    
 }
 
 
