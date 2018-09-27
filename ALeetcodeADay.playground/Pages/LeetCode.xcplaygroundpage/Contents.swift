@@ -2387,6 +2387,39 @@ class Solution {
         
     }
     
+    //56. Merge Intervals
+
+    func merge(_ intervals: [Interval]) -> [Interval] {
+        guard intervals.count > 0 else {
+            return [Interval]()
+        }
+        
+        var sortedInter = intervals
+        sortedInter.sort(by:({ $0.start < $1.start }))
+        
+        var start = sortedInter[0].start
+        var end = sortedInter[0].end
+        var i = 1
+        var result = [Interval]()
+        
+        while i < sortedInter.count {
+            if  end < sortedInter[i].start {
+                result.append(Interval(start, end))
+                start = sortedInter[i].start
+                end = sortedInter[i].end
+            } else if end <= sortedInter[i].end && end >= sortedInter[i].start {
+                end = sortedInter[i].end
+            }
+            
+            i += 1
+        }
+        
+        result.append(Interval(start, end))
+        
+        return result
+        
+    }
+    
 }
 
 
@@ -2507,6 +2540,16 @@ extension String {
             return nil
         }
         return String(Array(self)[index...toIndex])
+    }
+}
+
+
+public class Interval {
+    public var start: Int
+    public var end: Int
+    public init(_ start: Int, _ end: Int) {
+        self.start = start
+        self.end = end
     }
 }
 
