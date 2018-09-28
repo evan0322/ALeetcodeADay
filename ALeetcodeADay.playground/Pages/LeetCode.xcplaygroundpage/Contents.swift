@@ -2419,6 +2419,26 @@ class Solution {
         return result
         
     }
+   // 139. Word Break
+
+    func wordBreak(_ s: String, _ wordDict: [String]) -> Bool {
+        var dp = Array(repeating:false, count:s.count)
+        
+        var sArray = s.map{ String($0) }
+        
+        for i in 0..<s.count {
+            for j in 0...i {
+                var subString = sArray[j...i].joined(separator:"")
+                if wordDict.contains(subString) && ( j == 0 || dp[j - 1] == true ) {
+                    dp[i] = true
+                    break
+                }
+            }
+        }
+        
+        return dp[s.count - 1]
+        
+    }
     
 }
 
