@@ -2519,6 +2519,47 @@ class Solution {
         return searchNum(nums:nums, target: target, indexLow:0, indexHigh: nums.count - 1)
     }
     
+    //23. Merge k Sorted Lists
+
+    func mergeKLists(_ lists: [ListNode?]) -> ListNode? {
+        var lists = lists.flatMap({ $0 })
+        var result = ListNode(-1)
+        var rPointer: ListNode? = result
+        
+        func mergeLists(cLists: [ListNode]) {
+            guard cLists.count > 0 else {
+                return
+            }
+            
+            var cLists = cLists
+            
+            var cMin = ListNode(Int.max)
+            var index = -1
+            
+            for i in 0..<cLists.count {
+                if cLists[i].val < cMin.val {
+                    cMin = cLists[i]
+                    index = i
+                }
+            }
+            
+            rPointer?.next = ListNode(cMin.val)
+            rPointer = rPointer?.next
+            
+            if cLists[index].next == nil {
+                cLists.remove(at: index)
+            } else {
+                cLists[index] = cLists[index].next!
+            }
+            mergeLists(cLists:cLists)
+        }
+        
+        mergeLists(cLists: lists)
+        
+        return result.next
+        
+    }
+    
 }
 
 
