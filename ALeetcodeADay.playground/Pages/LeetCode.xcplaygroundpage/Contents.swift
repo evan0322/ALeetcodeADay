@@ -2459,6 +2459,68 @@ class Solution {
         return nums.count
     }
     
+    
+    //33. Search in Rotated Sorted Array
+    //[4, 5, 6, 7, 0, 1, 2]
+    /*
+     first we get a middle number, then if the middle num matchs nums[l] < num[m] then
+     the nums[l...m] is a sorted array. If the target > nums[l] and target < nums[m] then the target is inside
+     the sub arrya. Do a binary search and you will find the value other wise we search the nums in the other sub string, until we find the target.
+     
+     The tricky part is for the scenario [3, 1] which is indeed an unsorted array. 
+     */
+    func search(_ nums: [Int], _ target: Int) -> Int {
+        func binarySearch(nums:[Int], target: Int, indexL: Int, indexH: Int) -> Int {
+            var low = indexL
+            var high = indexH
+            
+            while low <= high {
+                let middle = (high + low)/2
+                if nums[middle] > target {
+                    high = middle - 1
+                } else if nums[middle] < target {
+                    low = middle + 1
+                } else {
+                    return (high + low)/2
+                }
+            }
+            return -1
+        }
+        
+        func searchNum(nums:[Int], target:Int, indexLow:Int, indexHigh:Int) -> Int {
+            var low = indexLow
+            var high = indexHigh
+            
+            let middle = (high + low)/2
+            
+            if indexLow == indexHigh {
+                return nums[indexLow] == target ? indexLow : -1
+            } else if nums[middle] == target {
+                return middle
+            } else if nums[low] <= nums[middle] {
+                if target >= nums[low] && target <= nums[middle] {
+                    return binarySearch(nums:nums, target: target, indexL: low, indexH: middle)
+                }  else {
+                    return searchNum(nums:nums, target:target, indexLow:middle + 1, indexHigh: high)
+                }
+            } else if nums[middle] <= nums[high] {
+                if target >= nums[middle] && target <= nums[high] {
+                    return binarySearch(nums:nums, target: target, indexL:middle, indexH: high)
+                } else {
+                    return searchNum(nums: nums, target:target, indexLow:low, indexHigh: middle - 1)
+                }
+            }
+            
+            return -1
+        }
+        
+        guard nums.count > 0 else {
+            return -1
+        }
+        
+        return searchNum(nums:nums, target: target, indexLow:0, indexHigh: nums.count - 1)
+    }
+    
 }
 
 
