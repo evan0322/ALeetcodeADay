@@ -2467,7 +2467,7 @@ class Solution {
      the nums[l...m] is a sorted array. If the target > nums[l] and target < nums[m] then the target is inside
      the sub arrya. Do a binary search and you will find the value other wise we search the nums in the other sub string, until we find the target.
      
-     The tricky part is for the scenario [3, 1] which is indeed an unsorted array. 
+     The tricky part is for the scenario [3, 1] which is indeed an unsorted array.
      */
     func search(_ nums: [Int], _ target: Int) -> Int {
         func binarySearch(nums:[Int], target: Int, indexL: Int, indexH: Int) -> Int {
@@ -2495,9 +2495,7 @@ class Solution {
             
             if indexLow == indexHigh {
                 return nums[indexLow] == target ? indexLow : -1
-            } else if nums[middle] == target {
-                return middle
-            } else if nums[low] <= nums[middle] {
+            }  else if nums[low] <= nums[middle] {
                 if target >= nums[low] && target <= nums[middle] {
                     return binarySearch(nums:nums, target: target, indexL: low, indexH: middle)
                 }  else {
