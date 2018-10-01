@@ -2560,6 +2560,40 @@ class Solution {
         
     }
     
+    //17. Letter Combinations of a Phone Number
+    // The loop is tricky
+    func letterCombinations(_ digits: String) -> [String] {
+        var memo = [Character: [Character]]()
+        
+        memo["2"] = ["a", "b", "c"]
+        memo["3"] = ["d", "e", "f"]
+        memo["4"] = ["g", "h", "i"]
+        memo["5"] = ["j", "k", "l"]
+        memo["6"] = ["m", "n", "o"]
+        memo["7"] = ["p", "q", "r", "s"]
+        memo["8"] = ["t", "u", "v"]
+        memo["9"] = ["w", "x", "y", "z"]
+        
+        var result = [String]()
+        
+        for char in digits {
+            if let nChars = memo[char] {
+                if result.count == 0 {
+                    result = nChars.map( {String($0)} )
+                } else {
+                    var temp = [String]()
+                    for i in 0..<result.count {
+                        for nChar in nChars {
+                            temp.append(result[i] + String(nChar))
+                        }
+                    }
+                    result = temp
+                }
+            }
+        }
+        return result
+    }
+    
 }
 
 
