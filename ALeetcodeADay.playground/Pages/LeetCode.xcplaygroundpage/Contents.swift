@@ -2593,7 +2593,92 @@ class Solution {
         }
         return result
     }
+    //127. Word Ladder
+    //BFS
+
+    func ladderLength(_ beginWord: String, _ endWord: String, _ wordList: [String]) -> Int {
+        var set = Set(wordList)
+        var az = "abcdefghijklmnopqrstuvwxyz"
+        var cList = Array(set)
+        
+        guard cList.count > 0 else {
+            return 0
+        }
+        
+        func helper(beginWord: String, endWord: String, wordList: [String] ) -> Int {
+            var queue = [String]()
+            if !wordList.contains(endWord) {
+                return 0
+            }
+            var wordList = wordList
+            queue.append(beginWord)
+            var path = 0
+            while queue.count > 0 {
+                let count = queue.count
+                for i in 0..<count {
+                    var cur = queue.removeFirst()
+                    if cur == endWord {
+                        return path + 1
+                    }
+                    
+                    for i in 0..<cur.count {
+                        var arrayC = Array(cur)
+                        for char in az {
+                            arrayC[i] = char
+                            let check = String(arrayC)
+                            if(wordList.contains(check) && check != cur) {
+                                queue.append(check)
+                                wordList = wordList.filter({ $0 != check })
+                            }
+                        }
+                    }
+                }
+                path += 1
+            }
+            
+            return 0
+        }
+        
+        return helper(beginWord:beginWord, endWord: endWord, wordList: wordList)
+        
+    }
     
+    // 67. Add Binary
+    // The trick is do the add from the lower digit
+    func addBinary(_ a: String, _ b: String) -> String {
+        var carry = 0
+        var i = a.count - 1
+        var j = b.count - 1
+        var result = ""
+        
+        var aArray = a.map({ String($0) })
+        var bArray = b.map({ String($0) })
+        
+        
+        while i >= 0 || j >= 0 {
+            var sum = carry
+            if i >= 0 {
+                sum += Int(aArray[i])!
+                i -= 1
+            }
+            
+            if j >= 0 {
+                sum += Int(bArray[j])!
+                j -= 1
+            }
+            
+            var cValue = sum % 2
+            result = String(cValue) + result
+            carry = sum / 2
+        }
+        
+        if carry > 0 {
+            result = "1" + result
+        }
+        
+        return result
+        
+    }
 }
 
 
