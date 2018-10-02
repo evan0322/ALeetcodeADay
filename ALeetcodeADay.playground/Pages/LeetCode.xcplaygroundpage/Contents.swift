@@ -2734,6 +2734,62 @@ class Solution {
         
         return result
     }
+    
+    // 350. Intersection of Two Arrays II
+    // O(max(m,n) * max(logm, logn))
+    func intersect(_ nums1: [Int], _ nums2: [Int]) -> [Int] {
+        guard nums1.count > 0 && nums2.count > 0 else {
+            return [Int]()
+        }
+        
+        var sortedN1 = nums1.sorted()
+        var sortedN2 = nums2.sorted()
+        
+        var i = 0
+        var j = 0
+        
+        var result = [Int]()
+        
+        while i < sortedN1.count && j < sortedN2.count {
+            if sortedN1[i] < sortedN2[j] {
+                i += 1
+            } else if sortedN1[i] > sortedN2[j] {
+                j += 1
+            } else {
+                result.append(sortedN1[i])
+                i += 1
+                j += 1
+            }
+        }
+        
+        return result
+    }
+    
+    // 350. Intersection of Two Arrays II (hash table)
+    // O(m + n)
+    func intersect2(_ nums1: [Int], _ nums2: [Int]) -> [Int] {
+        guard nums1.count > 0 && nums2.count > 0 else {
+            return [Int]()
+        }
+        
+        var result = [Int]()
+        var memo = [Int:Int]()
+        
+        for n in nums1 {
+            memo[n] = memo[n, default:0] + 1
+        }
+        
+        for m in nums2 {
+            if let count = memo[m] {
+                memo[m] = count - 1
+                if count - 1 >= 0 {
+                    result.append(m)
+                }
+            }
+        }
+        
+        return result
+    }
 }
 
 
