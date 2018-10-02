@@ -2679,6 +2679,61 @@ class Solution {
         return result
         
     }
+    
+    //301 Remove Invalid Parentheses
+    func removeInvalidParentheses(_ s: String) -> [String] {
+        func isValidP(s: String) -> Bool {
+            var count = 0
+            for char in s {
+                if char == "(" {
+                    count += 1
+                } else if char == ")" {
+                    count -= 1
+                }
+                if count < 0 {
+                    return false
+                }
+            }
+            return count == 0
+        }
+        
+        var queue = [String]()
+        var visited = [String: Bool]()
+        var result = [String]()
+        queue.append(s)
+        
+        // We use found to determin if the valid answer has been found in current level. If it is true, stop searching further
+        var found = false;
+        
+        while queue.count > 0 {
+            let cur = queue.removeFirst()
+            if isValidP(s: cur) && visited[cur] == nil {
+                result.append(cur)
+                found = true
+                visited[cur] = true
+            }
+            
+            if found {
+                continue
+            }
+            
+            for i in 0..<cur.count {
+                let index = cur.index(cur.startIndex, offsetBy:i)
+                var newString = cur
+                if newString[index] == "(" || newString[index] == ")" {
+                    newString.remove(at: index)
+                    if visited[newString] == nil {
+                        queue.append(newString)
+                        visited[cur] = true
+                    }
+                }
+            }
+            
+            
+        }
+        
+        return result
+    }
 }
 
 
