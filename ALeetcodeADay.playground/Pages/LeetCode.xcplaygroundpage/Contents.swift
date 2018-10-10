@@ -2794,6 +2794,68 @@ class Solution {
         
         return result
     }
+    
+    //79. Word Search
+    // Next time use index instead of droping word to make the algorithm faster
+    func exist(_ board: [[Character]], _ word: String) -> Bool {
+        guard word.count > 0  else {
+            return true
+        }
+        
+        guard board.count > 0 else {
+            return false
+        }
+        
+        var visited = Array(repeating:Array(repeating:false,count: board[0].count), count: board.count)
+        
+        func findChar(_ indexI:Int, _ indexJ:Int, _ word: String) -> Bool {
+            if word.count == 0 {
+                return true
+            }
+            
+            if indexI >= board.count || indexJ >= board[0].count || indexI < 0 || indexJ < 0 || visited[indexI][indexJ] {
+                return false
+            }
+            
+            let fIndex = word.index(word.startIndex, offsetBy:0)
+            let fChar = word[fIndex]
+            
+            if fChar != board[indexI][indexJ] {
+                return false
+            }
+            
+            visited[indexI][indexJ] = true
+            
+            let nWord = String(word.dropFirst())
+            if findChar(indexI + 1, indexJ, nWord) ||
+                findChar(indexI - 1, indexJ, nWord) ||
+                findChar(indexI, indexJ + 1, nWord) ||
+                findChar(indexI, indexJ - 1, nWord) {
+                return true
+            }
+            
+            visited[indexI][indexJ] = false
+            return false
+            
+        }
+        
+        var startPoints = [[Int]]()
+        
+        let startIndex = word.index(word.startIndex, offsetBy:0)
+        let startChar = word[startIndex]
+        
+        for m in 0..<board.count{
+            for n in 0..<board[m].count {
+                if board[m][n] == startChar &&  findChar(m,
+                                                         n,
+                                                         word) {
+                    return true
+                }
+            }
+        }
+        
+        return false
+    }
 }
 
 
