@@ -2856,6 +2856,13 @@ class Solution {
         
         return false
     }
+    
+    //268. Missing Number
+
+    func missingNumber(_ nums: [Int]) -> Int {
+        //Calculate 1 + 2 + ... + n then mins sum(nums). The difference is the missing number
+        return nums.count*(nums.count+1)/2 - nums.reduce(0, +)
+    }
 }
 
 
