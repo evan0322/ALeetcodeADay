@@ -2863,6 +2863,116 @@ class Solution {
         //Calculate 1 + 2 + ... + n then mins sum(nums). The difference is the missing number
         return nums.count*(nums.count+1)/2 - nums.reduce(0, +)
     }
+    
+    //3. Longest Substring Without Repeating Characters
+    //https://leetcode.com/problems/minimum-window-substring/discuss/26808/Here-is-a-10-line-template-that-can-solve-most-'substring'-problems
+    func lengthOfLongestSubstring(_ s: String) -> Int {
+        var memo = [String: Int]()
+        var result = 0
+        var start = 0
+        var end = 0
+        
+        var sArray = s.map{ String($0) }
+        
+        for char in sArray {
+            memo[char] = 0
+        }
+        
+        while end < s.count {
+            if memo[sArray[end]]! == 0 {
+                memo[sArray[end]] = 1
+            } else if memo[sArray[end]]! == 1 {
+                memo[sArray[end]]! += 1
+                while memo[sArray[end]]! != 1 {
+                    memo[sArray[start]]! -= 1
+                    start += 1
+                }
+            }
+            result = max(result, end - start + 1)
+            end += 1
+        }
+        
+        return result
+        
+    }
+    //76. Minimum Window Substring
+    // This is similar to all the other sub string problem.
+    //We have two pointer start and end, first we move end until a valid string is find.
+    //Then move start until the string is invalid. Then move the end until the string is valid again.
+    // Note we use count == 0 to decide if the string is valid
+    func minWindow(_ s: String, _ t: String) -> String {
+        var sArray = s.map{ String($0) }
+        var tArray = t.map{ String($0) }
+        
+        guard s.count > 0 && t.count > 0 && t.count <= s.count else {
+            return ""
+        }
+        
+        var start = 0
+        var end = 0
+        
+        var memo = [String: Int]()
+        var count = t.count
+        
+        for char in tArray {
+            memo[char] = memo[char, default:0] + 1
+        }
+        
+        var d = Int.max
+        var head = 0
+        
+        while end < sArray.count {
+            if memo[sArray[end]] != nil {
+                memo[sArray[end]] = memo[sArray[end]]! - 1
+                if memo[sArray[end]]! >= 0 {
+                    count -= 1
+                }
+            }
+            
+            while count == 0 {
+                var cString = sArray[start...end].joined(separator: "")
+                if d > end - start {
+                    d = end - start
+                    head = start
+                }
+                if memo[sArray[start]] != nil {
+                    memo[sArray[start]] = memo[sArray[start]]! + 1
+                    if memo[sArray[start]]! > 0 {
+                        count += 1
+                    }
+                }
+                start += 1
+            }
+            end += 1
+        }
+        
+        return d == Int.max ? "" : sArray[head...head + d].joined(separator: "")
+    }
+    
+    //215. Kth Largest Element in an Array
+
+    func findKthLargest(_ nums: [Int], _ k: Int) -> Int {
+        var sortedNums = nums.sorted()
+        return sortedNums[sortedNums.count - k]
+    }
+    
+    
+    //760. Find Anagram Mappings
+    //Best example of using hash map
+    func anagramMappings(_ A: [Int], _ B: [Int]) -> [Int] {
+        var memo = [Int: Int]()
+        var result = [Int]()
+        for i in 0..<B.count {
+            memo[B[i]] = i
+        }
+        
+        for i in 0..<A.count {
+            result.append(memo[A[i]]!)
+        }
+        
+        return result
+        
+    }
 }
 
 
