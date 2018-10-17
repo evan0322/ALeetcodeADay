@@ -2973,6 +2973,21 @@ class Solution {
         return result
         
     }
+    //700. Search in a Binary Search Tree
+
+    func searchBST(_ root: TreeNode?, _ val: Int) -> TreeNode? {
+        guard let node = root else {
+            return nil
+        }
+        if node.val == val {
+            return node
+        } else if node.val > val {
+            return searchBST(node.left, val)
+        } else if node.val < val {
+            return searchBST(node.right, val)
+        }
+        return nil
+    }
 }
 
 
