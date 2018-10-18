@@ -3016,6 +3016,28 @@ class Solution {
         
         return result
     }
+    
+    // 437. Path Sum III
+
+    func pathSum(_ root: TreeNode?, _ sum: Int) -> Int {
+        guard let n = root else {
+            return 0
+        }
+        
+        func findPath(root: TreeNode?, target: Int) -> Int {
+            guard let n = root else {
+                return 0
+            }
+            
+            
+            return (n.val == target ? 1: 0) + findPath(root: n.left, target: target - n.val) + findPath(root:n.right, target:target - n.val)
+        }
+
+        return findPath(root: n, target: sum) + pathSum(n.left, sum) + pathSum(n.right, sum)
+    }
+    
+    
+   
 }
 
 
