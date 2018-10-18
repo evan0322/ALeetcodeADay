@@ -3036,6 +3036,24 @@ class Solution {
         return findPath(root: n, target: sum) + pathSum(n.left, sum) + pathSum(n.right, sum)
     }
     
+    // 260. Single Number III
+    func singleNumber(_ nums: [Int]) -> [Int] {
+        var memo = [Int: Int]()
+        var result = [Int]()
+        
+        for num in nums {
+            memo[num] = memo[num, default:0] + 1
+        }
+        
+        for key in memo.keys {
+            if memo[key]! == 1 {
+                result.append(key)
+            }
+        }
+        
+        return result
+    }
+    
     
    
 }
