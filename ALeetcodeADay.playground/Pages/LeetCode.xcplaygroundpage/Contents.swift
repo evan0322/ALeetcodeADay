@@ -2988,6 +2988,34 @@ class Solution {
         }
         return nil
     }
+    
+   // 245. Shortest Word Distance III
+    func shortestWordDistance(_ words: [String], _ word1: String, _ word2: String) -> Int {
+        var index1 = [Int]()
+        var index2 = [Int]()
+        var result = Int.max
+        
+        for i in 0..<words.count {
+            let word = words[i]
+            if word == word1 {
+                if word1 == word2 {
+                    if let last = index1.last {
+                        result = min(result, abs(last - i))
+                    }
+                } else if let last = index2.last {
+                    result = min(result, abs(last - i))
+                }
+                index1.append(i)
+            } else if word == word2 {
+                if let last = index1.last {
+                    result = min(result, abs(last - i))
+                }
+                index2.append(i)
+            }
+        }
+        
+        return result
+    }
 }
 
 
