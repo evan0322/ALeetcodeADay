@@ -3054,6 +3054,33 @@ class Solution {
         return result
     }
     
+    //392. Is Subsequence
+    // O(nLog(n)) n is the length of t. Sorting 
+    func isSubsequence(_ s: String, _ t: String) -> Bool {
+        if s.count == 0 {
+            return true
+        } else if t.count == 0 {
+            return false
+        }
+        
+        var s = s.map({ String($0) })
+        var t = t.map({ String($0) })
+        
+        var i = 0
+        var j = 0
+        
+        while i < s.count && j < t.count {
+            if s[i] == t[j] {
+                i += 1
+                j += 1
+            } else {
+                j += 1
+            }
+        }
+        
+        return i == s.count
+    }
+    
     
    
 }
