@@ -3055,7 +3055,7 @@ class Solution {
     }
     
     //392. Is Subsequence
-    // O(nLog(n)) n is the length of t. Sorting 
+    // O(nLog(n)) n is the length of t. Sorting
     func isSubsequence(_ s: String, _ t: String) -> Bool {
         if s.count == 0 {
             return true
@@ -3081,6 +3081,34 @@ class Solution {
         return i == s.count
     }
     
+    
+    //826. Most Profit Assigning Work
+    func maxProfitAssignment(_ difficulty: [Int], _ profit: [Int], _ worker: [Int]) -> Int {
+        typealias Job = (d:Int, p:Int)
+        var jobs = [Job]()
+        var result = 0
+        
+        for i in 0..<difficulty.count {
+            jobs.append(Job(d:difficulty[i], p:profit[i]))
+        }
+        
+        jobs.sort(by:{ $0.d < $1.d })
+        let worker = worker.sorted(by:{ $0 < $1 })
+        
+        var i = 0
+        
+        //Note the max should be outside because the next worker is going to use it.
+        var maxV = 0
+        for w in worker {
+            //Note the sequnce cannot be w >= jobs[i].d &&  i < jobs.count otherwise index out of range
+            while  i < jobs.count && w >= jobs[i].d{
+                maxV = max(maxV, jobs[i].p)
+                i += 1
+            }
+            result += maxV
+        }
+        return result
+    }
     
    
 }
