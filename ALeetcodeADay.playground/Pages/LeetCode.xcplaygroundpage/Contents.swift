@@ -3110,6 +3110,68 @@ class Solution {
         return result
     }
     
+    // 872. Leaf-Similar Trees
+    func leafSimilar(_ root1: TreeNode?, _ root2: TreeNode?) -> Bool {
+        var seq = [Int]()
+        
+        func leafseq(node: TreeNode?) -> [Int]{
+            guard let n = node else {
+                return []
+            }
+            if n.left == nil && n.right == nil {
+                return [n.val]
+            }
+            return leafseq(node: n.left) + leafseq(node: n.right)
+        }
+        
+        var seq1 = leafseq(node:root1)
+        var seq2 = leafseq(node:root2)
+        
+        if seq1.count != seq2.count {
+            return false
+        }
+        
+        for i in 0..<seq1.count {
+            if seq1[i] != seq2[i] {
+                return false
+            }
+        }
+        return true
+    }
+    
+    //896. Monotonic Array
+    func isMonotonic(_ A: [Int]) -> Bool {
+        guard A.count > 0 else {
+            return false
+        }
+        
+        if A.count == 1 {
+            return true
+        }
+        
+        var state = "unknown"
+        
+        while j < A.count {
+            if A[i] > A[j]  {
+                if state == "increasing" {
+                    return false
+                } else {
+                    state = "decreasing"
+                }
+            } else if A[i] < A[j]  {
+                if state == "decreasing" {
+                    return false
+                } else {
+                    state = "increasing"
+                }
+            }
+            i += 1
+            j += 1
+        }
+        
+        return true
+    }
+    
    
 }
 
