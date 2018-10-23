@@ -3206,6 +3206,39 @@ class Solution {
         return true
     }
     
+    //366. Find Leaves of Binary Tree
+    func findLeaves(_ root: TreeNode?) -> [[Int]] {
+        var result = [[Int]]()
+        guard root != nil else {
+            return result
+        }
+        
+        func removeLeaves(root: TreeNode?, parent: TreeNode, isLeftNode: Bool) -> [Int]{
+            guard let n = root else {
+                return []
+            }
+            
+            if n.left == nil  && n.right == nil {
+                if isLeftNode {
+                    parent.left = nil
+                } else {
+                    parent.right = nil
+                }
+                return [n.val]
+            }
+            return removeLeaves(root: n.left, parent: n, isLeftNode: true) + removeLeaves(root: n.right, parent: n, isLeftNode: false)
+        }
+        
+        //Use fakeNode to start
+        var fakeNode = TreeNode(0)
+        fakeNode.left = root
+        
+        while fakeNode.left != nil {
+            result.append(removeLeaves(root:root, parent:fakeNode, isLeftNode: true))
+        }
+        return result
+    }
+    
    
 }
 
