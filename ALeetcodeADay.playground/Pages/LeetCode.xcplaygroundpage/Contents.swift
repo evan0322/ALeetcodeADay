@@ -3149,6 +3149,9 @@ class Solution {
             return true
         }
         
+        var i = 0
+        var j = 1
+        
         var state = "unknown"
         
         while j < A.count {
@@ -3167,6 +3170,37 @@ class Solution {
             }
             i += 1
             j += 1
+        }
+        
+        return true
+    }
+    
+    //205. Isomorphic Strings
+    func isIsomorphic(_ s: String, _ t: String) -> Bool {
+        guard s.count == t.count else {
+            return false
+        }
+        
+        //Used to store that char that has been maped
+        var memo = [Character:Character]()
+        
+        //Used to ensure that two char is not mapping to the same char
+        var storedChar = [Character: Character]()
+        
+        for i in 0..<s.count {
+            let index = s.index(s.startIndex, offsetBy: i)
+            if let char = memo[s[index]] {
+                if char != t[index] {
+                    return false
+                }
+            } else {
+                //This is to ensure the char has not been mapped before
+                if storedChar[t[index]] != nil {
+                    return false
+                }
+                memo[s[index]] = t[index]
+                storedChar[t[index]] = s[index]
+            }
         }
         
         return true
