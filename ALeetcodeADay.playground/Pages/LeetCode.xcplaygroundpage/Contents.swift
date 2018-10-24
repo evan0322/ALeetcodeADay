@@ -3239,6 +3239,86 @@ class Solution {
         return result
     }
     
+    //84. Largest Rectangle in Histogram
+    //Use dynamic programming
+    func largestRectangleArea(_ heights: [Int]) -> Int {
+        guard heights.count > 0 else {
+            return 0
+        }
+        
+        if heights.count == 1 {
+            return heights[0]
+        }
+        
+        var result = 0
+        
+        //DP[i][j] smallest element from index i to j
+        //Then dp[i][j] = min(min(dp[i + 1][j], heights[i]), min(dp[i][j - 1], heights[j]))
+        var dp = Array(repeating:Array(repeating:-1, count:heights.count), count: heights.count)
+        
+        
+        for j in 0..<heights.count {
+            for i in (0...j).reversed() {
+                if i == j {
+                    dp[i][j] = heights[i]
+                } else {
+                    dp[i][j] = min(min(dp[i + 1][j], heights[i]), min(dp[i][j - 1], heights[j]))
+                }
+                result = max(result, dp[i][j] * (j - i + 1))
+            }
+        }
+        return result
+    }
+    
+    //926. Flip String to Monotone Increasing
+    //Calculate how many 1's one the left plus how many 0's one the right for each char. Then choose the one
+    // with minimum zeros + ones
+    func minFlipsMonoIncr(_ S: String) -> Int {
+        typealias memo = (zeros:Int, ones:Int)
+        
+        var result = [memo]()
+        
+        guard S.count > 0 else {
+            return 0
+        }
+        
+        
+        for i in 0..<S.count {
+            if i == 0 {
+                result.append(memo(zeros:0, ones:0))
+            } else {
+                let previous = result[i - 1]
+                let pIndex = S.index(S.startIndex, offsetBy:i - 1)
+                if S[pIndex] == "1" {
+                    result.append(memo(zeros:0, ones: previous.ones + 1))
+                } else {
+                    result.append(memo(zeros:0, ones: previous.ones))
+                }
+            }
+        }
+        
+        for i in (0..<S.count).reversed() {
+            if i == S.count - 1 {
+                result[i] = memo(zeros:0, ones: result[i].ones)
+            } else {
+                let previous = result[i + 1]
+                let pIndex = S.index(S.startIndex, offsetBy:i + 1)
+                if S[pIndex] == "0" {
+                    result[i] = memo(zeros:previous.zeros + 1, ones:result[i].ones)
+                } else {
+                    result[i] = memo(zeros:previous.zeros, ones:result[i].ones)
+                }
+            }
+        }
+        
+        var minNum = Int.max
+        
+        for m in result {
+            minNum = min(minNum, m.zeros + m.ones)
+        }
+        
+        return minNum
+    }
    
 }
 
