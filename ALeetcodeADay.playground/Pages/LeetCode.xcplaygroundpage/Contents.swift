@@ -3353,6 +3353,64 @@ class Solution {
         return helper(i:0, j:s.count - 1, target: s)
         
     }
+    
+    
+    //567. Permutation in String
+
+    /*
+     Sliding window soluion. We use memo to track the chars in s1. Then use count to judge if
+     All chars in s1 can be find in current window
+     */
+    func checkInclusion(_ s1: String, _ s2: String) -> Bool {
+        var s1 = s1.map({ String($0) })
+        var s2 = s2.map({ String($0) })
+        
+        var memo = [String: Int]()
+        var count = s1.count
+        
+        for char in s1 {
+            memo[char] = memo[char, default:0] + 1
+        }
+        
+        var i = 0
+        var j = 0
+        var pChar = ""
+        
+        while j < s2.count {
+            if let pCount = memo[pChar] {
+                memo[pChar] = pCount + 1
+                //Note the count only increase if te previous char (the one slide out of the window)
+                //is needed again.
+                if pCount + 1 > 0 {
+                    count += 1
+                }
+            }
+            
+            if let charCount = memo[s2[j]] {
+                memo[s2[j]] = charCount - 1
+                //Only increase the count when the need for this char is actually decreased (not duplicate)
+                if charCount - 1 >= 0 {
+                    count -= 1
+                }
+            }
+            
+            if count == 0 {
+                return true
+            }
+            
+            if j - i + 1 == s1.count {
+                //Window size
+                pChar = s2[i]
+                i += 1
+                j += 1
+            } else {
+                j += 1
+            }
+        }
+        
+        return false
+        
+    }
    
 }
 
