@@ -3276,7 +3276,7 @@ class Solution {
     func minFlipsMonoIncr(_ S: String) -> Int {
         typealias memo = (zeros:Int, ones:Int)
         
-        var result = [memo]()
+        var result = Array(repeating:memo(zeros:0,ones:0), count: S.count)
         
         guard S.count > 0 else {
             return 0
@@ -3284,29 +3284,26 @@ class Solution {
         
         
         for i in 0..<S.count {
+            let j = S.count - i - 1
             if i == 0 {
-                result.append(memo(zeros:0, ones:0))
+                result[i] = memo(zeros:0, ones:0)
+                result[j] = memo(zeros:0, ones:0)
             } else {
-                let previous = result[i - 1]
-                let pIndex = S.index(S.startIndex, offsetBy:i - 1)
-                if S[pIndex] == "1" {
-                    result.append(memo(zeros:0, ones: previous.ones + 1))
+                let previousI = result[i - 1]
+                let pIndexI = S.index(S.startIndex, offsetBy:i - 1)
+                if S[pIndexI] == "1" {
+                    result[i] = memo(zeros:result[i].zeros, ones: previousI.ones + 1)
                 } else {
-                    result.append(memo(zeros:0, ones: previous.ones))
+                    result[i] = memo(zeros:result[i].zeros, ones: previousI.ones)
                 }
-            }
-        }
-        
-        for i in (0..<S.count).reversed() {
-            if i == S.count - 1 {
-                result[i] = memo(zeros:0, ones: result[i].ones)
-            } else {
-                let previous = result[i + 1]
-                let pIndex = S.index(S.startIndex, offsetBy:i + 1)
-                if S[pIndex] == "0" {
-                    result[i] = memo(zeros:previous.zeros + 1, ones:result[i].ones)
+                
+                let previousJ = result[j + 1]
+                let pIndexJ = S.index(S.startIndex, offsetBy:j + 1)
+                
+                if S[pIndexJ] == "0" {
+                    result[j] = memo(zeros:previousJ.zeros + 1, ones: result[j].ones)
                 } else {
-                    result[i] = memo(zeros:previous.zeros, ones:result[i].ones)
+                    result[j] = memo(zeros:previousJ.zeros, ones: result[j].ones)
                 }
             }
         }
@@ -3315,9 +3312,46 @@ class Solution {
         
         for m in result {
             minNum = min(minNum, m.zeros + m.ones)
+            print("Current \(m.zeros) \(m.ones)")
         }
         
         return minNum
+    }
+    
+    
+    //680. Valid Palindrome II
+    //Ensure that it is still valid palindrome after deleting one letter
+    //O(n)
+    func validPalindrome(_ s: String) -> Bool {
+        
+        
+        var foundFlaw = false
+        
+        func helper(i:Int, j:Int, target: String) -> Bool {
+            if i >= j {
+                return true
+            }
+            
+            let indexI = target.index(target.startIndex, offsetBy: i)
+            let indexJ = target.index(target.startIndex, offsetBy: j)
+            
+            let charI = target[indexI]
+            let charJ = target[indexJ]
+            
+            if charI == charJ {
+                return helper(i:i + 1, j:j - 1, target: target)
+            } else {
+                if foundFlaw {
+                    return false
+                } else {
+                    foundFlaw = true
+                    return helper(i:i, j:j - 1, target: target) || helper(i:i + 1, j:j, target: target)
+                }
+            }
+        }
+        
+        return helper(i:0, j:s.count - 1, target: s)
+        
     }
    
 }
