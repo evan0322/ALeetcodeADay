@@ -3411,6 +3411,38 @@ class Solution {
         return false
         
     }
+    
+    // 783. Minimum Distance Between BST Nodes
+    // MUST remember that mini difference for a binary search tree can
+    // always be found via in-order-traverse (left- self - right).
+    func minDiffInBST(_ root: TreeNode?) -> Int {
+        var result = Int.max
+        var pre: Int? = nil
+        
+        guard let node = root else {
+            return 0
+        }
+        
+        
+        func traverse(cRoot:TreeNode?) {
+            guard let n = cRoot else {
+                return
+            }
+            
+            traverse(cRoot:n.left)
+            
+            if let pVal = pre {
+                result = min(abs(pVal - n.val), result )
+            }
+            
+            pre = n.val
+            traverse(cRoot:n.right)
+        }
+        
+        traverse(cRoot:root)
+        
+        return result
+    }
    
 }
 
