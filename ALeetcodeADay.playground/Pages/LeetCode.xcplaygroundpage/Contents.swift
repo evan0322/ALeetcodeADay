@@ -3443,6 +3443,32 @@ class Solution {
         
         return result
     }
+    
+    //560. Subarray Sum Equals K
+    // https://leetcode.com/problems/subarray-sum-equals-k/discuss/134689/Three-Approaches-With-Explanation
+    func subarraySum(_ nums: [Int], _ k: Int) -> Int {
+        var memo = [Int: Int]()
+        var sum = 0
+        var result = 0
+        
+        guard nums.count > 0 else {
+            return 0
+        }
+        
+        // This is important. In case the num is eaqual to the value
+        memo[0] = 1
+        
+        for i in 0..<nums.count {
+            sum += nums[i]
+            if let count = memo[sum - k] {
+                result += count
+            }
+            memo[sum] = memo[sum, default:0] + 1
+        }
+        
+        
+        return result
+    }
    
 }
 
