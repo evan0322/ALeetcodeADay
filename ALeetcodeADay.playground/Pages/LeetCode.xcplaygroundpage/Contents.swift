@@ -3482,6 +3482,39 @@ class Solution {
         }
         return -1
     }
+    
+    //884. Uncommon Words from Two Sentences
+    func uncommonFromSentences(_ A: String, _ B: String) -> [String] {
+        var result = [String]()
+        var memo = [String: Int]()
+        
+        var A = A.split(separator:" ").map({ String($0) })
+        var B = B.split(separator:" ").map({ String($0) })
+        
+        for word in A {
+            if let count = memo[word] {
+                //Duplicate not qualify
+                memo[word] = -1
+            } else {
+                memo[word] = 1
+            }
+        }
+        
+        for word in B {
+            if let count = memo[word] {
+                //Duplicate not qualify
+                memo[word] = -1
+            } else {
+                memo[word] = 1
+            }
+        }
+        
+        for key in memo.keys where memo[key] == 1 {
+            result.append(key)
+        }
+        
+        return result
+    }
    
 }
 
