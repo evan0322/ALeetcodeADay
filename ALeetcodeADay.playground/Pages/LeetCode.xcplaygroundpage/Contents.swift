@@ -3537,6 +3537,40 @@ class Solution {
         return result
         
     }
+    
+    //2. Add Two Numbers
+    func addTwoNumbers(_ l1: ListNode?, _ l2: ListNode?) -> ListNode? {
+        let result = ListNode(-1)
+        var head: ListNode? = result
+        
+        var l1Head = l1
+        var l2Head = l2
+        
+        var count = 0
+        
+        while l1Head != nil || l2Head != nil {
+            var newValue = 0
+            let value1 = l1Head?.val ?? 0
+            let value2 = l2Head?.val ?? 0
+            newValue = value1 + value2 + count
+            if newValue >= 10 {
+                newValue = newValue % 10
+                count = 1
+            }
+            
+            let newNode = ListNode(newValue)
+            head?.next = newNode
+            head = head?.next
+            
+            l1Head = l1Head?.next
+            l2Head = l2Head?.next
+        }
+        if count == 1 {
+            head?.next = ListNode(1)
+            head = head?.next
+        }
+        return result.next
+    }
    
 }
 
