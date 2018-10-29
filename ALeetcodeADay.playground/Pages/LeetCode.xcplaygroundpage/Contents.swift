@@ -3515,6 +3515,28 @@ class Solution {
         
         return result
     }
+    
+    //771. Jewels and Stones
+
+    func numJewelsInStones(_ J: String, _ S: String) -> Int {
+        var result = 0
+        var memo = [String:Int]()
+        var J = J.map({ String($0) })
+        var S = S.map({ String($0) })
+        
+        for s in J {
+            memo[s] = memo[s, default:0] + 1
+        }
+        
+        for s in S {
+            if let count = memo[s] {
+                result += 1
+            }
+        }
+        
+        return result
+        
+    }
    
 }
 
