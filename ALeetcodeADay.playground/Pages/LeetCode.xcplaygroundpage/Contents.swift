@@ -3469,6 +3469,19 @@ class Solution {
         
         return result
     }
+    
+    //169. Majority Element
+    func majorityElement(_ nums: [Int]) -> Int {
+        var memo = [Int:Int]()
+        
+        for num in nums {
+            memo[num] = memo[num, default:0] + 1
+            if memo[num]! > nums.count/2 {
+                return num
+            }
+        }
+        return -1
+    }
    
 }
 
