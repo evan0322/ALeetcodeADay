@@ -3590,6 +3590,28 @@ class Solution {
         
         return fakeNode.next
     }
+    //557. Reverse Words in a String III
+
+    func reverseWords(_ s: String) -> String {
+        var words = s.map({ String($0) })
+        var temp = ""
+        var result = ""
+        for i in (0..<words.count).reversed() {
+            temp += words[i]
+        }
+        
+        var tempArray = temp.components(separatedBy:" ")
+        
+        for i in (0..<tempArray.count).reversed() {
+            result = result + tempArray[i]
+            if i != 0 {
+                result += " "
+            }
+        }
+        
+        
+        return result
+    }
    
 }
 
