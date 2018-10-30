@@ -3571,6 +3571,25 @@ class Solution {
         }
         return result.next
     }
+    
+    //203. Remove Linked List Elements
+    func removeElements(_ head: ListNode?, _ val: Int) -> ListNode? {
+        let fakeNode = ListNode(0)
+        
+        fakeNode.next = head
+        
+        var node = fakeNode
+        
+        while node.next != nil {
+            if node.next!.val == val {
+                node.next = node.next!.next
+            } else {
+                node = node.next!
+            }
+        }
+        
+        return fakeNode.next
+    }
    
 }
 
