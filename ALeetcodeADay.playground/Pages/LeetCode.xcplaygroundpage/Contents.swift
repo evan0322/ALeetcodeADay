@@ -938,24 +938,6 @@ class Solution {
         return count
     }
     
-    //203. Remove Linked List Elements
-    func removeElements(_ head: ListNode?, _ val: Int) -> ListNode? {
-        let fakeNode = ListNode(-1)
-        fakeNode.next = head
-        
-        var currentNode: ListNode? = fakeNode
-        
-        while currentNode != nil {
-            if currentNode!.next?.val == val {
-                currentNode!.next = currentNode!.next?.next
-            }
-            currentNode = currentNode!.next
-        }
-        
-        return fakeNode.next
-        
-        
-    }
     
     //387. First Unique Character in a String
 
@@ -3609,6 +3591,55 @@ class Solution {
             }
         }
         
+        
+        return result
+    }
+    //463. Island Perimeter
+    func islandPerimeter(_ grid: [[Int]]) -> Int {
+        guard grid.count > 0 else {
+            return 0
+        }
+        var result = 0
+        
+        //Return the potention perimeter for grid (i,j)
+        func findPerimeter(i:Int, j:Int) -> Int {
+            //Do no forget about this
+            if grid[i][j] == 0 {
+                return 0
+            }
+            var p = 0
+            if j + 1 >= grid[0].count {
+                p += 1
+            } else if grid[i][j + 1] == 0 {
+                p += 1
+            }
+            
+            if j - 1 < 0 {
+                p += 1
+            } else if grid[i][j - 1] == 0 {
+                p += 1
+            }
+            
+            if i + 1 >= grid.count {
+                p += 1
+            } else if grid[i + 1][j] == 0 {
+                p += 1
+            }
+            
+            if i - 1 < 0 {
+                p += 1
+            } else if grid[i - 1][j] == 0 {
+                p += 1
+            }
+            
+            return p
+        }
+        
+        for i in 0..<grid.count {
+            for j in 0..<grid[0].count {
+                result += findPerimeter(i:i, j:j)
+            }
+        }
         
         return result
     }
