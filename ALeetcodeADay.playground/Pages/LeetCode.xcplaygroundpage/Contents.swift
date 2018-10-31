@@ -3644,6 +3644,27 @@ class Solution {
         return result
     }
    
+    //674. Longest Continuous Increasing Subsequence
+    func findLengthOfLCIS(_ nums: [Int]) -> Int {
+        var result = 0
+        var pNum = Int.min
+        var currentMax = 0
+        
+        for num in nums {
+            if num > pNum {
+                currentMax += 1
+            } else {
+                result = max(currentMax, result)
+                //Not 0. Because each sequnce starts with 1
+                currentMax = 1
+            }
+            pNum = num
+        }
+        
+        //Note here return result will cause error if the LCIS ends with last element
+        return max(currentMax, result)
+        
+    }
 }
 
 
