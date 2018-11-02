@@ -3712,6 +3712,27 @@ class Solution {
         
         return rooms.count
     }
+    //724. Find Pivot Index
+    func pivotIndex(_ nums: [Int]) -> Int {
+        guard nums.count > 0 else {
+            return -1
+        }
+        
+        let sum = nums.reduce(0,+)
+        
+        var cSum = 0
+        
+        for i in 0..<nums.count {
+            // (sum - nums[i]) % 2 == 0 is very important as the int will be rounded and give wrong answer
+            if cSum == (sum - nums[i])/2 && (sum - nums[i]) % 2 == 0{
+                return i
+            }
+            cSum += nums[i]
+        }
+        
+        return -1
+        
+    }
 }
 
 
