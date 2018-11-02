@@ -3665,6 +3665,25 @@ class Solution {
         return max(currentMax, result)
         
     }
+    
+    //11. Container With Most Water
+    //https://leetcode.com/problems/container-with-most-water/description/
+    //let dp(i, j) be the max volumn between i and j. If i < j, then all (i, i + 1), (i, i + 2) ... (i, j - 1) will not produce a higher value than dp(i, j), as i is the bottle neck and the distances are shorter than j - i. Then we use i + 1 to explore the next possiblity.
+    func maxArea(_ height: [Int]) -> Int {
+        var i = 0
+        var j = height.count - 1
+        var result = 0
+        
+        while i < j {
+            result = max(result, min(height[i], height[j]) * (j - i))
+            if height[i] < height [j] {
+                i += 1
+            } else {
+                j -= 1
+            }
+        }
+        return result
+    }
 }
 
 
