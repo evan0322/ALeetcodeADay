@@ -2374,7 +2374,8 @@ class Solution {
     }
     
     //56. Merge Intervals
-
+    // The idea is sort the interval by its start time, to avoid the scenario that a block of time slot is wasted.
+    // for each interval, we check current meeting room schedule, if there is space, then put it in and update the meeting room schedule, otherwise create another meeting room
     func merge(_ intervals: [Interval]) -> [Interval] {
         guard intervals.count > 0 else {
             return [Interval]()
