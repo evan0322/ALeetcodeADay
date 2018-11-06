@@ -3698,7 +3698,7 @@ class Solution {
             for i in 0..<rooms.count {
                 let room = rooms[i]
                 if room.end <= inter.start {
-                    //Be very careful about this. Do not directly use room.end = inter.end, as in this case room is a copy instead of referenct, room[i]
+                    //Be very careful about this. Do not directly use room.end = inter.end, as in this case room is a copy instead of reference, room[i]
                     rooms[i] = Room(start:room.start,end:inter.end)
                     findRoom = true
                     break
@@ -3731,6 +3731,42 @@ class Solution {
         }
         
         return -1
+        
+    }
+    
+    
+    //31. Next Permutation
+    func nextPermutation(_ nums: inout [Int]) {
+        var index = nums.count - 1
+        
+        //Find the num where nums[i - 1] < nums[i]
+        while index >= 1 && nums[index - 1] >= nums[index] {
+            index -= 1
+        }
+        
+        if index == 0 {
+            return nums.reverse()
+        }
+        
+        //Index is found. Now replace nums[i - 1] with the smallest number in [nums.count, nums[i]] that bigger than nums[i - 1]
+        var small = Int.max
+        var tIndex = index - 1
+        for i in index..<nums.count {
+            if nums[i] > nums[index - 1] {
+                if small > nums[i] {
+                    small = nums[i]
+                    tIndex = i
+                }
+            }
+        }
+        
+        //swap the two
+        var temp = nums[index - 1]
+        nums[index - 1] = nums[tIndex]
+        nums[tIndex] = temp
+        
+        //Sort [nums.count, nums[i]]
+        nums[index...nums.count - 1].sort()
         
     }
 }
