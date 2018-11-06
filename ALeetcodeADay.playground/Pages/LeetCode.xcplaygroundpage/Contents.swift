@@ -3769,6 +3769,54 @@ class Solution {
         nums[index...nums.count - 1].sort()
         
     }
+    
+    //347. Top K Frequent Elements
+    // Swift way: nlogn
+    func topKFrequent(_ nums: [Int], _ k: Int) -> [Int] {
+        var memo = [Int: Int]()
+        
+        for num in nums {
+            memo[num] = memo[num, default: 0] + 1
+        }
+        //Remember is you call Dictionary.sorted() then dictionary will become an array of tuple(key:T, value:T)
+        // It is very covenient. (or you can all Array(Dictionary) if you do not want to sort)
+        
+        return Array(memo.sorted(by:{$0.1 > $1.1}).map({ $0.0 })[0..<k])
+    }
+    
+    //Bucket sort
+    func topKFrequentV2(_ nums: [Int], _ k: Int) -> [Int] {
+        var bucket = Array(repeating:[Int](), count: nums.count + 1)
+        var memo = [Int: Int]()
+        
+        for num in nums {
+            memo[num] = memo[num, default: 0] + 1
+        }
+        
+        for key in memo.keys {
+            if bucket[memo[key]!].count == 0 {
+                bucket[memo[key]!] = [key]
+            } else {
+                bucket[memo[key]!] = bucket[memo[key]!] + [key]
+            }
+        }
+        
+        var result = [Int]()
+        
+        
+        for i in (0..<bucket.count).reversed() {
+            if bucket[i].count > 0 {
+                for b in bucket[i] {
+                    if result.count == k {
+                        return result
+                    }
+                    result.append(b)
+                }
+            }
+        }
+        
+        return result
+    }
 }
 
 
