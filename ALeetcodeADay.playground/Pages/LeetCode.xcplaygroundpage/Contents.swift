@@ -3850,6 +3850,31 @@ class Solution {
             return small
         }
     }
+    
+    
+    //19. Remove Nth Node From End of List
+    func removeNthFromEnd(_ head: ListNode?, _ n: Int) -> ListNode? {
+        //We need to use fake head here. Otherwise for the scenarios such as" [1] 1" we will have error.
+        var fakeHead = ListNode(0)
+        
+        var begin: ListNode? = fakeHead
+        var end: ListNode? = fakeHead
+        fakeHead.next = head
+        
+        for i in 0..<n {
+            end = end?.next
+        }
+        
+        while end?.next != nil {
+            begin = begin?.next
+            end = end?.next
+        }
+        
+        begin?.next = begin?.next?.next
+        
+        return fakeHead.next
+        
+    }
 }
 
 
