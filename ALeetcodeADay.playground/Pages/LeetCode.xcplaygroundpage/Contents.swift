@@ -3817,6 +3817,39 @@ class Solution {
         
         return result
     }
+    
+    
+    class MinStack {
+        
+        typealias Node = (val:Int, min:Int)
+        var stack = [Node]()
+        var small = Int.max
+        
+        /** initialize your data structure here. */
+        init() {
+            
+        }
+        
+        func push(_ x: Int) {
+            //We record the min that before the value is append
+            stack.append(Node(val:x,min:small))
+            small = min(small, x)
+        }
+        
+        func pop() {
+            if let node = stack.popLast() {
+                small = node.min
+            }
+        }
+        
+        func top() -> Int {
+            return stack.last!.val
+        }
+        
+        func getMin() -> Int {
+            return small
+        }
+    }
 }
 
 
