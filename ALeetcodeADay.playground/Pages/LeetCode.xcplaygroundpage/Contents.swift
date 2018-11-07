@@ -3853,6 +3853,26 @@ class Solution {
         return fakeHead.next
         
     }
+    //448. Find All Numbers Disappeared in an Array
+
+    func findDisappearedNumbers(_ nums: [Int]) -> [Int] {
+        guard nums.count > 0 else {
+            return [Int]()
+        }
+        var memo = [Int:Int]()
+        var result = [Int]()
+        for num in nums {
+            memo[num] = memo[num, default:0] + 1
+        }
+        
+        for i in 1...nums.count {
+            if memo[i] == nil {
+                result.append(i)
+            }
+        }
+        
+        return result
+    }
 }
 
 
