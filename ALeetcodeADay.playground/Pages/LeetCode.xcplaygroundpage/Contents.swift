@@ -3873,6 +3873,41 @@ class Solution {
         
         return result
     }
+    //221. Maximal Square
+    func maximalSquare(_ matrix: [[Character]]) -> Int {
+        guard matrix.count > 0 else {
+            return 0
+        }
+        //DP max size of square can be archived at [i, j]
+        var dp = Array(repeating:Array(repeating:-1, count:matrix[0].count), count:matrix.count)
+        
+        var result = 0
+        
+        for i in 0..<matrix.count {
+            dp[i][0] = matrix[i][0] == "0" ? 0 : 1
+            result = max(dp[i][0], result)
+        }
+        
+        for j in 0..<matrix[0].count {
+            dp[0][j] = matrix[0][j] == "0" ? 0 : 1
+            result = max(dp[0][j], result)
+        }
+        
+        for i in 0..<matrix.count {
+            for j in 0..<matrix[0].count {
+                if i == 0 || j == 0 {
+                    continue
+                }
+                if matrix[i][j] == "1" {
+                    dp[i][j] = min(min(dp[i - 1][j], dp[i][j - 1]), dp[i - 1][j - 1]) + 1
+                    result = max(result, dp[i][j])
+                } else {
+                    dp[i][j] = 0
+                }
+            }
+        }
+        return result * result
+    }
 }
 
 
