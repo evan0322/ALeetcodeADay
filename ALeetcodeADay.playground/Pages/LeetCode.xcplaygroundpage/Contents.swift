@@ -257,6 +257,27 @@ class Solution {
         
     }
     
+    
+    func subsetsV2(_ nums: [Int]) -> [[Int]] {
+        var result = [[Int]]()
+        
+        func getSet(set:[Int], list:[Int]) {
+            if list.count == 0 {
+                return
+            }
+            var list = list
+            while list.count != 0 {
+                let newSet = set + [list.removeFirst()]
+                result.append(newSet)
+                getSet(set:newSet, list:list)
+            }
+        }
+        
+        getSet(set:[Int](), list:nums)
+        result.append([])
+        return result
+    }
+    
     //387. First Unique Character in a String O(2N)
     func firstUniqChar(_ s: String) -> Int {
         var harshTable = [Character: Int]()
