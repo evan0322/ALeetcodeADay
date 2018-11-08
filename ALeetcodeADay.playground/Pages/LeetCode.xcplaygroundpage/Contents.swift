@@ -3963,6 +3963,33 @@ class Solution {
         
         fTree(root)
     }
+    //287. Find the Duplicate Number
+
+    func findDuplicate(_ nums: [Int]) -> Int {
+        var sNums = nums.sorted()
+        for i in 0..<sNums.count {
+            if sNums[i + 1] == sNums[i] {
+                return sNums[i]
+            }
+        }
+        
+        return -1
+    }
+    
+    //48. Rotate Image
+    // DO NOT SPEND TIME ON THE ALGORITHM THAT WOULD COST YOU FOREVER TO FIGUREOUT.
+    // The genera way is so easy if you know how to do it properly
+    func rotate(_ matrix: inout [[Int]]) {
+        matrix.reverse()
+        
+        for i in 0..<matrix.count {
+            for j in i + 1..<matrix[0].count {
+                let temp = matrix[i][j]
+                matrix[i][j] = matrix[j][i]
+                matrix[j][i] = temp
+            }
+        }
+    }
 }
 
 
