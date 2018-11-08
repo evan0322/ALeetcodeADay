@@ -3908,6 +3908,40 @@ class Solution {
         }
         return result * result
     }
+    
+    //114. Flatten Binary Tree to Linked List
+
+    func flatten(_ root: TreeNode?) {
+        var stack = [TreeNode]()
+        
+        func fTree(_ root: TreeNode?)  {
+            guard let n = root else {
+                return
+            }
+            
+            //Put the right tree into stack, traverse the trees left node first
+            if let right = n.right {
+                stack.append(right)
+            }
+            
+            //Swap left and right based on the requirement
+            n.right = n.left
+            
+            //Remove the left
+            n.left = nil
+            
+            //If n has right, continue visit
+            if let cRight = n.right {
+                fTree(cRight)
+                //If n ran out of right node, pop one from the stack to continue visit
+            } else {
+                n.right = stack.popLast()
+                fTree(n.right)
+            }
+        }
+        
+        fTree(root)
+    }
 }
 
 
