@@ -4046,6 +4046,39 @@ class Solution {
         return result
         
     }
+    
+    //279. Perfect Squares
+
+    func numSquares(_ n: Int) -> Int {
+        //Time exceeded
+        //         var dp = Array(repeating:Int.max, count:n + 1)
+        
+        //         dp[0] = 0
+        
+        //         for i in 1...n {
+        //             for j in 1...i where j*j <= i {
+        // dp[i] has to be consisted of number i - j*j and a perfect square i
+        //                 dp[i] = min(dp[i - j*j] + 1, dp[i])
+        //             }
+        //         }
+        
+        //         return dp.last!
+        
+        //Build from bottom
+        
+        var dp = [0]
+        
+        while dp.count <= n {
+            var size = dp.count
+            var cSquare = Int.max
+            for i in 1...size where i*i <= size {
+                cSquare = min(cSquare, dp[size - i * i] + 1)
+            }
+            dp.append(cSquare)
+        }
+        
+        return dp.last!
+    }
 }
 
 
