@@ -3990,6 +3990,62 @@ class Solution {
             }
         }
     }
+    
+    //394. Decode String
+    func decodeString(_ s: String) -> String {
+        var result = ""
+        var sArray = s.map({ String($0)})
+        
+        func dString(_ s:[String]) {
+            var num = "0123456789"
+            var count = 0
+            var cIndex = 0
+            var currentString = [String]()
+            var newString = [String]()
+            var i = 0
+            
+            while i < s.count {
+                if num.contains(s[i]) {
+                    cIndex = i
+                    count = 0
+                    while num.contains(s[i]) {
+                        count = 10 * count + Int(s[i])!
+                        i += 1
+                    }
+                    currentString = [String]()
+                    i += 1
+                } else if s[i] == "[" {
+                    i += 1
+                    continue
+                } else if s[i] == "]" {
+                    for _ in 0..<count {
+                        newString += currentString
+                    }
+                    
+                    newString = s[0..<cIndex] + newString
+                    if i < s.count {
+                        newString += s[i + 1..<s.count]
+                    }
+                    count = 0
+                    break
+                } else {
+                    currentString.append(s[i])
+                    i += 1
+                }
+            }
+            
+            if newString.count > 0 {
+                dString(newString)
+            } else {
+                result = s.joined(separator:"")
+            }
+        }
+        
+        dString(sArray)
+        
+        return result
+        
+    }
 }
 
 
