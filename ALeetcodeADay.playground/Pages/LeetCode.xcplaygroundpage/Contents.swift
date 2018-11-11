@@ -4120,6 +4120,34 @@ class Solution {
         
         
     }
+    
+    //152. Maximum Product Subarray
+    /*
+     If the nums are all positive, then it is easy because the product of all
+     the element of nums is the biggest value. However nums may contain negative value.
+     We need to remember the biggest value as well as smallest value (should be a negative value).
+     In the case of nums[i] < 0, then the smallest value multiple by nums[i] will become the largest value.
+     
+     */
+    func maxProduct(_ nums: [Int]) -> Int {
+        guard nums.count > 0 else {
+            return 0
+        }
+        
+        var large = nums[0]
+        var small = nums[0]
+        var result = nums[0]
+        
+        for i in 1..<nums.count {
+            //Note here we need a temp. Other wise the first line will pollute large and give wrong answer
+            var temp = large
+            large = max(max(small * nums[i], large * nums[i]), nums[i])
+            small = min(min(small * nums[i], temp * nums[i]), nums[i])
+            result = max(large, result)
+        }
+        
+        return result
+    }
 }
 
 
