@@ -322,36 +322,6 @@ class Solution {
         }
     }
     
-    //5. Longest Palindromic Substring
-    //Use memory to reduce the time complexity. the time complextity is 2N * N/2 = N^2
-    
-    var memo = [String: String]()
-    
-    func longestPalindrome(_ s: String) -> String {
-        let result = palindrom(s: Array(s), i: 0, j: s.count - 1)
-        return String(result)
-    }
-    
-    func palindrom(s: [Character], i: Int, j: Int) -> [Character] {
-        if i == j {
-            return [s[i]]
-        } else if let memory = memo[String(Array(s[i...j]))] {
-            return Array(memory)
-        } else if isPalindrome(s:Array(s[i...j])) == true {
-            return Array(s[i...j])
-        } else {
-            let s1 = palindrom(s: s, i: i + 1, j: j)
-            let s2 = palindrom(s: s, i: i, j: j - 1)
-            if s1.count > s2.count {
-                memo[String(Array(s[i...j]))] = String(s1)
-                return s1
-            } else {
-                memo[String(Array(s[i...j]))] = String(s2)
-                return s2
-            }
-        }
-    }
-    
     func isPalindrome(s: [Character]) -> Bool {
         if s.count == 0 {
             return true
@@ -4081,6 +4051,7 @@ class Solution {
     }
     
     //5. Longest Palindromic Substring
+    // O(n^2)
     func longestPalindrome(_ s: String) -> String {
         guard s.count > 0 else {
             return ""
@@ -4122,6 +4093,7 @@ class Solution {
     }
     
     //152. Maximum Product Subarray
+    //O(n)
     /*
      If the nums are all positive, then it is easy because the product of all
      the element of nums is the biggest value. However nums may contain negative value.
@@ -4147,6 +4119,56 @@ class Solution {
         }
         
         return result
+    }
+    
+    //75. Sort Colors
+    // O(n)
+    func sortColors(_ nums: inout [Int]) {
+        var memo = Array(repeating: 0, count:3)
+        for num in nums {
+            if num == 0 {
+                memo[0] += 1
+            } else if num == 1 {
+                memo[1] += 1
+            } else {
+                memo[2] += 1
+            }
+        }
+        
+        for i in 0..<nums.count {
+            if i < memo[0] {
+                nums[i] = 0
+            } else if i < memo[0] + memo[1] {
+                nums[i] = 1
+            } else {
+                nums[i] = 2
+            }
+        }
+    }
+    
+    //148. Sort List
+    func sortList(_ head: ListNode?) -> ListNode? {
+        var nums = [Int]()
+        var node = head
+        
+        while node != nil {
+            nums.append(node!.val)
+            node = node!.next
+        }
+        
+        nums.sort()
+        
+        var mockNode = ListNode(0)
+        node = mockNode
+        
+        //Do not directly change node otherwise error will occure
+        for num in nums {
+            node?.next = ListNode(num)
+            node = node?.next
+        }
+        
+        return mockNode.next
+        
     }
 }
 
