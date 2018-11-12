@@ -4265,6 +4265,42 @@ class Solution {
         backtrace(nums:nums, path:[Int](), index:0)
         return result
     }
+    
+    //240. Search a 2D Matrix II
+    func searchMatrix(_ matrix: [[Int]], _ target: Int) -> Bool {
+        guard matrix.count > 0 && matrix[0].count > 0 else {
+            return false
+        }
+        //Practice binary search more
+        func bSearch(nums:[Int], target: Int) -> Bool {
+            var l = 0
+            var h = nums.count - 1
+            
+            while l <= h {
+                let m = l + (h - l)/2
+                if target < nums[m] {
+                    h = m - 1
+                } else if target > nums[m] {
+                    l = m + 1
+                } else {
+                    return true
+                }
+            }
+            
+            return false
+        }
+        
+        for column in matrix {
+            if target > column.last! || target < column.first! {
+                continue
+            }
+            if bSearch(nums:column, target:target) {
+                return true
+            }
+        }
+        
+        return false
+    }
 }
 
 
