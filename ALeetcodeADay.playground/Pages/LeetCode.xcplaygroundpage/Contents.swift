@@ -4170,6 +4170,79 @@ class Solution {
         return mockNode.next
         
     }
+    
+    //39. Combination Sum
+    //For each num in the candicates, we could take 1 of the num, or 2 of the nums...as long as n * num <= target. if n * num == target, a path is find, put all the nums to the path and add a new result. otherwise, keep searching in the second candidates with what remains when 1 of the num, or 2 of the nums... were taken. Until all the nums are find
+    func combinationSum(_ candidates: [Int], _ target: Int) -> [[Int]] {
+        guard candidates.count > 0 else {
+            return [[Int]]()
+        }
+        
+        var result = [[Int]]()
+        
+        typealias Path = (remain:Int, pre:[Int])
+        
+        func findMatch(paths:[Path], cIndex:Int) {
+            if paths.count == 0 || cIndex == candidates.count {
+                return
+            }
+            var newPaths = [Path]()
+            for path in paths {
+                var count = 0
+                while candidates[cIndex] * count <= path.remain {
+                    var newPre = path.pre
+                    for _ in 0..<count {
+                        newPre.append(candidates[cIndex])
+                    }
+                    
+                    let newPath = (remain: path.remain - candidates[cIndex] * count, pre:newPre)
+                    
+                    if newPath.remain == 0 {
+                        result.append(newPre)
+                    } else {
+                        newPaths.append(newPath)
+                    }
+                    count += 1
+                }
+            }
+            findMatch(paths:newPaths,cIndex: cIndex + 1)
+        }
+        
+        findMatch(paths:[Path(remain:target, pre:[Int]())], cIndex:0)
+        
+        return result
+    }
+    
+    //Back tracking solution
+    func combinationSumV2(_ candidates: [Int], _ target: Int) -> [[Int]] {
+        guard candidates.count > 0 else {
+            return [[Int]]()
+        }
+        
+        var result = [[Int]]()
+        
+        
+        func findMatch(candidates:[Int], target: Int, index: Int, path:[Int]) {
+            if target <= 0 {
+                if target == 0 {
+                    result.append(path)
+                }
+                return
+            }
+            
+            for i in index..<candidates.count {
+                var num = candidates[i]
+                if num > target {
+                    continue
+                }
+                findMatch(candidates:candidates, target: target - num, index: i, path:path + [num])
+            }
+        }
+        
+        findMatch(candidates:candidates, target: target, index: 0, path:[Int]())
+        
+        return result
+    }
 }
 
 
