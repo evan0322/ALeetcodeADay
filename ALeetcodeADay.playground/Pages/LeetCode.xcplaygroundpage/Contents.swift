@@ -4243,6 +4243,28 @@ class Solution {
         
         return result
     }
+    
+    //90. Subsets II
+    func subsetsWithDup(_ nums: [Int]) -> [[Int]] {
+        
+        var result = [[Int]]()
+        
+        var nums = nums.sorted()
+        
+        func backtrace(nums:[Int], path:[Int], index:Int) {
+            result.append(path)
+            for i in index..<nums.count {
+                if i > index && nums[i] == nums[i - 1] {
+                    continue
+                }
+                // Note index: i + 1
+                backtrace(nums:nums,path:path + [nums[i]], index:i + 1)
+            }
+        }
+        
+        backtrace(nums:nums, path:[Int](), index:0)
+        return result
+    }
 }
 
 
