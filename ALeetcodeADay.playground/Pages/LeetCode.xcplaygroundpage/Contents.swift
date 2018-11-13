@@ -4301,6 +4301,39 @@ class Solution {
         
         return false
     }
+    
+    //547. Friend Circles
+    /*
+    The relationship between friend consists a graph with adjcent matrix.
+    In order to find how many isolated group in the matrix, we need to traver from each people.
+     if a people is visited, means he is friend of some previous person, we skip. otherwise a new
+     friend circle is found.
+     */
+    func findCircleNum(_ M: [[Int]]) -> Int {
+        var visited = Array(repeating: false, count: M.count)
+        var result = 0
+        
+        func dfsGraph(adjMatrix:[[Int]], size: Int, i: Int) {
+            //This column should be marked as visited
+            visited[i] = true
+            for j in 0..<size {
+                if !visited[j] && adjMatrix[i][j] == 1 {
+                    //If some index in that column is unvisited, we jump to visit that column.
+                    dfsGraph(adjMatrix: adjMatrix, size: size, i: j)
+                }
+            }
+        }
+        
+        
+        for i in 0..<M.count {
+            if !visited[i] {
+                result += 1
+                dfsGraph(adjMatrix:M, size: M.count, i: i)
+            }
+        }
+        
+        return result
+    }
 }
 
 
@@ -4423,6 +4456,35 @@ extension String {
         return String(Array(self)[index...toIndex])
     }
 }
+
+// DFS for with a adjcent matrix
+
+var test =
+    [[0, 1, 0, 0, 1, 1, 0, 0],
+     [1, 0, 0, 0, 0, 1, 1, 0],
+     [0, 0, 0, 1, 0, 0, 1, 0],
+     [0, 0, 1, 0, 0, 0, 0, 1],
+     [1, 0, 0, 0, 0, 1, 0, 0],
+     [1, 1, 0, 0, 1, 0, 0, 0],
+     [0, 1, 1, 0, 0, 0, 0, 1],
+     [0, 0, 0, 1, 0, 0, 1, 0]]
+
+
+var visited = Array(repeating: false, count: test.count)
+
+func dfsGraph(adjMatrix:[[Int]], size: Int, i: Int) {
+    //This column should be marked as visited
+    print("visiting \(i) ")
+    visited[i] = true
+    for j in 0..<size {
+        if !visited[j] && adjMatrix[i][j] == 1 {
+            //If some index in that column is unvisited, we jump to visit that column.
+            dfsGraph(adjMatrix: adjMatrix, size: size, i: j)
+        }
+    }
+}
+
+dfsGraph(adjMatrix: test, size: visited.count, i: 0)
 
 
 public class Interval {
