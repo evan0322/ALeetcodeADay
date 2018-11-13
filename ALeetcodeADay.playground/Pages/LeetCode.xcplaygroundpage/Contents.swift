@@ -4299,6 +4299,49 @@ class Solution {
         
         return result
     }
+    
+    //695. Max Area of Island
+    // Samilar to previous question. We traverse the map to find the valid graph, calculate the max area of each graph takes. Then compare to the answer
+    func maxAreaOfIsland(_ grid: [[Int]]) -> Int {
+        var visited = Array(repeating:Array(repeating:false,count:grid[0].count), count:grid.count)
+        var result = 0
+        var currentMax = 0
+        
+        func dfs(i: Int, j:Int) {
+            visited[i][j] = true
+            currentMax += 1
+            if i + 1 < visited.count && grid[i + 1][j] == 1 && !visited[i + 1][j] {
+                dfs(i:i + 1, j: j)
+            }
+            
+            //Note it is >= 0 not > 0 as grid[0] is still valid
+            if i - 1 >= 0 && grid[i - 1][j] == 1 && !visited[i - 1][j]{
+                dfs(i:i - 1, j: j)
+            }
+            
+            //Note visited[0] not visited
+            if j + 1 < visited[0].count && grid[i][j + 1] == 1 && !visited[i][j + 1] {
+                dfs(i:i, j: j + 1)
+            }
+            
+            if j - 1 >= 0 && grid[i][j - 1] == 1 && !visited[i][j - 1] {
+                dfs(i:i, j: j - 1)
+            }
+        }
+        
+        
+        for i in 0..<grid.count {
+            for j in 0..<grid[0].count {
+                if !visited[i][j] && grid[i][j] == 1 {
+                    currentMax = 0
+                    dfs(i:i, j:j)
+                    result = max(currentMax, result)
+                }
+            }
+        }
+        
+        return result
+    }
 }
 
 
