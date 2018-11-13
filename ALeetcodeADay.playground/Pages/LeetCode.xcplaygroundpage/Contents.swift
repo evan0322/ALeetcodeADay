@@ -207,7 +207,7 @@ class Solution {
     var result = [[Int]]()
     
     
-    func combinationSum(_ candidates: [Int], _ target: Int) -> [[Int]] {
+    func combinationSumV1(_ candidates: [Int], _ target: Int) -> [[Int]] {
         if candidates.count == 0 {
             return [[]]
         } else {
@@ -2125,41 +2125,6 @@ class Solution {
             memo[char] = count - 1
         }
         return true
-    }
-    
-    
-   // 74. Search a 2D Matrix
-
-    func searchMatrix(_ matrix: [[Int]], _ target: Int) -> Bool {
-        
-        guard matrix.count > 0 && matrix[0].count > 0 else {
-            return false
-        }
-        
-        var temp = [Int]()
-        
-        for i in 0..<matrix.count {
-            for j in 0..<matrix[0].count {
-                temp.append(matrix[i][j])
-            }
-        }
-        
-        var begin = 0
-        var end = temp.count - 1
-        
-        while begin <= end {
-            var mid = (end + begin)/2
-            if target > temp[mid] {
-                begin = mid + 1
-            } else if target == temp[mid] {
-                return true
-            } else {
-                end = mid - 1
-            }
-        }
-        
-        return false
-        
     }
     
     //167. Two Sum II - Input array is sorted
