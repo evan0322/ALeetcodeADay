@@ -4342,6 +4342,40 @@ class Solution {
         
         return result
     }
+    
+    //16. 3Sum Closest
+    // We traverse the sorted nums, find the sum: num[i] + nums[low] + nums[high] that closest to the target
+    func threeSumClosest(_ nums: [Int], _ target: Int) -> Int {
+        guard nums.count > 2 else {
+            return 0
+        }
+        
+        var nums = nums
+        
+        nums.sort()
+        
+        var result = nums[0] + nums[1] + nums[nums.count - 1]
+        
+        for i in 0..<nums.count - 2 {
+            let num = nums[i]
+            var low = i + 1
+            var high = nums.count - 1
+            while low < high {
+                let sum = num + nums[low] + nums[high]
+                if sum > target {
+                    high -= 1
+                } else {
+                    low += 1
+                }
+                
+                if abs(target - sum) < abs(target - result) {
+                    result = sum
+                }
+            }
+        }
+        
+        return result
+    }
 }
 
 
