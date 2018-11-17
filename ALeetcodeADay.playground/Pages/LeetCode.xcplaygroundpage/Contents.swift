@@ -4551,6 +4551,75 @@ class Solution {
         }
         return result
     }
+    
+    //208. Implement Trie (Prefix Tree)
+    class Trie {
+        let head: TrieNode
+        /** Initialize your data structure here. */
+        init() {
+            //We need a starting head node
+            self.head = TrieNode(val:"*")
+        }
+        
+        /** Inserts a word into the trie. */
+        func insert(_ word: String) {
+            var word = word.map{ String($0) }
+            var cNode = self.head
+            for char in word {
+                //For each char in word, we look for if current node matches the charater
+                if let nNode = cNode.children[char] {
+                    //If cNode has current value, continue
+                    cNode = nNode
+                } else {
+                    //if the path does no exist, create a new node
+                    let nNode = TrieNode(val:char)
+                    cNode.children[char] = nNode
+                    cNode = nNode
+                }
+            }
+            //This is important. other wise for trie "a->p->p->l->e", when search for "app".
+            //It will incorrectly return true. For each word we insert, we must give a closure
+            cNode.children["end"] = TrieNode(val:"*")
+        }
+        
+        /** Returns if the word is in the trie. */
+        func search(_ word: String) -> Bool {
+            var word = word.map{ String($0) }
+            var cNode = self.head
+            for char in word {
+                if let nNode = cNode.children[char] {
+                    cNode = nNode
+                } else {
+                    return false
+                }
+            }
+            //Check if the word ends here.
+            return cNode.children["end"] != nil
+        }
+        
+        /** Returns if there is any word in the trie that starts with the given prefix. */
+        func startsWith(_ prefix: String) -> Bool {
+            var prefix = prefix.map{ String($0) }
+            var cNode = self.head
+            for char in prefix {
+                if let nNode = cNode.children[char] {
+                    cNode = nNode
+                } else {
+                    return false
+                }
+            }
+            return true
+        }
+    }
+    
+    class TrieNode {
+        let val: String
+        var children = [String: TrieNode]()
+        
+        public init(val: String) {
+            self.val = val
+        }
+    }
 }
 
 
