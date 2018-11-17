@@ -4442,6 +4442,65 @@ class Solution {
         }
         return result
     }
+    
+    //582. Kill Process V1
+    func killProcessV1(_ pid: [Int], _ ppid: [Int], _ kill: Int) -> [Int] {
+        guard pid.count > 0 && ppid.count > 0 else {
+            return [Int]()
+        }
+        
+        var memo = [Int: [Int]]()
+        var result = [kill]
+        
+        for i in 0..<ppid.count {
+            memo[ppid[i]] = memo[ppid[i], default:[Int]()] + [pid[i]]
+        }
+        
+        
+        func killP(pid:[Int], ppid:[Int], kill:Int) {
+            guard let pToKill = memo[kill] else {
+                return
+            }
+            
+            for p in pToKill {
+                result.append(p)
+                killP(pid:pid, ppid:ppid, kill:p)
+            }
+        }
+        
+        killP(pid:pid, ppid:ppid, kill:kill)
+        
+        return result
+    }
+    
+    //582. Kill Process bfs
+    func killProcess(_ pid: [Int], _ ppid: [Int], _ kill: Int) -> [Int] {
+        guard pid.count > 0 && ppid.count > 0 else {
+            return [Int]()
+        }
+        
+        var memo = [Int: [Int]]()
+        var result = [Int]()
+        
+        for i in 0..<ppid.count {
+            memo[ppid[i]] = memo[ppid[i], default:[Int]()] + [pid[i]]
+        }
+        
+        
+        var queue = [Int]()
+        queue.append(kill)
+        
+        while queue.count > 0 {
+            let p = queue.removeLast()
+            result.append(p)
+            if let newP = memo[p] {
+                queue += newP
+            }
+        }
+        
+        
+        return result
+    }
 }
 
 
