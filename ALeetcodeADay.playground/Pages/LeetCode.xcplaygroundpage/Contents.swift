@@ -4501,6 +4501,56 @@ class Solution {
         
         return result
     }
+    
+    //249. Group Shifted Strings
+    func groupStrings(_ strings: [String]) -> [[String]] {
+        guard strings.count > 0 else {
+            return [[String]]()
+        }
+        
+        var chars = "abcdefghijklmnopqrstuvwxyz".map{ String($0) }
+        var memo = [String:Int]()
+        var result = [[String]]()
+        
+        for i in 0..<chars.count {
+            memo[chars[i]] = i
+        }
+        
+        func unifyString(string: String) -> String {
+            guard string.count > 0 else {
+                return ""
+            }
+            var sArray = string.map{ String($0) }
+            let d = memo[sArray[0]]!
+            
+            sArray = sArray.map{ (char) -> String in
+                var distance = memo[char]! - d
+                //This is very important for case "az" "ba"
+                if distance < 0 {
+                    distance = distance + 26
+                }
+                
+                return chars[distance]
+            }
+            
+            return sArray.joined()
+        }
+        
+        var dict = [String: [String]]()
+        for s in strings {
+            let unifiedString = unifyString(string:s)
+            if let cStrings = dict[unifiedString] {
+                dict[unifiedString] = cStrings + [s]
+            } else {
+                dict[unifiedString] = [s]
+            }
+        }
+        
+        for key in dict.keys {
+            result.append(dict[key]!)
+        }
+        return result
+    }
 }
 
 
