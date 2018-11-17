@@ -4376,6 +4376,55 @@ class Solution {
         
         return result
     }
+    //54. Spiral Matrix
+    //Pay attention to the relationship between x, y and i, j. Remember i is row and j is column
+    func spiralOrder(_ matrix: [[Int]]) -> [Int] {
+        guard matrix.count > 0 && matrix[0].count > 0 else {
+            return [Int]()
+        }
+        
+        var memo = Array(repeating:Array(repeating:false, count:matrix[0].count), count:matrix.count)
+        
+        typealias Coordinate = (x: Int, y:Int)
+        var coordinates = [Coordinate(x:1, y:0),
+                           Coordinate(x:0, y:1),
+                           Coordinate(x:-1, y:0),
+                           Coordinate(x:0, y:-1)]
+        
+        
+        func traverse(i:Int, j:Int, cResult:[Int], coIndex: Int) -> [Int] {
+            if i < 0 || j < 0 || i >= matrix.count || j >= matrix[0].count || memo[i][j] == true {
+                return cResult
+            }
+            
+            var cResult = cResult
+            var i = i
+            var j = j
+            while i < matrix.count && i >= 0 && j < matrix[0].count && j >= 0 && memo[i][j] != true {
+                cResult.append(matrix[i][j])
+                memo[i][j] = true
+                i += coordinates[coIndex].y
+                j += coordinates[coIndex].x
+            }
+            
+            i -= coordinates[coIndex].y
+            j -= coordinates[coIndex].x
+            
+            let newCo = (coIndex + 1)%4
+            
+            i += coordinates[newCo].y
+            j += coordinates[newCo].x
+            
+            
+            return traverse(i: i,
+                            j: j,
+                            cResult:cResult,
+                            coIndex: newCo)
+        }
+        
+        return traverse(i:0, j:0, cResult:[Int](), coIndex:0)
+        
+    }
 }
 
 
