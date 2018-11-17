@@ -4425,6 +4425,23 @@ class Solution {
         return traverse(i:0, j:0, cResult:[Int](), coIndex:0)
         
     }
+    
+    //53. Maximum Subarray
+    func maxSubArray(_ nums: [Int]) -> Int {
+        guard nums.count > 0 else {
+            return 0
+        }
+        
+        var dp = Array(repeating:0, count:nums.count)
+        var result = nums[0]
+        dp[0] = nums[0]
+        
+        for i in 1..<nums.count {
+            dp[i] = nums[i] + (dp[i - 1] > 0 ? dp[i - 1] : 0)
+            result = max(dp[i], result)
+        }
+        return result
+    }
 }
 
 
