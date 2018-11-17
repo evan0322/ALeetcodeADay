@@ -4431,7 +4431,7 @@ class Solution {
         guard nums.count > 0 else {
             return 0
         }
-        
+        //DP: Max sum that ends with index i
         var dp = Array(repeating:0, count:nums.count)
         var result = nums[0]
         dp[0] = nums[0]
