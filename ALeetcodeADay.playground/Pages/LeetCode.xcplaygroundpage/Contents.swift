@@ -4651,6 +4651,52 @@ class Solution {
         return result
         
     }
+    
+    //348. Design Tic-Tac-Toe
+    class TicTacToe {
+        var columns : [Int]
+        var rows : [Int]
+        var diagonal: Int
+        var antiDiagonal: Int
+        /** Initialize your data structure here. */
+        init(_ n: Int) {
+            self.rows = [Int](repeating: 0, count:n)
+            self.columns = [Int](repeating: 0, count:n)
+            self.diagonal = 0
+            self.antiDiagonal = 0
+        }
+        
+        /** Player {player} makes a move at ({row}, {col}).
+         @param row The row of the board.
+         @param col The column of the board.
+         @param player The player, can be either 1 or 2.
+         @return The current winning condition, can be either:
+         0: No one wins.
+         1: Player 1 wins.
+         2: Player 2 wins. */
+        func move(_ row: Int, _ col: Int, _ player: Int) -> Int {
+            let toMove = player == 1 ? 1 : -1
+            rows[row] += toMove
+            columns[col] += toMove
+            
+            if row == col {
+                diagonal += toMove
+            }
+            
+            if col == rows.count - row - 1 {
+                antiDiagonal += toMove
+            }
+            
+            let t = rows.count
+            
+            if abs(rows[row]) == t || abs(columns[col]) == t || abs(diagonal) == t || abs(antiDiagonal) == t {
+                return player
+            } else {
+                return 0
+            }
+        }
+    }
+
 }
 
 
