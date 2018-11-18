@@ -4620,6 +4620,37 @@ class Solution {
             self.val = val
         }
     }
+    
+    
+    //238. Product of Array Except Self
+
+    func productExceptSelf(_ nums: [Int]) -> [Int] {
+        guard nums.count > 0 else {
+            return [Int]()
+        }
+        
+        var result = [Int]()
+        var left = [nums.first!]
+        var right = [nums.last!]
+        
+        for i in 1..<nums.count {
+            left.append(nums[i] * left[i - 1])
+            right.insert(nums[nums.count - i - 1] * right[0], at:0)
+        }
+        
+        for i in 0..<nums.count {
+            if i == 0 {
+                result.append(right[1])
+            } else if i == nums.count - 1 {
+                result.append(left[nums.count - 2])
+            } else {
+                result.append(left[i - 1] * right[i + 1])
+            }
+        }
+        
+        return result
+        
+    }
 }
 
 
