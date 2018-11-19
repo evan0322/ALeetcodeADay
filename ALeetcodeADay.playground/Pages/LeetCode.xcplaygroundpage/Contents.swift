@@ -4482,6 +4482,7 @@ class Solution {
         var memo = [Int: [Int]]()
         var result = [Int]()
         
+        //It is important to prepare for the candidates here
         for i in 0..<ppid.count {
             memo[ppid[i]] = memo[ppid[i], default:[Int]()] + [pid[i]]
         }
@@ -4696,8 +4697,43 @@ class Solution {
             }
         }
     }
+    
+    //202. Happy Number
+    func isHappy(_ n: Int) -> Bool {
+        guard n > 0 else {
+            return false
+        }
+        
+        var memo = [Int: Bool]()
+        
+        func getNextNum(num: Int) -> Bool {
+            if num == 1 {
+                return true
+            } else if memo[num] == true {
+                return false
+            }
+            
+            memo[num] = true
+            
+            var digits = [Int]()
+            var num = num
+            while num > 0 {
+                digits.append(num % 10)
+                num /= 10
+            }
+            
+            for digit in digits {
+                num += digit * digit
+            }
+            
+            return getNextNum(num: num)
+        }
+        
+        return getNextNum(num: n)
+    }
 
 }
+
 
 
 //Extra
