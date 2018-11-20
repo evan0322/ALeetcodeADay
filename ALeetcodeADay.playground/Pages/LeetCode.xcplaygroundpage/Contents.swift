@@ -4731,6 +4731,26 @@ class Solution {
         
         return getNextNum(num: n)
     }
+    
+    //206. Reverse Linked List
+    func reverseList(_ head: ListNode?) -> ListNode? {
+        guard let node = head else {
+            return nil
+        }
+        
+        var pre: ListNode? = nil
+        var current = head
+        
+        while current != nil {
+            var next = current!.next
+            current!.next = pre
+            pre = current
+            current = next
+        }
+        
+        return pre
+    }
+
 
 }
 
