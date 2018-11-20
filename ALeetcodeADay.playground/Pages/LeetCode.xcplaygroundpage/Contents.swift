@@ -4742,7 +4742,7 @@ class Solution {
         var current = head
         
         while current != nil {
-            var next = current!.next
+            let next = current!.next
             current!.next = pre
             pre = current
             current = next
@@ -4751,6 +4751,28 @@ class Solution {
         return pre
     }
 
+    
+    //179. Largest Number
+
+    func largestNumber(_ nums: [Int]) -> String {
+        guard nums.count > 0 else {
+            return ""
+        }
+        
+        var n = nums.map({ String($0) })
+        
+        n.sort { (n1, n2) -> Bool in
+            let s1 = Int(n1 + n2)!
+            let s2 = Int(n2 + n1)!
+            return s1 > s2
+        }
+        
+        
+        let result = n.joined()
+        
+        
+        return n[0] == "0" ? "0" : result
+    }
 
 }
 
