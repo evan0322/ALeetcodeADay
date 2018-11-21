@@ -4773,6 +4773,34 @@ class Solution {
         
         return n[0] == "0" ? "0" : result
     }
+    
+    //124. Binary Tree Maximum Path Sum
+    /*
+    In the maxiumDown, each input node has two responsibility.
+     First calculate the max value starting from this node. The second
+     is to provide a path (either right or left), including itself, for the upper
+     node to use.
+     */
+    func maxPathSum(_ root: TreeNode?) -> Int {
+        var result = Int.min
+        
+        
+        func maxiumDown(cNode: TreeNode?) -> Int {
+            guard let n = cNode else {
+                return 0
+            }
+            let left = max(maxiumDown(cNode:n.left), 0)
+            let right = max(maxiumDown(cNode:n.right), 0)
+            result = max(result, left + right + n.val)
+            
+            return max(left,right) + n.val
+        }
+        
+        maxiumDown(cNode: root)
+        
+        
+        return result
+    }
 
 }
 
