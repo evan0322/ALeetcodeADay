@@ -4835,6 +4835,36 @@ class Solution {
         return result == Int.max ? 0 : result
         
     }
+    
+    //733. Flood Fill
+    func floodFill(_ image: [[Int]], _ sr: Int, _ sc: Int, _ newColor: Int) -> [[Int]] {
+        guard image.count > 0 && image[0].count > 0 else {
+            return [[Int]]()
+        }
+        
+        var image = image
+        
+        var visited = [[Bool]](repeating:[Bool](repeating:false, count:image[0].count), count: image.count)
+        
+        let oldColor = image[sr][sc]
+        
+        func fillNode(r: Int, c: Int) {
+            if r < 0 || c < 0 || r >= image.count || c >= image[0].count || visited[r][c] == true || image[r][c] != oldColor
+            {
+                return
+            }
+            
+            visited[r][c] = true
+            image[r][c] = newColor
+            fillNode(r:r, c:c + 1)
+            fillNode(r:r, c:c - 1)
+            fillNode(r:r + 1, c:c)
+            fillNode(r:r - 1, c:c)
+        }
+        
+        fillNode(r:sr, c:sc)
+        return image
+    }
 
 }
 
