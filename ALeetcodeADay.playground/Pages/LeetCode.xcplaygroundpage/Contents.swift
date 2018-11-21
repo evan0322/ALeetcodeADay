@@ -4801,6 +4801,40 @@ class Solution {
         
         return result
     }
+    //209. Minimum Size Subarray Sum
+    //Sliding window
+    func minSubArrayLen(_ s: Int, _ nums: [Int]) -> Int {
+        guard nums.count > 0 else {
+            return 0
+        }
+        
+        var result = Int.max
+        
+        var start = 0
+        var end = 0
+        
+        var sum = nums[0]
+        
+        while end < nums.count {
+            if sum < s {
+                end += 1
+                if end < nums.count {
+                    sum += nums[end]
+                }
+            } else {
+                if start == end {
+                    return 1
+                }
+                
+                result = min(result, end - start + 1)
+                sum -= nums[start]
+                start += 1
+            }
+        }
+        
+        return result == Int.max ? 0 : result
+        
+    }
 
 }
 
