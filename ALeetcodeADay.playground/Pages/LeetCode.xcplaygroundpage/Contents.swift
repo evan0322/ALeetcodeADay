@@ -4865,6 +4865,57 @@ class Solution {
         fillNode(r:sr, c:sc)
         return image
     }
+    
+    //289. Game of Life
+    func gameOfLife(_ board: inout [[Int]]) {
+        guard board.count > 0 && board[0].count > 0 else {
+            return
+        }
+        
+        var result = [[Int]](repeating:[Int](repeating:-1, count: board[0].count), count: board.count)
+        
+        func nextStatus(i:Int, j:Int) -> Int {
+            var liveN = 0
+            let directions = [[0, 1],
+                              [0, -1],
+                              [1, 0],
+                              [-1, 0],
+                              [1, 1],
+                              [-1, -1],
+                              [1, -1],
+                              [-1, 1]]
+            for d in directions {
+                if isAlive(i: i + d[0], j: j + d[1]) {
+                    liveN += 1
+                }
+            }
+            
+            if liveN < 2 && board[i][j] == 1{
+                return 0
+            } else if liveN > 3 && board[i][j] == 1 {
+                return 0
+            } else if liveN == 3 && board[i][j] == 0 {
+                return 1
+            }
+            return board[i][j]
+        }
+        
+        func isAlive(i:Int, j:Int) -> Bool {
+            if i < 0 || j < 0 || i >= board.count || j >= board[0].count || board[i][j] == 0 {
+                return false
+            } else {
+                return board[i][j] == 1
+            }
+        }
+        
+        for r in 0..<board.count {
+            for c in 0..<board[0].count {
+                result[r][c] = nextStatus(i:r, j:c)
+            }
+        }
+        
+        board = result
+    }
 
 }
 
