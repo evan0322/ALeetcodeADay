@@ -4939,6 +4939,40 @@ class Solution {
         
         return result
     }
+    
+    //91. Decode Ways
+
+    func numDecodings(_ s: String) -> Int {
+        if s.count == 0 {
+            return 0
+        } else if s.count == 1 {
+            return s == "0" ? 0 : 1
+        }
+        
+        var s = s.map({ String($0) })
+        if s[0] == "0" {
+            return 0
+        }
+        var dp = [Int](repeating: 0, count: s.count + 1)
+        dp[0] = 1
+        dp[1] = s[0] == "0" ? 0 : 1
+        
+        var i = 2
+        while i <= s.count {
+            let first = Int(s[i - 1])!
+            let two = Int(s[i - 2] + s[i - 1])!
+            if first >= 1 && first <= 9 {
+                dp[i] += dp[i - 1]
+            }
+            
+            if two >= 10 && two <= 26 {
+                dp[i] += dp[i - 2]
+            }
+            i += 1
+        }
+        
+        return dp[s.count]
+    }
 }
 
 
