@@ -4973,6 +4973,62 @@ class Solution {
         
         return dp[s.count]
     }
+    
+    //844. Backspace String Compare
+    //O(m + n)
+    //if we allow O(3N) that is easy. call getRealString for each string then compare.
+    //The tricky part is if we only allowed to us O(M + N), then we get the valid string for
+    //one string and check another one
+    func backspaceCompare(_ S: String, _ T: String) -> Bool {
+        var sArray = S.map({ String($0) })
+        var tArray = T.map({ String($0) })
+        
+        func getRealString(string: [String]) -> [String] {
+            var queue = [String]()
+            for i in 0..<string.count {
+                if string[i] == "#" {
+                    if queue.count > 0 {
+                        queue.removeLast()
+                    }
+                } else {
+                    queue.append(string[i])
+                }
+            }
+            return queue
+        }
+        
+        let temp = getRealString(string: sArray)
+        
+        //We use a cache to record the space "debt"
+        var bCache = 0
+        var i = tArray.count - 1
+        var j = temp.count  - 1
+        
+        //Now we have the actual string. going backwards to check if another string matchs
+        while i >= 0 && j >= 0 {
+            if tArray[i] == "#" {
+                bCache += 1
+                i -= 1
+            } else if bCache > 0 {
+                bCache -= 1
+                i -= 1
+            } else if tArray[i] != temp[j] {
+                return false
+            } else {
+                i -= 1
+                j -= 1
+            }
+        }
+        
+        if i < 0 && j < 0 {
+            return true
+        } else if i < 0 {
+            return false
+        } else {
+            //The other string still has numbers. check if eventually it becomes empty
+            return getRealString(string: Array(tArray[0...i])).count == 0
+        }
+    }
 }
 
 
