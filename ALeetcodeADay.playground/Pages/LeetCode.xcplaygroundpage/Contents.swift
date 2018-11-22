@@ -4917,6 +4917,28 @@ class Solution {
         board = result
     }
 
+    //412. Fizz Buzz
+    func fizzBuzz(_ n: Int) -> [String] {
+        guard n > 0 else {
+            return [String]()
+        }
+        
+        var result = [String]()
+        
+        for i in 0..<n {
+            if (i + 1) % 15 == 0 {
+                result.append("FizzBuzz")
+            } else if (i + 1) % 3 == 0 {
+                result.append("Fizz")
+            } else if (i + 1) % 5 == 0 {
+                result.append("Buzz")
+            } else {
+                result.append(String(i + 1))
+            }
+        }
+        
+        return result
+    }
 }
 
 
