@@ -5029,6 +5029,45 @@ class Solution {
             return getRealString(string: Array(tArray[0...i])).count == 0
         }
     }
+    
+    //735. Asteroid Collision
+    func asteroidCollision(_ asteroids: [Int]) -> [Int] {
+        guard asteroids.count > 0 else {
+            return [Int]()
+        }
+        
+        var queue = [Int]()
+        
+        for i in 0..<asteroids.count {
+            //only + and - will collide
+            if queue.count > 0 {
+                let left = queue.last!
+                let right = asteroids[i]
+                if left > 0 && right < 0 {
+                    //collid
+                    if left == abs(right) {
+                        //Both explode
+                        queue.removeLast()
+                    } else {
+                        while queue.count > 0 && queue.last! < abs(right) && queue.last! > 0 {
+                            queue.removeLast()
+                        }
+                        
+                        if queue.count == 0 || queue.last! < 0 {
+                            queue.append(right)
+                        } else if queue.last! == abs(right) {
+                            queue.removeLast()
+                        }
+                    }
+                } else {
+                    queue.append(right)
+                }
+            } else {
+                queue.append(asteroids[i])
+            }
+        }
+        return queue
+    }
 }
 
 
