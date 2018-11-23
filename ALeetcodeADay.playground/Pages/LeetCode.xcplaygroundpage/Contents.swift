@@ -5068,6 +5068,56 @@ class Solution {
         }
         return queue
     }
+    //501. Find Mode in Binary Search Tree
+    //Remember that in order traverse a binary tree will give you decend order nums. then we will get something like [1, 2, 2, 3, 4, 4, 5]
+    func findMode(_ root: TreeNode?) -> [Int] {
+        guard let node = root else {
+            return [Int]()
+        }
+        
+        var result = [Int]()
+        
+        var preCount = 1
+        var max = Int.min
+        var preValue = 0
+        var isFirst = true
+        
+        func traverse(n: TreeNode?) {
+            guard let tNode = n else {
+                return
+            }
+            
+            traverse(n: tNode.left)
+            if isFirst {
+                isFirst = false
+            } else if tNode.val != preValue {
+                if preCount > max {
+                    result.removeAll()
+                    result.append(preValue)
+                    max = preCount
+                } else if preCount == max {
+                    result.append(preValue)
+                }
+                preCount = 1
+            } else {
+                preCount += 1
+            }
+            preValue = tNode.val
+            traverse(n: tNode.right)
+        }
+        
+        traverse(n: node)
+        
+        if preCount > max {
+            result.removeAll()
+            result.append(preValue)
+            max = preCount
+        } else if preCount == max {
+            result.append(preValue)
+        }
+        
+        return result
+    }
 }
 
 
