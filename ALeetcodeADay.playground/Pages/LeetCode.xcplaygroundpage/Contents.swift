@@ -1731,20 +1731,6 @@ class Solution {
         return root
     }
     
-    //389. Find the Difference
-    func findTheDifference(_ s: String, _ t: String) -> Character {
-        var sArray = s.sorted(by:{ $0 < $1 })
-        var tArray = t.sorted(by:{ $0 < $1 })
-        
-        for i in 0..<sArray.count {
-            if sArray[i] != tArray[i] {
-                return tArray[i]
-            }
-        }
-        
-        return tArray.last!
-    }
-    
     //83. Remove Duplicates from Sorted List
     //Must draw picture for linked list problems!!
     func deleteDuplicates(_ head: ListNode?) -> ListNode? {
@@ -5117,6 +5103,36 @@ class Solution {
         }
         
         return result
+    }
+    
+    //389. Find the Difference
+    //(O(n))
+    // Another approach is to sort both string and compare them one element by one element.
+    // In that case the time complexity is O(nlogn)
+    func findTheDifference(_ s: String, _ t: String) -> Character {
+        var sArray = s.map( {String($0)} )
+        var tArray = t.map( {String($0)} )
+        var memo = [String:Int]()
+        var result = ""
+        
+        for i in 0..<sArray.count {
+            memo[sArray[i]] = memo[sArray[i], default: 0] + 1
+        }
+        
+        for j in 0..<tArray.count {
+            guard let charCount  = memo[tArray[j]] else {
+                result = tArray[j]
+                return Character(result)
+            }
+            
+            memo[tArray[j]] = charCount - 1
+            if charCount - 1 < 0 {
+                result = tArray[j]
+            }
+            
+        }
+        
+        return Character(result)
     }
 }
 
