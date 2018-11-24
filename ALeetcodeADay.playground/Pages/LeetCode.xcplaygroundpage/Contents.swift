@@ -5134,6 +5134,103 @@ class Solution {
         
         return Character(result)
     }
+    
+    //290. Word Pattern
+    func wordPattern(_ pattern: String, _ str: String) -> Bool {
+        if pattern.count == 0 && str.count == 0 {
+            return true
+        }
+        
+        guard pattern.count > 0, str.count > 0 else {
+            return false
+        }
+        var memo = [String: String]()
+        var registered = [String: Bool]()
+        
+        let pArray = pattern.map{ String($0) }
+        let sArray = str.components(separatedBy:" ")
+        
+        if pArray.count != sArray.count {
+            return false
+        }
+        
+        for i in 0..<pArray.count {
+            if let match = memo[pArray[i]] {
+                if match != sArray[i] {
+                    return false
+                }
+                registered[match] = true
+            } else {
+                if registered[sArray[i]] != nil {
+                    return false
+                } else {
+                    memo[pArray[i]] = sArray[i]
+                    registered[sArray[i]] = true
+                }
+            }
+        }
+        
+        return true
+    }
+    
+    //395. Longest Substring with At Least K Repeating Characters
+    //Use any invalid char as splitter, until the string cannot be splite anymore
+    func longestSubstring(_ s: String, _ k: Int) -> Int {
+        guard s.count > 0 else {
+            return 0
+        }
+        
+        guard k > 0 else {
+            return s.count
+        }
+        
+        var result = Int.min
+        var sArray = s.map{ String($0) }
+        
+        func splitString(string: [String]) {
+            guard string.count > 0 else {
+                return
+            }
+            var memo = [String: Int]()
+            var invalidChar = [String]()
+            for i in 0..<string.count {
+                memo[string[i]] = memo[string[i], default:0] + 1
+            }
+            
+            var candidates = [[String]]()
+            var last = -1
+            var i = 0
+            while i < string.count  {
+                if memo[string[i]]! < k {
+                    if i <= last + 1 {
+                        last = i
+                        i += 1
+                        continue
+                    } else {
+                        candidates.append(Array(string[last + 1..<i]))
+                        last = i
+                    }
+                }
+                i += 1
+            }
+            
+            if last < string.count - 1{
+                candidates.append(Array(string[last + 1..<string.count]))
+            }
+            
+            if last == -1 {
+                result = max(string.count, result)
+                return
+            }
+            
+            for c in candidates {
+                splitString(string:c)
+            }
+        }
+        
+        splitString(string:sArray)
+        return result == Int.min ? 0 : result
+    }
 }
 
 
