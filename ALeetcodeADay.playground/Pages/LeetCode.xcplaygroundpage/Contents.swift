@@ -82,36 +82,34 @@ class Solution {
     
     // No.20 Valid Parentheses
     func isValid(_ s: String) -> Bool {
-            var string = s
-            var expectedEndings = ""
+        var queue = [String]()
+        var sArray = s.map{ String($0) }
         
-            while !string.isEmpty {
-                let currentChar = String(string.prefix(1))
-                switch currentChar {
-                case "(", "{", "[":
-                    expectedEndings += currentChar
-                case ")":
-                    if expectedEndings.isEmpty || String(expectedEndings.suffix(1)) != ")" {
-                        return false
-                    }
-                    expectedEndings = String(expectedEndings.dropLast())
-                case "}":
-                    if expectedEndings.isEmpty || String(expectedEndings.suffix(1)) != "}" {
-                        return false
-                    }
-                    expectedEndings = String(expectedEndings.dropLast())
-                case "]":
-                    if expectedEndings.isEmpty || String(expectedEndings.suffix(1)) != "]" {
-                        return false
-                    }
-                    expectedEndings = String(expectedEndings.dropLast())
-                default:
-                    break
+        for i in 0..<sArray.count {
+            if sArray[i] == "[" ||  sArray[i] == "(" || sArray[i] == "{" {
+                queue.append(sArray[i])
+            } else if sArray[i] == "]" {
+                if queue.count == 0 {
+                    return false
+                } else if queue.removeLast() != "[" {
+                    return false
                 }
-                string = String(string.dropFirst())
+            } else if sArray[i] == ")" {
+                if queue.count == 0 {
+                    return false
+                } else if queue.removeLast() != "(" {
+                    return false
+                }
+            } else if sArray[i] == "}" {
+                if queue.count == 0 {
+                    return false
+                } else if queue.removeLast() != "{" {
+                    return false
+                }
             }
+        }
         
-            return expectedEndings.isEmpty
+        return queue.count == 0
     }
     
     // 28. Implement strStr()
