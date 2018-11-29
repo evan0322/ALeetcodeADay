@@ -5258,6 +5258,41 @@ class Solution {
         return result
         
     }
+    
+    //120. Triangle
+    func minimumTotal(_ triangle: [[Int]]) -> Int {
+        guard triangle.count > 0, triangle[0].count > 0 else {
+            return 0
+        }
+        
+        if triangle.count == 1 {
+            return triangle[0][0]
+        }
+        
+        var dp = [triangle[0][0]]
+        
+        for i in 1..<triangle.count {
+            var temp = [Int](repeating:0,count:triangle[i].count)
+            for j in 0..<triangle[i].count {
+                if j == 0 {
+                    temp[j] = dp[j] + triangle[i][j]
+                } else if j == triangle[i].count - 1 {
+                    temp[j] = dp[j - 1] + triangle[i][j]
+                } else {
+                    temp[j] = min(dp[j], dp[j - 1]) + triangle[i][j]
+                }
+            }
+            dp = temp
+        }
+        
+        var minNum = Int.max
+        
+        for num in dp {
+            minNum = min(minNum, num)
+        }
+        
+        return minNum
+    }
 }
 
 
