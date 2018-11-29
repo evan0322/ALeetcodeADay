@@ -5229,6 +5229,35 @@ class Solution {
         splitString(string:sArray)
         return result == Int.min ? 0 : result
     }
+    
+    //110. Balanced Binary Tree
+    //findMaxDepth has two responsibility: provide the max depth for the parent node, and check if current diff exceeds the boundry
+    func isBalanced(_ root: TreeNode?) -> Bool {
+        guard let rootNode = root else {
+            return true
+        }
+        
+        var result = true
+        
+        func findMaxDepth(root: TreeNode?) -> Int {
+            guard let node = root else {
+                return 0
+            }
+            
+            var left = findMaxDepth(root:node.left)
+            var right = findMaxDepth(root:node.right)
+            let diff = abs(left - right)
+            if diff >= 2 {
+                result = false
+            }
+            return max(left, right) + 1
+        }
+        
+        let maxD = findMaxDepth(root:rootNode)
+        
+        return result
+        
+    }
 }
 
 
