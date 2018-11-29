@@ -5293,6 +5293,44 @@ class Solution {
         
         return minNum
     }
+    
+    //491. Increasing Subsequences
+    //The key is to find the right pattern
+    func findSubsequences(_ nums: [Int]) -> [[Int]] {
+        guard nums.count > 1 else {
+            return [[Int]]()
+        }
+        
+        var result = [[Int]]()
+        
+        func helper(array:[Int], index: Int) {
+            if array.count > 1 {
+                result.append(array)
+            }
+            
+            if index > nums.count {
+                return
+            }
+            
+            //User memo to eliminate duplicate
+            var memo = [Int:Bool]()
+            for i in index..<nums.count {
+                if memo[nums[i]] == true {
+                    continue
+                }
+                if array.count == 0 || nums[i] >= array.last! {
+                    memo[nums[i]] = true
+                    print("array is \(array)")
+                    print("Current num is \(nums[i])")
+                    helper(array:array + [nums[i]], index: i + 1)
+                }
+            }
+        }
+        
+        helper(array:[Int](), index:0)
+        
+        return result
+    }
 }
 
 
