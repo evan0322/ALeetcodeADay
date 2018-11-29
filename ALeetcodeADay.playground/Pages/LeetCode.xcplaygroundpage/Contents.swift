@@ -5331,6 +5331,44 @@ class Solution {
         
         return result
     }
+    
+    //109. Convert Sorted List to Binary Search Tree
+    // The idea is to half the array everytime, find the medium as the root
+    // to make the tree balance.
+    func sortedListToBST(_ head: ListNode?) -> TreeNode? {
+        var node = head
+        var nums = [Int]()
+        //Convert it to array
+        while node != nil {
+            nums.append(node!.val)
+            node = node!.next
+        }
+        
+        if nums.count == 0 {
+            return nil
+        }
+        
+        //We use index instead of array object for conveniently check if the index is out
+        //of boundary.
+        func toBST(sIndex:Int, eIndex:Int) -> TreeNode? {
+            guard sIndex <= eIndex, sIndex >= 0, eIndex < nums.count else {
+                return nil
+            }
+            
+            if sIndex == eIndex {
+                return TreeNode(nums[sIndex])
+            }
+            
+            let medium = (sIndex + eIndex)/2
+            let node = TreeNode(nums[medium])
+            node.left = toBST(sIndex:sIndex, eIndex:medium - 1)
+            node.right = toBST(sIndex:medium + 1, eIndex:eIndex)
+            return node
+        }
+        
+        return toBST(sIndex:0, eIndex:nums.count - 1)
+        
+    }
 }
 
 
