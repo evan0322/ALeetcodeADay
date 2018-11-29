@@ -5369,6 +5369,37 @@ class Solution {
         return toBST(sIndex:0, eIndex:nums.count - 1)
         
     }
+    //938. Range Sum of BST
+    // Traverse the tree inorder and get the path between L and R
+    func rangeSumBST(_ root: TreeNode?, _ L: Int, _ R: Int) -> Int {
+        
+        var result = 0
+        var shouldAdd = false
+        
+        func traverse(node:TreeNode?) {
+            guard let n = node else {
+                return
+            }
+            
+            traverse(node:n.left)
+            
+            if shouldAdd {
+                result += n.val
+            }
+            
+            if n.val == L {
+                result = n.val
+                shouldAdd = true
+            } else if n.val == R {
+                shouldAdd = false
+            }
+            
+            traverse(node:n.right)
+        }
+        
+        traverse(node:root)
+        return result
+    }
 }
 
 
