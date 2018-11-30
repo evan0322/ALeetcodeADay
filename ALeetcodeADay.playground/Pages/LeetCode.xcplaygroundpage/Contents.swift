@@ -5259,7 +5259,9 @@ class Solution {
         
     }
     
-    //120. Triangle
+    //Use dynamic programing. For each element j in row i, the min sum is decided by  min(dp[j], dp[j - 1]), we keep building the dp to fill the last layer, then traverse it to find the min
+    //Time: O(n) n is the total num of elements in the trangle
+    //Space: O(n) n is the maxMium num of elements in each row
     func minimumTotal(_ triangle: [[Int]]) -> Int {
         guard triangle.count > 0, triangle[0].count > 0 else {
             return 0
@@ -5320,8 +5322,6 @@ class Solution {
                 }
                 if array.count == 0 || nums[i] >= array.last! {
                     memo[nums[i]] = true
-                    print("array is \(array)")
-                    print("Current num is \(nums[i])")
                     helper(array:array + [nums[i]], index: i + 1)
                 }
             }
@@ -5458,6 +5458,82 @@ class Solution {
         
         traverse(node:node, level:0)
         return result.reversed()
+    }
+    
+    //565. Array Nesting
+    //This is tricky. Each formed loop will not be able to enter from a different num.
+    //That means if you find a loop, then every element in the loop has the same max length of the circle
+    // Time: O(n) n is the number of elements
+    // space: O(1)
+    func arrayNesting(_ nums: [Int]) -> Int {
+        var result = 0
+        var nums = nums
+        
+        for i in 0..<nums.count {
+            var j = i
+            var cMax = 0
+            while nums[j] >= 0 {
+                let num = nums[j]
+                nums[j] = -1
+                j = num
+                cMax += 1
+            }
+            result = max(result, cMax)
+        }
+        
+        return result
+    }
+    
+    //875. Koko Eating Bananas
+    //Binary search
+    /*
+     We get the largest possible eating time and smallest.
+     Then check if the middle number is valid, if too small l = m + 1
+     else h = m
+     
+     Time O(mlogn)
+     m is the total nums of piles(we need to check if it is available m times)
+     n = h - l
+     
+     Space O(n)
+     
+     
+     */
+    func minEatingSpeed(_ piles: [Int], _ H: Int) -> Int {
+        
+        var maxP = 0
+        
+        for p in piles {
+            maxP = max(p, maxP)
+        }
+        
+        func getEatTime(s:Int) -> Int {
+            var result = 0
+            for p in piles {
+                if p%s == 0 {
+                    result += p/s
+                } else {
+                    result += p/s + 1
+                }
+            }
+            
+            return result
+        }
+        
+        var l = 1
+        var h = maxP
+        
+        while l < h{
+            let s = (l + h)/2
+            if getEatTime(s:s) > H {
+                l = s + 1
+            } else {
+                //Note here is h = s instead of h = s - 1 otherwise error will occure
+                h = s
+            }
+        }
+        
+        return l
     }
 }
 
