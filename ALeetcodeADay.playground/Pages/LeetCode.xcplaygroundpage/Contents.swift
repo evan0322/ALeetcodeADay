@@ -5528,7 +5528,7 @@ class Solution {
             if getEatTime(s:s) > H {
                 l = s + 1
             } else {
-                //Note here is h = s instead of h = s - 1 otherwise error will occure
+                //Note here is h = s instead of h = s - 1 otherwise error will occur
                 h = s
             }
         }
