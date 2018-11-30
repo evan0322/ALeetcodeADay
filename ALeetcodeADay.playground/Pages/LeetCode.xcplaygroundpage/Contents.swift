@@ -5400,6 +5400,39 @@ class Solution {
         traverse(node:root)
         return result
     }
+    
+    //611. Valid Triangle Number
+    //For any triangle, longest side < small side + small side.
+    //We sort the array first, then go backwards to find any low and high
+    // that nums[l] + nums[h] < nums[i]. Then any num between l and h will consist
+    // Triangle with nums[i]. We then lower h to exceed current h to find new candicate.
+    func triangleNumber(_ nums: [Int]) -> Int {
+        var nums = nums.filter{ $0 > 0 }
+        guard nums.count > 2 else {
+            return 0
+        }
+        
+        var result = 0
+        
+        nums.sort()
+        
+        for i in (2..<nums.count).reversed() {
+            var l = 0
+            var h = i - 1
+            
+            while l < h {
+                if nums[l] + nums[h] > nums[i] {
+                    result += h - l
+                    h -= 1
+                } else {
+                    l += 1
+                }
+            }
+        }
+        
+        
+        return result
+    }
 }
 
 
