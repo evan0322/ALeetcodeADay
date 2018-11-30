@@ -5535,6 +5535,52 @@ class Solution {
         
         return l
     }
+    
+    
+    //890. Find and Replace Pattern
+    //Using a memo to record the mapping between pattern and the word
+    //Then a map to record which word has already been mapped
+    //We invalidate a word in 2 case:
+    // 1. A char in pattern that does not map to the same char in word
+    // 2. A char in pattern cannot be mapped to any char but the corresponding char in word already been mapped
+    // Time: O(n) n is the total characters in the words array, since we are checking for each of them.
+    func findAndReplacePattern(_ words: [String], _ pattern: String) -> [String] {
+        guard pattern.count > 0, words.count > 0 else {
+            return [String]()
+        }
+        
+        var result = [String]()
+        var words = words.map{ $0.map({ String($0) }) }
+        var pattern = pattern.map{ String($0) }
+        
+        for word in words {
+            if word.count != pattern.count {
+                continue
+            }
+            var memo = [String:String]()
+            var mapped = [String: Bool]()
+            for i in 0..<word.count {
+                if let char = memo[pattern[i]] {
+                    if char != word[i] {
+                        break
+                    }
+                }  else {
+                    if mapped[word[i]] == true {
+                        break
+                    } else {
+                        //note here to record the char in word to mark it as mapped
+                        memo[pattern[i]] = word[i]
+                        mapped[word[i]] = true
+                    }
+                }
+                
+                if i == word.count - 1 {
+                    result.append(word.joined())
+                }
+            }
+        }
+        return result
+    }
 }
 
 
