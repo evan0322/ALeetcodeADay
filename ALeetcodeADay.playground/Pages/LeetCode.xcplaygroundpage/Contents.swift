@@ -5433,6 +5433,32 @@ class Solution {
         
         return result
     }
+    
+    //107. Binary Tree Level Order Traversal II
+    func levelOrderBottom(_ root: TreeNode?) -> [[Int]] {
+        guard let node = root else {
+            return [[Int]]()
+        }
+        var result = [[Int]]()
+        
+        func traverse(node:TreeNode?, level:Int) {
+            guard let n = node else {
+                return
+            }
+            
+            if level >= result.count {
+                result.append([n.val])
+            } else {
+                result[level] = result[level] + [n.val]
+            }
+            
+            traverse(node:n.left, level: level + 1)
+            traverse(node:n.right, level: level + 1)
+        }
+        
+        traverse(node:node, level:0)
+        return result.reversed()
+    }
 }
 
 
