@@ -5632,6 +5632,37 @@ class Solution {
         var candidates = [sNums[sNums.count - 3], sNums[sNums.count - 2], sNums[sNums.count - 1]]
         return max(candidates.reduce(1, *), sNums[0] * sNums[1] * candidates[2])
     }
+    
+    //216. Combination Sum III
+    // For num 1, we are looking for any combination between 2-9 that contains k - 1 num and total value of n - 1. Route = [1]
+    //For num 2, we are looking for any combinartion between 3- 9 that contains k - 1 num and total value of n - 2. Route = [2]
+    // If we take both 1 and 3, we are looking for any combination between 4 - 9 that contains k - 2 num and total value of n - 1 - 3. Route = [1, 3]
+    func combinationSum3(_ k: Int, _ n: Int) -> [[Int]] {
+        guard k > 0, n > 0 else {
+            return [[Int]]()
+        }
+        
+        var result = [[Int]]()
+        
+        func helper(index:Int, rVal:Int, cRout:[Int]) {
+            if rVal == 0 && cRout.count == k  {
+                result.append(cRout)
+                return
+            } else if index > 9 {
+                return
+            } else if cRout.count == k {
+                return
+            } else {
+                for i in index...9 {
+                    helper(index:i + 1, rVal:rVal - i, cRout:cRout + [i])
+                }
+            }
+        }
+        
+        helper(index:1, rVal:n, cRout:[Int]())
+        
+        return result
+    }
 }
 
 
