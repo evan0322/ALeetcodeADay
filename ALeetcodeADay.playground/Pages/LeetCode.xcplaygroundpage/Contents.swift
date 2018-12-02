@@ -5679,6 +5679,33 @@ class Solution {
         
         return odd + even
     }
+    
+    //331. Verify Preorder Serialization of a Binary Tree
+
+    /*
+     all non-null node provides 2 outdegree and 1 indegree (2 children and 1 parent), except root
+     all null node provides 0 outdegree and 1 indegree (0 child and 1 parent).
+     Suppose we try to build this tree. During building, we record the difference between out degree and in degree diff = outdegree - indegree. When the next node comes, we then decrease diff by 1, because the node provides an in degree. If the node is not null, we increase diff by 2, because it provides two out degrees. If a serialization is correct, diff should never be negative and diff will be zero when finished.
+     */
+    func isValidSerialization(_ preorder: String) -> Bool {
+        var nodes = preorder.components(separatedBy:",")
+        var diff = 1
+        for n in nodes {
+            diff -= 1
+            
+            if diff < 0 {
+                return false
+            }
+            
+            
+            
+            if n != "#" {
+                diff += 2
+            }
+        }
+        
+        return diff == 0
+    }
 }
 
 
