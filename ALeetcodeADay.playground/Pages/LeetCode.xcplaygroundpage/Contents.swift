@@ -5581,6 +5581,57 @@ class Solution {
         }
         return result
     }
+    
+    //518. Coin Change 2
+    /*
+     Important question.
+     Using DP and similar to Knapsack problem
+     Time O(m * n)
+     space O(m * n)
+     */
+    func change(_ amount: Int, _ coins: [Int]) -> Int {
+        var result = 0
+        if amount == 0 {
+            return 1
+        } else if coins.count == 0 {
+            return 0
+        }
+        //DP: the ways aount j can be made by using the coins up to coin type i
+        //dp[2][5]: The ways amount 5 can be made by using coin type 1 to 2
+        // coins.count + 1 instead of coins.count to cover more generic boundary
+        var dp = [[Int]](repeating:[Int](repeating:0, count:amount + 1), count:coins.count + 1)
+        
+        for i in 0..<dp.count {
+            for j in 0..<dp[0].count {
+                if j == 0 {
+                    dp[i][j] = 1
+                } else if i == 0 {
+                    dp[i][j] = 0
+                }else {
+                    dp[i][j] = dp[i - 1][j]
+                    if j - coins[i - 1] >= 0 {
+                        //Since we allow to use duplicate coins, we just look back to see
+                        //How many ways current can make with amount j - coins[i - 1]
+                        dp[i][j] += dp[i][j - coins[i - 1]]
+                    }
+                }
+            }
+        }
+        
+        return dp[coins.count][amount]
+    }
+    
+    //628. Maximum Product of Three Numbers
+
+    func maximumProduct(_ nums: [Int]) -> Int {
+        guard nums.count > 2 else {
+            return 0
+        }
+        
+        let sNums = nums.sorted()
+        var candidates = [sNums[sNums.count - 3], sNums[sNums.count - 2], sNums[sNums.count - 1]]
+        return max(candidates.reduce(1, *), sNums[0] * sNums[1] * candidates[2])
+    }
 }
 
 
@@ -5671,6 +5722,33 @@ func knapsack(W:Int,ws:[Int],vs:[Int]) -> Int {
     return knapsackDP(weightLimit: W, weights: ws, values: vs, index: ws.count - 1)
     
     
+}
+
+//iteratively solution
+func knapsack(weights:[Int], values:[Int], w:Int) -> Int {
+    guard weights.count > 0, values.count > 0, w > 0 else {
+        return 0
+    }
+    
+    //dp: the maxium value can be archived using first ith item and not exceeding j
+    //dp[i][j] = max(dp[i - 1][j], dp[i][j - weights[i]] + values[i])
+    var dp = [[Int]](repeating: [Int](repeating: 0, count: w + 1), count: weights.count + 1)
+    
+    for i in 0..<dp.count {
+        for j in 0..<dp[0].count {
+            if i == 0 || j == 0 {
+                dp[i][j] = 0
+            } else {
+                if j - weights[i - 1] >= 0 {
+                    //Note here using dp[i - 1] instead of dp[i] to void using the same item again.
+                    dp[i][j] = max(dp[i - 1][j], dp[i - 1][j - weights[i - 1]] + values[i - 1])
+                } else {
+                    dp[i][j] = dp[i - 1][j]
+                }
+            }
+        }
+    }
+    return dp[weights.count][w]
 }
 
 //let weights = [20, 10, 30]
