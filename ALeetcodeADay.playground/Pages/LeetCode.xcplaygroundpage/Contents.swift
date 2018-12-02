@@ -5706,6 +5706,23 @@ class Solution {
         
         return diff == 0
     }
+    
+    //231. Power of Two
+    func isPowerOfTwo(_ n: Int) -> Bool {
+        guard n > 0 else {
+            return false
+        }
+        
+        if n == 1 {
+            return true
+        }
+        
+        if n % 2 == 0 {
+            return isPowerOfTwo(n/2)
+        } else {
+            return false
+        }
+    }
 }
 
 
