@@ -5663,6 +5663,22 @@ class Solution {
         
         return result
     }
+    
+    //905. Sort Array By Parity
+    func sortArrayByParity(_ A: [Int]) -> [Int] {
+        var odd = [Int]()
+        var even = [Int]()
+        
+        for num in A {
+            if num % 2 == 0 {
+                odd.append(num)
+            } else {
+                even.append(num)
+            }
+        }
+        
+        return odd + even
+    }
 }
 
 
