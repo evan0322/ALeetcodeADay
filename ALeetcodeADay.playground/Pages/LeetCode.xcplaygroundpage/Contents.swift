@@ -5703,7 +5703,6 @@ class Solution {
                 diff += 2
             }
         }
-        
         return diff == 0
     }
     
@@ -5722,6 +5721,41 @@ class Solution {
         } else {
             return false
         }
+    }
+    
+    //270. Closest Binary Search Tree Value
+    //Traverse each node and record current closest. if the target is larger than the value, then it is likely that n.right also be the result, so we traverse to that node.
+    func closestValue(_ root: TreeNode?, _ target: Double) -> Int {
+        guard let node = root else {
+            return 0
+        }
+        
+        var result = 0
+        var minDiff = Double.greatestFiniteMagnitude
+        
+        
+        func traverse(node: TreeNode?) {
+            guard let n = node else {
+                return
+            }
+            
+            if Double(n.val) == target {
+                result = n.val
+                return
+            } else if abs(Double(n.val) - target) <= minDiff {
+                result = n.val
+                minDiff = abs(Double(n.val) - target)
+            }
+            if target > Double(n.val) {
+                traverse(node:n.right)
+            } else {
+                traverse(node:n.left)
+            }
+        }
+        
+        traverse(node:node)
+        
+        return result
     }
 }
 
