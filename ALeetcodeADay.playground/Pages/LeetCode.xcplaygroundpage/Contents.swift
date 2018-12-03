@@ -5783,6 +5783,44 @@ class Solution {
         
         return result
     }
+    
+    //624. Maximum Distance in Arrays
+    //Be carful that the max value could comes from the same array, which invalidate the answer
+    func maxDistance(_ arrays: [[Int]]) -> Int {
+        var max1 = Int.min
+        var max2 = Int.min
+        
+        var maxIndex = 0
+        
+        var min1 = Int.max
+        var min2 = Int.max
+        
+        var minIndex = 0
+        
+        for i in 0..<arrays.count {
+            if arrays[i].first! < min1 {
+                min2 = min1
+                min1 = arrays[i].first!
+                minIndex = i
+            } else if arrays[i].first! < min2 {
+                min2 = arrays[i].first!
+            }
+            
+            if arrays[i].last! > max1 {
+                max2 = max1
+                max1 = arrays[i].last!
+                maxIndex = i
+            } else if arrays[i].last! > max2 {
+                max2 = arrays[i].last!
+            }
+        }
+        
+        if minIndex == maxIndex {
+            return max(abs(max1 - min2), abs(max2 - min1))
+        } else {
+            return abs(max1 - min1)
+        }
+    }
 }
 
 
