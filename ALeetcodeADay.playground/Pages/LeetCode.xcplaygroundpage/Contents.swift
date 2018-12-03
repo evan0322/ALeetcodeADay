@@ -5757,6 +5757,32 @@ class Solution {
         
         return result
     }
+    
+    
+    //259. 3Sum Smaller
+    func threeSumSmaller(_ nums: [Int], _ target: Int) -> Int {
+        guard nums.count > 2 else {
+            return 0
+        }
+        
+        var nums = nums.sorted()
+        
+        var result = 0
+        for i in (2..<nums.count).reversed() {
+            var h = i - 1
+            var l = 0
+            while l < h {
+                if nums[l] + nums[h] + nums[i] < target {
+                    result += h - l
+                    l += 1
+                } else {
+                    h -= 1
+                }
+            }
+        }
+        
+        return result
+    }
 }
 
 
