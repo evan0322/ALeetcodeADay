@@ -5878,6 +5878,53 @@ class Solution {
             return result
         }
     }
+    
+    //161. One Edit Distance
+    func isOneEditDistance(_ s: String, _ t: String) -> Bool {
+        guard abs(s.count - t.count) < 2 else {
+            return false
+        }
+        
+        if s.count == 0 && t.count == 0 {
+            return false
+        }
+        
+        var i = 0
+        var j = 0
+        var foundDiff = false
+        var sArray = s.map{ String($0) }
+        var tArray = t.map{ String($0) }
+        
+        while i < s.count && j < t.count {
+            if sArray[i] != tArray[j] {
+                if foundDiff {
+                    return false
+                }
+                if s.count == t.count {
+                    i += 1
+                    j += 1
+                } else if s.count > t.count {
+                    i += 1
+                } else {
+                    j += 1
+                }
+                foundDiff = true
+            } else {
+                i += 1
+                j += 1
+            }
+        }
+        
+        if foundDiff == false {
+            if i == s.count && j == t.count {
+                return false
+            } else {
+                return true
+            }
+        } else {
+            return i == s.count && j == t.count
+        }
+    }
 }
 
 
