@@ -5821,6 +5821,63 @@ class Solution {
             return abs(max1 - min1)
         }
     }
+    
+    //304. Range Sum Query 2D - Immutable
+    class NumMatrix {
+        var sum = [[Int]]()
+        var matrix: [[Int]]
+        init(_ matrix: [[Int]]) {
+            self.matrix = matrix
+            self.sum = getSumMatrix(nums:matrix)
+        }
+        
+        func getSumMatrix(nums:[[Int]]) -> [[Int]]{
+            guard nums.count > 0, nums[0].count > 0 else {
+                return [[Int]]()
+            }
+            
+            var sum = [[Int]](repeating:[Int](repeating:0,count: matrix[0].count), count:matrix.count)
+            
+            for i in 0..<nums.count {
+                for j in 0..<nums[0].count {
+                    var num = nums[i][j]
+                    if i - 1 >= 0 {
+                        num += sum[i - 1][j]
+                    }
+                    
+                    if j - 1 >= 0 {
+                        num += sum[i][j - 1]
+                    }
+                    
+                    if i - 1 >= 0 && j - 1 >= 0 {
+                        num -= sum[i - 1][j - 1]
+                    }
+                    sum[i][j] = num
+                }
+            }
+            
+            print(sum)
+            return sum
+        }
+        
+        func sumRegion(_ row1: Int, _ col1: Int, _ row2: Int, _ col2: Int) -> Int {
+            var result = sum[row2][col2]
+            
+            if row1 - 1 >= 0 {
+                result -= sum[row1 - 1][col2]
+            }
+            
+            if col1 - 1 >= 0 {
+                result -= sum[row2][col1 - 1]
+            }
+            
+            if col1 - 1 >= 0 && row1 - 1 >= 0 {
+                result += sum[row1 - 1][col1 - 1]
+            }
+            
+            return result
+        }
+    }
 }
 
 
@@ -5929,7 +5986,7 @@ func knapsack(weights:[Int], values:[Int], w:Int) -> Int {
                 dp[i][j] = 0
             } else {
                 if j - weights[i - 1] >= 0 {
-                    //Note here using dp[i - 1] instead of dp[i] to void using the same item again.
+                    //Note here using dp[i - 1] instead of dp[i] to avoid using the same item again.
                     dp[i][j] = max(dp[i - 1][j], dp[i - 1][j - weights[i - 1]] + values[i - 1])
                 } else {
                     dp[i][j] = dp[i - 1][j]
