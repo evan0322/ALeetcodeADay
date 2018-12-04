@@ -5925,6 +5925,37 @@ class Solution {
             return i == s.count && j == t.count
         }
     }
+    
+    //49. Group Anagrams
+    //We use a dictionary to track the string that belongs to the same analog.
+    //For each word, we sort it first, check if the sorted string match any key in the
+    //dictionary, if there is already a key that match, means there is anagram. Then put word in that group
+    // In the end traverse all the keys to get the group.
+    // Time O(n * mlogm) m is the string length and n is the number of words in the str.
+    // Space O(m)
+    func groupAnagrams(_ strs: [String]) -> [[String]] {
+        guard strs.count > 0 else {
+            return [[String]]()
+        }
+        var memo = [String: [String]]()
+        
+        for s in strs {
+            var sortedS = String(s.sorted())
+            if let strings = memo[sortedS] {
+                memo[sortedS] = strings + [s]
+            } else {
+                memo[sortedS] = [s]
+            }
+        }
+        
+        var result = [[String]]()
+        
+        for key in memo.keys {
+            result.append(memo[key]!)
+        }
+        
+        return result
+    }
 }
 
 
