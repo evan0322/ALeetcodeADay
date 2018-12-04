@@ -5976,7 +5976,7 @@ class Solution {
     }
     
     //88. Merge Sorted Array
-
+    // Put the num to its final location instead of inserting
     func merge(_ nums1: inout [Int], _ m: Int, _ nums2: [Int], _ n: Int) {
         var i = m - 1
         var j = n - 1
