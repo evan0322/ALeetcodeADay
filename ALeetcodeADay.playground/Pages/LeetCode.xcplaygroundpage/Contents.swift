@@ -6003,6 +6003,73 @@ class Solution {
         }
         
     }
+    
+    //399. Evaluate Division
+    /*
+     This is a example of how to build a graph with weighted edges
+     if a/b = 2.0, we build a graph with first edge a-2.0->b and  b-0.5->a etc.
+     We store all the adjacent list in a dictionary.
+     When the query comes, c/d , we perform dfs to find if there is connection between c and d, if not, then in each c's neighbor, continue search with the product of the distance
+     */
+    func calcEquation(_ equations: [[String]], _ values: [Double], _ queries: [[String]]) -> [Double] {
+        guard equations.count > 0, values.count > 0, queries.count > 0 else {
+            return [Double]()
+        }
+        typealias Vector = (String, Double)
+        
+        //Build graph
+        var graph = [String: [Vector]]()
+        for i in 0..<equations.count {
+            let val = values[i]
+            let start = equations[i][0]
+            let end = equations[i][1]
+            //The graph has to be bidirectional
+            graph[start] = graph[start, default: [Vector]()] + [Vector(end, val)]
+            graph[end] = graph[end, default: [Vector]()] + [Vector(start, 1/val)]
+        }
+        
+        
+        // we need currentVal to track the distance so far.
+        // We need visited to record the visited nodes so that we do not go in loops
+        func dfs(query:[String], currentVal: Double, visited:[String: Bool]) -> Double {
+            let start = query[0]
+            let end = query[1]
+            if visited[start] == true {
+                return -1.0
+            }
+            
+            var visited = visited
+            visited[start] = true
+            
+            guard let vectors = graph[start] else {
+                return -1.0
+            }
+            
+            for vector in vectors {
+                if vector.0 == end {
+                    return vector.1 * currentVal
+                }
+            }
+            var value = -1.0
+            for vector in vectors {
+                let temp = dfs(query: [vector.0, end], currentVal: currentVal * vector.1, visited: visited)
+                if temp != -1.0 {
+                    value = temp
+                }
+            }
+            
+            return value
+        }
+        
+        
+        var result = [Double]()
+        
+        for query in queries {
+            result.append(dfs(query: query, currentVal: 1.0, visited: [String: Bool]()))
+        }
+        
+        return result
+    }
 }
 
 
