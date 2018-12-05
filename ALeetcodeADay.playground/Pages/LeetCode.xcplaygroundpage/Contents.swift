@@ -6039,6 +6039,30 @@ class Solution {
         
     }
     
+    //256. Paint House
+    //In this problem, two adjacent houses canno be the same color. Since we have known type of colors, we can build dp scenario by scenario
+    func minCost(_ costs: [[Int]]) -> Int {
+        guard costs.count > 0 else {
+            return 0
+        }
+        
+        var dp = [[Int]](repeating:[0, 0, 0], count: costs.count)
+        dp[0][0] = costs[0][0]
+        dp[0][1] = costs[0][1]
+        dp[0][2] = costs[0][2]
+        
+        
+        for i in 1..<costs.count {
+            dp[i][0] = min(dp[i - 1][1], dp[i - 1][2]) + costs[i][0]
+            dp[i][1] = min(dp[i - 1][0], dp[i - 1][2]) + costs[i][1]
+            dp[i][2] = min(dp[i - 1][0], dp[i - 1][1]) + costs[i][2]
+        }
+        
+        let n = dp.count - 1
+        
+        return min(min(dp[n][0], dp[n][1]),dp[n][2])
+    }
+    
     //399. Evaluate Division
     /*
      This is a example of how to build a graph with weighted edges
