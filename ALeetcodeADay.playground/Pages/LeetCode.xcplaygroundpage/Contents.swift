@@ -6003,6 +6003,41 @@ class Solution {
         }
         
     }
+
+
+    //276. Paint Fence
+    /*
+    For each fence with index i, assum the color is c[i]
+    we have two scenario,
+    c[i] != c[i - 1]
+    Then we have k-1 ways to paint
+    c[i] == c[i - 1]
+    Then c[i - 1] must not be the same as c[i - 2]. Then we have
+    k - 1 ways to paint i - 1.
+    dp[i] = (k - 1) * dp[i - 1] + (k - 1) * dp[i - 2]
+     */
+    func numWays(_ n: Int, _ k: Int) -> Int {
+        guard n > 0, k > 0 else {
+            return 0
+        }
+        
+        var dp = [Int](repeating:0, count:n + 1)
+        
+        for i in 0..<dp.count {
+            if i == 0 {
+                dp[i] = 1
+            } else if i == 1 {
+                dp[i] = k
+            } else if i == 2 {
+                dp[i] = k * k
+            }   else {
+                dp[i] = (k - 1) * dp[i - 1] + (k - 1) * dp[i - 2]
+            }
+        }
+        
+        return dp[n] < 0 ? 0 : dp[n]
+        
+    }
     
     //399. Evaluate Division
     /*
