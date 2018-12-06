@@ -3605,30 +3605,31 @@ class Solution {
     }
     
     //253. Meeting Rooms II
+    //https://leetcode.com/problems/meeting-rooms-ii/discuss/67855/Explanation-of-%22Super-Easy-Java-Solution-Beats-98.8%22-from-%40pinkfloyda
     func minMeetingRooms(_ intervals: [Interval]) -> Int {
-        typealias Room = (start:Int, end:Int)
-        var rooms = [Room]()
+        var starts = [Int]()
+        var ends = [Int]()
         
-        var intervals = intervals.sorted(by:{ $0.start < $1.start })
+        for i in intervals {
+            starts.append(i.start)
+            ends.append(i.end)
+        }
         
-        for inter in intervals {
-            var findRoom = false
-            for i in 0..<rooms.count {
-                let room = rooms[i]
-                if room.end <= inter.start {
-                    //Be very careful about this. Do not directly use room.end = inter.end, as in this case room is a copy instead of reference, room[i]
-                    rooms[i] = Room(start:room.start,end:inter.end)
-                    findRoom = true
-                    break
-                }
-            }
-            
-            if !findRoom {
-                rooms.append(Room(start:inter.start, end:inter.end))
+        starts.sort()
+        ends.sort()
+        
+        var room = 0
+        var endIndex = 0
+        
+        for i in 0..<starts.count {
+            if starts[i] < ends[endIndex] {
+                room += 1
+            } else {
+                endIndex += 1
             }
         }
         
-        return rooms.count
+        return room
     }
     //724. Find Pivot Index
     func pivotIndex(_ nums: [Int]) -> Int {
