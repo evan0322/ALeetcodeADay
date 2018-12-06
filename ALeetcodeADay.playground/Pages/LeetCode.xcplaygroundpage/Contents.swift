@@ -6356,6 +6356,44 @@ class Solution {
         
         return result
     }
+    
+    
+    //40. Combination Sum II
+    /*
+     Sort the array to avoid duplicate
+     Traverse each element in the array, if the element is the same as the previous element, then do not traverse. Otherwise continue to find the value - num[i]
+     Time = n + n - 1 + .. + 1 = O(n^2)
+     Space = O(n ^ 2) (for the result)
+     
+     */
+    func combinationSum2(_ candidates: [Int], _ target: Int) -> [[Int]] {
+        guard candidates.count > 0, target > 0 else {
+            return [[Int]]()
+        }
+        
+        var result = [[Int]]()
+        var nums = candidates.sorted()
+        
+        func traverse(index:Int, t: Int, path:[Int]) {
+            if t == 0 {
+                result.append(path)
+                return
+            } else if t < 0 || index > nums.count {
+                return
+            }
+            
+            for i in index..<nums.count {
+                if i > index && nums[i] == nums[i - 1] {
+                    continue
+                }
+                
+                traverse(index: i + 1, t: t - nums[i], path:path + [nums[i]])
+            }
+        }
+        
+        traverse(index:0, t: target, path:[Int]())
+        return result
+    }
 }
 
 
