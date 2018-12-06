@@ -6249,6 +6249,61 @@ class Solution {
         
         return true
     }
+    
+    
+    /*
+     This is basically detect if there is loop in the built graph. One important message is that the number of course to finish is equal to the total number of course. That means if there is no loop the course is gareenteed to be finished. Then we build the graph, go through each of the course do dfs.
+     Note we have to keep track of two sets of memo. One is the node we visited so far to ensure we did not traverse again. One is the node visited for current dfs. If a node is found again a circle is detected.
+     Time: O(N).
+     Space: O(N * N)
+     
+     */
+    
+    //207. Course Schedule
+    func canFinish(_ numCourses: Int, _ prerequisites: [[Int]]) -> Bool {
+        guard numCourses > 0 else {
+            return true
+        }
+        guard prerequisites.count > 0 else {
+            return true
+        }
+        
+        var target = numCourses
+        var graph = [Int:[Int]]()
+        
+        for p in prerequisites {
+            graph[p[0]] = graph[p[0], default:[Int]()] + [p[1]]
+        }
+        
+        var visited = [Int: Bool]()
+        
+        func dfs(node: Int, curVisited:[Int: Bool]) -> Bool {
+            guard curVisited[node] == nil else {
+                return false
+            }
+            guard visited[node] == nil else {
+                return true
+            }
+            visited[node] = true
+            var curVisited = curVisited
+            curVisited[node] = true
+            guard let neighbors = graph[node] else  {
+                return true
+            }
+            for n in neighbors {
+                if dfs(node:n, curVisited:curVisited) == false {
+                    return false
+                }
+            }
+            return true
+        }
+        for i in 0..<numCourses {
+            if !dfs(node: i, curVisited: [Int:Bool]()) {
+                return false
+            }
+        }
+        return true
+    }
 }
 
 
