@@ -6181,6 +6181,44 @@ class Solution {
         
         return canPart(index:0, remain:k, curSum: 0, visited:[Int: Bool]())
     }
+    
+    
+    
+    //103. Binary Tree Zigzag Level Order Traversal
+    func zigzagLevelOrder(_ root: TreeNode?) -> [[Int]] {
+        guard let n = root else {
+            return [[Int]]()
+        }
+        
+        var result = [[Int]]()
+        var memo = [Int: [Int]]()
+        
+        func traverse(root: TreeNode?, level: Int) {
+            guard let node = root else {
+                return
+            }
+            
+            if let nodes = memo[level] {
+                if  level % 2 == 1 {
+                    memo[level] = [node.val] + nodes
+                } else {
+                    memo[level] = nodes + [node.val]
+                }
+            } else {
+                memo[level] = [node.val]
+            }
+            
+            traverse(root:node.left, level: level + 1)
+            traverse(root:node.right, level: level + 1)
+        }
+        
+        traverse(root:n, level:0)
+        for i in 0..<memo.keys.count {
+            result.append(memo[i]!)
+        }
+        
+        return result
+    }
 }
 
 
