@@ -6220,6 +6220,35 @@ class Solution {
         
         return result
     }
+    
+    //266. Palindrome Permutation
+
+    func canPermutePalindrome(_ s: String) -> Bool {
+        guard s.count > 0 else {
+            return false
+        }
+        
+        var memo = [String:Int]()
+        
+        var sArray = s.map{ String($0) }
+        for char in sArray {
+            memo[char] = memo[char, default:0] + 1
+        }
+        
+        var found = false
+        
+        for key in memo.keys {
+            if memo[key]! % 2 != 0 {
+                if found {
+                    return false
+                } else {
+                    found = true
+                }
+            }
+        }
+        
+        return true
+    }
 }
 
 
