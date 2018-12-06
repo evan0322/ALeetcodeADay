@@ -6254,7 +6254,7 @@ class Solution {
     /*
      This is basically detect if there is loop in the built graph. One important message is that the number of course to finish is equal to the total number of course. That means if there is no loop the course is gareenteed to be finished. Then we build the graph, go through each of the course do dfs.
      Note we have to keep track of two sets of memo. One is the node we visited so far to ensure we did not traverse again. One is the node visited for current dfs. If a node is found again a circle is detected.
-     Time: O(N).
+     Time: O(N) N is the number of course.
      Space: O(N * N)
      
      */
@@ -6303,6 +6303,58 @@ class Solution {
             }
         }
         return true
+    }
+    
+    //329. Longest Increasing Path in a Matrix
+    /*
+     This is a special case of dfs.
+     The original way to dfs in 2d matrix is to traverse the array with a memory of what node has been visited, find the node that matches the scenario while keep recording of current max/min value.
+     However it no longer simply works in this case. In this case, the definition of what node should be included in dfs consist of 2 scenario. The next num is smaller than current number  or larger than current number. If we do dfs will miss another scenario.
+     So we use memo[i][j] means longest length that at matrix[i][j] can archive.
+     */
+    func longestIncreasingPath(_ matrix: [[Int]]) -> Int {
+        guard matrix.count > 0 && matrix[0].count > 0 else {
+            return 0
+        }
+        
+        var memo = [[Int]](repeating:[Int](repeating:0, count:matrix[0].count), count:matrix.count)
+        
+        var result = 1
+        
+        let coodinate = [[1, 0], [0, 1], [-1, 0], [0, -1]]
+        
+        func dfs(r:Int, c:Int) -> Int {
+            if memo[r][c] != 0 {
+                return memo[r][c]
+            }
+            
+            let num = matrix[r][c]
+            var count = 1
+            
+            for co in coodinate {
+                var newR = r + co[0]
+                var newC = c + co[1]
+                
+                if newR < 0 || newC < 0 || newR >= memo.count || newC >= memo[0].count || matrix[newR][newC] <= matrix[r][c] {
+                    continue
+                }
+                
+                let len = 1 + dfs(r:newR, c:newC)
+                count = max(count, len)
+            }
+            
+            memo[r][c] = count
+            return count
+        }
+        
+        for i in 0..<matrix.count {
+            for j in 0..<matrix[0].count {
+                var count = dfs(r:i, c:j)
+                result = max(count, result)
+            }
+        }
+        
+        return result
     }
 }
 
