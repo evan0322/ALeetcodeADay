@@ -6129,6 +6129,58 @@ class Solution {
         
         return result
     }
+    
+    
+    //698. Partition to K Equal Sum Subsets
+    //We could use dfs. start from the first index, find the combination where num1 + num2 .. + num3 == target. Then start from index 0 with memory of which numbers has been used.
+    func canPartitionKSubsets(_ nums: [Int], _ k: Int) -> Bool {
+        if nums.count == 0 && k == 0 {
+            return true
+        }
+        guard nums.count > 0, k > 0 else {
+            return false
+        }
+        var target = nums.reduce(0, +)
+        //Remember to check if the target can be fully divided by k
+        if target % k != 0 {
+            return false
+        }
+        target = target/k
+        
+        
+        func canPart(index:Int, remain:Int, curSum: Int, visited:[Int: Bool]) -> Bool {
+            if remain == 0 {
+                return true
+            }
+            
+            if index == nums.count {
+                return false
+            }
+            
+            if curSum == target {
+                //Valid sum find, start from index 0 with all memories
+                return canPart(index:0, remain:remain - 1, curSum:0, visited:visited)
+            } else if curSum > target {
+                return false
+            }
+            
+            for i in index..<nums.count {
+                var visited = visited
+                if visited[i] == true {
+                    continue
+                } else {
+                    visited[i] = true
+                    if canPart(index:i, remain:remain, curSum: curSum + nums[i], visited: visited) {
+                        return true
+                    }
+                }
+            }
+            
+            return false
+        }
+        
+        return canPart(index:0, remain:k, curSum: 0, visited:[Int: Bool]())
+    }
 }
 
 
