@@ -6631,6 +6631,44 @@ class Solution {
         
         return result
     }
+    
+    //929. Unique Email Addresses
+
+    func numUniqueEmails(_ emails: [String]) -> Int {
+        guard emails.count > 0 else {
+            return 0
+        }
+        
+        var memo = [String:Bool]()
+        
+        func getValidEmail(email: String) {
+            var components = email.components(separatedBy:"@")
+            if components.count != 2 {
+                return
+            }
+            var localName = components[0].map{ String($0) }
+            var domainName = components[1]
+            
+            var newLocal = [String]()
+            for char in localName {
+                if char == "+" {
+                    break
+                } else if char == "." {
+                    continue
+                }
+                newLocal.append(char)
+            }
+            
+            var localString = newLocal.joined() + "@" + domainName
+            memo[localString] = true
+        }
+        
+        for email in emails {
+            getValidEmail(email:email)
+        }
+        
+        return memo.keys.count
+    }
 }
 
 
