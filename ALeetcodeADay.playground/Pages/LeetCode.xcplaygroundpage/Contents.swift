@@ -6394,6 +6394,39 @@ class Solution {
         traverse(index:0, t: target, path:[Int]())
         return result
     }
+    
+    //377. Combination Sum IV
+
+    /*
+     This is different from sum III/II/I as it only requires the numbers of the
+     combination instead of combination itself.
+     In this case we can simplify the algorithm we use and use dp instead.
+     dp[n]: number of ways to sum to n with input nums.
+     dp[n] = dp[n - nums[0]] + dp[n - nums[1]] + ... + dp[n - nums[n]]
+     
+     Time Complexity: O(t * nums.count)
+     space Complexity: O(t)
+     */
+    func combinationSum4(_ nums: [Int], _ target: Int) -> Int {
+        guard nums.count > 0, target > 0 else {
+            return 0
+        }
+        
+        //We use double here becuase it exceed Int.max
+        var dp = [Double](repeating:Double(0), count: target + 1)
+        
+        dp[0] = 1
+        
+        for i in 1...target {
+            for j in 0..<nums.count {
+                if i - nums[j] >= 0 {
+                    dp[i] += dp[i - nums[j]]
+                }
+            }
+        }
+        
+        return Int(dp[target])
+    }
 }
 
 
