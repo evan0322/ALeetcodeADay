@@ -2797,13 +2797,15 @@ class Solution {
         
     }
     //76. Minimum Window Substring
+    //
     // This is similar to all the other sub string problem.
     //We have two pointer start and end, first we move end until a valid string is find.
     //Then move start until the string is invalid. Then move the end until the string is valid again.
-    // Note we use count == 0 to decide if the string is valid
+    //The key here is that while you are moving the i, you keep check the result and current i...j sub string until we find an invalid sub string. remember checking does not cost anything
+    
     func minWindow(_ s: String, _ t: String) -> String {
-        var sArray = s.map{ String($0) }
-        var tArray = t.map{ String($0) }
+        var s = s.map{ String($0) }
+        var t = t.map{ String($0) }
         
         guard s.count > 0 && t.count > 0 && t.count <= s.count else {
             return ""
@@ -2815,39 +2817,43 @@ class Solution {
         var memo = [String: Int]()
         var count = t.count
         
-        for char in tArray {
+        for char in t {
             memo[char] = memo[char, default:0] + 1
         }
         
-        var d = Int.max
-        var head = 0
+        var result = [String]()
+        var i = 0
+        var j = 0
         
-        while end < sArray.count {
-            if memo[sArray[end]] != nil {
-                memo[sArray[end]] = memo[sArray[end]]! - 1
-                if memo[sArray[end]]! >= 0 {
+        while j < s.count {
+            if var c = memo[s[j]] {
+                c -= 1
+                memo[s[j]] = c
+                if c >= 0 {
                     count -= 1
                 }
             }
             
             while count == 0 {
-                var cString = sArray[start...end].joined(separator: "")
-                if d > end - start {
-                    d = end - start
-                    head = start
+                if result.count == 0 {
+                    result = Array(s[i...j])
+                } else {
+                    result = result.count > j - i + 1 ? Array(s[i...j]) : result
                 }
-                if memo[sArray[start]] != nil {
-                    memo[sArray[start]] = memo[sArray[start]]! + 1
-                    if memo[sArray[start]]! > 0 {
+                
+                if var c = memo[s[i]] {
+                    c += 1
+                    if c > 0 {
                         count += 1
                     }
+                    memo[s[i]] = c
                 }
-                start += 1
+                i += 1
             }
-            end += 1
+            j += 1
         }
         
-        return d == Int.max ? "" : sArray[head...head + d].joined(separator: "")
+        return result.joined()
     }
     
     //215. Kth Largest Element in an Array
