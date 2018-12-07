@@ -6512,6 +6512,92 @@ class Solution {
         
         return result
     }
+    
+    
+    //904. Fruit Into Baskets
+    //Brute force. Go through each tree and use it as start point. See how many trees we can traverse before we stop.
+    //Time O(n^2) as in worsest case each element is valid candidate
+    //space O(n)
+    func totalFruitBF(_ tree: [Int]) -> Int {
+        guard tree.count > 0 else {
+            return 0
+        }
+        
+        var result = Int.min
+        
+        func pick(index: Int) {
+            var basket = [Int]()
+            var filled = false
+            for i in index..<tree.count {
+                if !basket.contains(tree[i]) {
+                    if basket.count < 2 {
+                        basket.append(tree[i])
+                    } else {
+                        result = max(result, i - index)
+                        filled = true
+                        break
+                    }
+                }
+            }
+            
+            //The basket did not hit the stop condition
+            if !filled {
+                result = max(result, tree.count - index)
+            }
+        }
+        
+        for i in 0..<tree.count {
+            pick(index:i)
+        }
+        
+        return result
+    }
+    
+    /*
+     Sliding window. We keep track of the frequence of the element in the window. If a new element apears, we shrink the window until the new window only has two types of elements. In order to do that, move i to right and delete the element met in the dictionary until the window is valid again.
+     Time: O(n)
+     Space: O(n)
+     */
+    func totalFruit(_ tree: [Int]) -> Int {
+        guard tree.count > 0 else {
+            return 0
+        }
+        
+        var result = Int.min
+        var i = 0
+        var j = 0
+        //We need to use dictionary to track the frequency of current element
+        //When i is moving right, we know delete the met element from dictionary until only 2 element is in that dictionary.
+        var basket = [Int:Int]()
+        
+        while j < tree.count {
+            if !basket.keys.contains(tree[j]) {
+                if basket.count < 2 {
+                    basket[tree[j]] = 1
+                } else {
+                    basket[tree[j]] = 1
+                    //make the window valid again
+                    while basket.keys.count > 2 {
+                        if let count = basket[tree[i]] {
+                            if count - 1 == 0 {
+                                basket[tree[i]] = nil
+                            } else {
+                                basket[tree[i]] = count - 1
+                            }
+                        }
+                        i += 1
+                    }
+                }
+            } else {
+                basket[tree[j]] = basket[tree[j], default:0] + 1
+            }
+            result = max(result, j - i + 1)
+            j += 1
+        }
+        
+        
+        return result
+    }
 }
 
 
