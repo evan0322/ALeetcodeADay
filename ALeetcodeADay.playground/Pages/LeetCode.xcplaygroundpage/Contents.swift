@@ -6427,6 +6427,33 @@ class Solution {
         
         return Int(dp[target])
     }
+    
+    
+    /* we precalculate the sum up to current array. then check if there is prvious sum pSum that sum - k = pSum. If so plus the frequncy of that sum*/
+    func subarraySum(_ nums: [Int], _ k: Int) -> Int {
+        if nums.count == 0 && k == 0 {
+            return 1
+        }
+        
+        guard nums.count > 0 else {
+            return 0
+        }
+        var sum = 0
+        var result = 0
+        var memo = [Int: Int]()
+        
+        memo[0] = 1
+        for i in 0..<nums.count {
+            sum += nums[i]
+            if let count = memo[sum - k] {
+                result += count
+            }
+            
+            memo[sum] = memo[sum, default:0] + 1
+        }
+        
+        return result
+    }
 }
 
 
