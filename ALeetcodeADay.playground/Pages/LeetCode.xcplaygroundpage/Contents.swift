@@ -3261,6 +3261,33 @@ class Solution {
         
     }
     
+    //687. Longest Univalue Path
+    //We traverse the tree. Note at each tree we start a new traverse. If value == pre then it is part of the old travers plus that number. else return 0 to previous traverse
+    func longestUnivaluePath(_ root: TreeNode?) -> Int {
+        guard let n = root else {
+            return 0
+        }
+        
+        var result = Int.min
+        
+        func helper(root: TreeNode?, pre:Int) -> Int {
+            guard let node = root else {
+                return 0
+            }
+            let left = helper(root:node.left, pre: node.val)
+            let right = helper(root:node.right, pre: node.val)
+            result = max(result, left + right)
+            if node.val == pre {
+                return 1 + max(left, right)
+            }
+            return 0
+        }
+        
+        
+        helper(root: n, pre:n.val)
+        return result
+    }
+    
     
     //567. Permutation in String
 
