@@ -525,6 +525,35 @@ class Solution {
         
     }
     
+    
+    //198 House Robber bottom up iteral
+    /*
+     The robber has two options: rob hous i or not.
+     If the robber rob house i then, he cannot rob house i - 1, but he can get max result from i - 2. If robber does not rob house i, then he can get the max value until house i - 1
+     Time: O(n)
+     Space: O(n)
+     */
+    
+    func robIter(_ nums: [Int]) -> Int {
+        guard nums.count > 0 else {
+            return 0
+        }
+        
+        guard nums.count > 1 else {
+            return nums[0]
+        }
+        
+        var dp = [Int](repeating:0, count: nums.count + 1)
+        dp[0] = 0
+        dp[1] = nums[0]
+        
+        for i in 2...nums.count {
+            dp[i] = max(dp[i - 2] + nums[i - 1], dp[i - 1])
+        }
+        
+        return dp[nums.count]
+    }
+    
     // 646. Maximum Length of Pair Chain( sort the array first is the key)
     // Greed solution. First we sort the array based on the last number. we only put the num that has the smallest last digit into the chain to make the chain as big as possible.
     // O(n) = nlogn (The complexity of sort)
