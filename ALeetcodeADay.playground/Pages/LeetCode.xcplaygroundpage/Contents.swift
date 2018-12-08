@@ -6669,6 +6669,35 @@ class Solution {
         
         return memo.keys.count
     }
+    
+    //36. Valid Sudoku
+    func isValidSudoku(_ board: [[Character]]) -> Bool {
+        guard board.count == 9, board[0].count == 9 else {
+            return false
+        }
+        var rows = [[Character:Bool]](repeating:[Character:Bool](),count:9)
+        var cols = [[Character:Bool]](repeating:[Character:Bool](),count:9)
+        var squares = [[[Character:Bool]]](repeating:[[Character:Bool]](repeating:[Character:Bool](),count:3),count:3)
+        
+        for i in 0..<board.count {
+            for j in 0..<board[0].count {
+                var cell = board[i][j]
+                if cell == "." {
+                    continue
+                }
+                var sRow = i/3
+                var sCol = j/3
+                if  rows[i][cell] == true || cols[j][cell] == true || squares[sRow][sCol][cell] == true {
+                    return false
+                }
+                
+                cols[j][cell] = true
+                rows[i][cell] = true
+                squares[sRow][sCol][cell] = true
+            }
+        }
+        return true
+    }
 }
 
 
