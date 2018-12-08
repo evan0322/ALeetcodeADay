@@ -554,6 +554,49 @@ class Solution {
         return dp[nums.count]
     }
     
+    //213. House Robber II
+    /* We can not rob house n and house 0 at the same time. so we can either rob house 1 - house n or rob house 0 to house n - 1
+     */
+    func rob(_ nums: [Int]) -> Int {
+        guard nums.count > 0 else {
+            return 0
+        }
+        
+        guard nums.count > 1 else {
+            return nums[0]
+        }
+        
+        guard nums.count > 2 else {
+            return max(nums[0], nums[1])
+        }
+        
+        var dp = [Int](repeating:0, count: nums.count)
+        
+        var nums1 = nums
+        var nums2 = nums
+        nums1.removeFirst()
+        nums2.removeLast()
+        
+        //we rob house 0 to house n - 1
+        dp[0] = 0
+        dp[1] = nums1[0]
+        for i in 2...nums1.count {
+            dp[i] = max(dp[i - 1], dp[i - 2] + nums1[i - 1])
+        }
+        let p1 = dp[nums1.count]
+        
+        //we rob house 1 to house n
+        dp[0] = 0
+        dp[1] = nums2[0]
+        for i in 2...nums2.count {
+            dp[i] = max(dp[i - 1], dp[i - 2] + nums2[i - 1])
+        }
+        let p2 = dp[nums2.count]
+        
+        
+        return max(p1,p2)
+    }
+    
     // 646. Maximum Length of Pair Chain( sort the array first is the key)
     // Greed solution. First we sort the array based on the last number. we only put the num that has the smallest last digit into the chain to make the chain as big as possible.
     // O(n) = nlogn (The complexity of sort)
