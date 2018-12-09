@@ -6770,6 +6770,40 @@ class Solution {
         }
         return true
     }
+    
+    
+    //45. Jump Game II
+    func jump(_ nums: [Int]) -> Int {
+        guard nums.count > 0 else {
+            return 0
+        }
+        
+        var result = 0
+        
+        var index = 0
+        while index < nums.count - 1 {
+            result += 1
+            let range = index + nums[index]
+            if range >= nums.count - 1 {
+                break
+            }
+            var nIndex = index
+            for i in index...range {
+                if nums[i] + i > nums[nIndex] + nIndex {
+                    nIndex = i
+                }
+            }
+            
+            if nIndex + nums[nIndex] <= range {
+                result = 0
+                break
+            }
+            
+            index = nIndex
+        }
+        
+        return result
+    }
 }
 
 
