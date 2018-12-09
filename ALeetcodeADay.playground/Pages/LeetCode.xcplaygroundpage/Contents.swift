@@ -3545,37 +3545,40 @@ class Solution {
     }
     
     //2. Add Two Numbers
+    /*
+     Be aware of corner cases. What if l1 is empty first? what if there is still counter after the traverse?
+     mockNode is alwasys a good idea to construct a list node
+     */
     func addTwoNumbers(_ l1: ListNode?, _ l2: ListNode?) -> ListNode? {
-        let result = ListNode(-1)
-        var head: ListNode? = result
         
-        var l1Head = l1
-        var l2Head = l2
-        
+        var p1 = l1
+        var p2 = l2
+        var mockNode = ListNode(0)
+        var p = mockNode
         var count = 0
         
-        while l1Head != nil || l2Head != nil {
-            var newValue = 0
-            let value1 = l1Head?.val ?? 0
-            let value2 = l2Head?.val ?? 0
-            newValue = value1 + value2 + count
-            if newValue >= 10 {
-                newValue = newValue % 10
-                count = 1
+        while p1 != nil || p2 != nil {
+            var val = count
+            if p1 != nil {
+                val += p1!.val
             }
+            if p2 != nil {
+                val += p2!.val
+            }
+            count = val/10
+            val = val % 10
+            p.next = ListNode(val)
+            p = p.next!
             
-            let newNode = ListNode(newValue)
-            head?.next = newNode
-            head = head?.next
-            
-            l1Head = l1Head?.next
-            l2Head = l2Head?.next
+            p1 = p1?.next
+            p2 = p2?.next
         }
+        
         if count == 1 {
-            head?.next = ListNode(1)
-            head = head?.next
+            p.next = ListNode(count)
         }
-        return result.next
+        
+        return mockNode.next
     }
     
     //203. Remove Linked List Elements
