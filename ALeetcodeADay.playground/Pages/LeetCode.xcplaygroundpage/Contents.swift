@@ -6804,6 +6804,35 @@ class Solution {
         
         return result
     }
+    //1. Two Sum
+
+    /*
+     Should be easy but we need to ask a few questions.
+     Do we have multiple answers?
+     Can we use the same element twice?
+     Is there any duplicates in the array?
+     */
+    func twoSum(_ nums: [Int], _ target: Int) -> [Int] {
+        guard nums.count > 0 else {
+            return [Int]()
+        }
+        
+        var result = [Int]()
+        
+        var dict = [Int: Int]()
+        for i in 0..<nums.count {
+            if let index = dict[nums[i]] {
+                //This is important to avoid using the same element twice
+                if i != index {
+                    result = [i, index]
+                    break
+                }
+            }
+            dict[target - nums[i]] = i
+        }
+        
+        return result
+    }
 }
 
 
