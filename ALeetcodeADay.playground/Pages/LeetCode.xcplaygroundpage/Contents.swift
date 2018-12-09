@@ -150,32 +150,34 @@ class Solution {
     //        return Set(char).count == char.count
     //    }
     
+    /*
+     Sliding window problem
+     */
+    //3. Longest Substring Without Repeating Characters
     func lengthOfLongestSubstring(_ s: String) -> Int {
-        //Sliding window
-        
-        if s.count < 2 {
-            return s.count
+        guard s.count > 0 else {
+            return 0
         }
         
-        var i = 0
         var j = 0
-        var longest = 0
-        var sArray = Array(s)
+        var i = 0
+        var dict = [String: Bool]()
+        var result = Int.min
+        var s = s.map{ String($0) }
         
-        
-        while i < s.count && j < s.count {
-            for k in i...j {
-                if sArray[k] == sArray[j] {
-                    i = k + 1
-                    if j - i + 1 > longest {
-                        longest = j - i + 1
-                    }
-                    break
+        while j < s.count {
+            if dict[s[j]] == true {
+                while dict[s[j]] == true {
+                    dict[s[i]] = nil
+                    i += 1
                 }
             }
+            dict[s[j]] = true
+            result = max(result, j - i + 1)
             j += 1
         }
-        return max(longest - 1, j - i)
+        
+        return result
     }
     
     
