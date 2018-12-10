@@ -3775,6 +3775,13 @@ class Solution {
     
     
     //31. Next Permutation
+    /*
+     The target is to replace a number in nums so that the nums increase least
+     1. Find the first i from the end that nums[i] < nums[i - 1]
+     2. Swap the num with the closest num in i + 1..<nums.count. Note to search it in reverse order to ensure that after swap the num in i + 1..<nums.count is in descent order.
+     3. Reverse any number between i + 1..<nums.count
+     
+     */
     func nextPermutation(_ nums: inout [Int]) {
         var index = nums.count - 1
         
