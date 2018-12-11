@@ -6897,6 +6897,61 @@ class Solution {
         return true
     }
     
+    
+    //261. Graph Valid Tree
+    
+    /*
+     How to determin is a bidirectional graph has circles:
+     Keep track of an reference to the previous visited node. If the current node's
+     neighb has previous node, skip it, as it is expected. however if current node has
+     a node that is already visited, then a loop is detected
+     */
+    func validTree(_ n: Int, _ edges: [[Int]]) -> Bool {
+        guard edges.count > 0 else {
+            //Special case here. single node tree
+            return n == 1
+        }
+        
+        var graph = [Int:[Int]]()
+        for e in edges {
+            if e[0] == e[1] {
+                return false
+            }
+            
+            graph[e[0]] = graph[e[0], default:[Int]()] + [e[1]]
+            graph[e[1]] = graph[e[1], default:[Int]()] + [e[0]]
+        }
+        var visited = [Int:Bool]()
+        
+        func dfs(n:Int, parent:Int) -> Bool {
+            guard let neighbs = graph[n] else {
+                return false
+            }
+            
+            visited[n] = true
+            
+            for ne in neighbs {
+                if ne == parent {
+                    continue
+                }
+                
+                if visited[ne] == true {
+                    return false
+                }
+                if !dfs(n:ne, parent:n) {
+                    return false
+                }
+            }
+            
+            return true
+        }
+        if !dfs(n:0, parent:-1) {
+            return false
+        }
+        
+        return visited.keys.count == n
+    }
+    
 }
 
 
