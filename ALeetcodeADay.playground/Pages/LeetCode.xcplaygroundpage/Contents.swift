@@ -6899,6 +6899,7 @@ class Solution {
     
     
     //261. Graph Valid Tree
+
     
     /*
      How to determin is a bidirectional graph has circles:
@@ -6951,6 +6952,122 @@ class Solution {
         
         return visited.keys.count == n
     }
+    
+    //417. Pacific Atlantic Water Flow
+
+    /*
+     DFS from the side to the middle.
+     Do the boundary check at the begining of the dfs function instead of during the loop.
+     Do not think to do two things at one dfs. Seperate them. It does not change Big O
+     */
+    func pacificAtlantic(_ matrix: [[Int]]) -> [[Int]] {
+        guard matrix.count > 0, matrix[0].count > 0 else {
+            return [[Int]]()
+        }
+        
+        var result = [[Int]]()
+        
+        //-1: Node is not visited
+        // 0: Node does not lead to ocean
+        // 1: Node lead to ocean.
+        var memoA = [[Bool]](repeating:[Bool](repeating:false, count:matrix[0].count), count: matrix.count)
+        var memoP = [[Bool]](repeating:[Bool](repeating:false, count:matrix[0].count), count: matrix.count)
+        let dirs = [[1, 0], [0, 1], [-1, 0], [0, -1]]
+        
+        func dfs(i:Int, j:Int, height:Int, isA: Bool) {
+            if i < 0 || j < 0 || i >= matrix.count || j >= matrix[0].count || matrix[i][j] < height {
+                return
+            }
+            
+            if isA && memoA[i][j] == true {
+                return
+            }
+            
+            if !isA && memoP[i][j] == true {
+                return
+            }
+            
+            if isA {
+                memoA[i][j] = true
+            } else {
+                memoP[i][j] = true
+            }
+            
+            for dir in dirs {
+                dfs(i: i + dir[0], j: j + dir[1], height: matrix[i][j], isA: isA)
+            }
+        }
+        
+        for m in 0..<matrix[0].count {
+            dfs(i: 0, j: m, height: Int.min, isA: false)
+            dfs(i: matrix.count - 1, j: m, height: Int.min, isA: true)
+        }
+        
+        for n in 0..<matrix.count {
+            dfs(i: n, j: 0, height: Int.min, isA: false)
+            dfs(i: n, j: matrix[0].count - 1, height: Int.min, isA: true)
+        }
+        
+        
+        for i in 0..<matrix.count {
+            for j in 0..<matrix[0].count {
+                if memoP[i][j] == true && memoA[i][j] == true {
+                    result.append([i, j])
+                }
+            }
+        }
+        
+        
+        return result
+    }
+    
+    
+    // 380. Insert Delete GetRandom O(1)
+    class RandomizedSet {
+        var store: [Int:Int]
+        var nums: [Int]
+        /** Initialize your data structure here. */
+        init() {
+            store = [Int:Int]()
+            nums = [Int]()
+        }
+        
+        /** Inserts a value to the set. Returns true if the set did not already contain the specified element. */
+        func insert(_ val: Int) -> Bool {
+            if store[val] != nil {
+                return false
+            }
+            store[val] = nums.count
+            nums.append(val)
+            return true
+        }
+        
+        /** Removes a value from the set. Returns true if the set contained the specified element. */
+        func remove(_ val: Int) -> Bool {
+            guard let loc = store[val] else {
+                return false
+            }
+            
+            if loc < nums.count - 1 {
+                nums.swapAt(loc,nums.count - 1)
+            }
+            store[nums[loc]] = loc
+            store[val] = nil
+            nums.removeLast()
+            
+            return true
+        }
+        
+        /** Get a random element from the set. */
+        func getRandom() -> Int {
+            if nums.count == 0 {
+                return 0
+            }
+            let ran = Int.random(in:0..<nums.count)
+            return nums[ran]
+        }
+    }
+
     
 }
 
