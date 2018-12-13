@@ -7068,6 +7068,33 @@ class Solution {
         }
     }
 
+    //73. Set Matrix Zeroes
+    func setZeroes(_ matrix: inout [[Int]]) {
+        guard matrix.count > 0, matrix[0].count > 0 else {
+            return
+        }
+        
+        var colMemo = [Int:Bool]()
+        var rowMemo = [Int:Bool]()
+        
+        for i in 0..<matrix.count {
+            for j in 0..<matrix[i].count {
+                if matrix[i][j] == 0 {
+                    rowMemo[i] = true
+                    colMemo[j] = true
+                }
+            }
+        }
+        
+        for i in 0..<matrix.count {
+            for j in 0..<matrix[i].count {
+                if rowMemo[i] == true || colMemo[j] == true {
+                    matrix[i][j] = 0
+                }
+            }
+        }
+        
+    }
     
 }
 
