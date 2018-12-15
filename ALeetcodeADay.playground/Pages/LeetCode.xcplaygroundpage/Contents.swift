@@ -2399,7 +2399,7 @@ class Solution {
         
     }
    // 139. Word Break
-
+    //Dp solution. we assume dp[i] is if a word ends at index i. then dp is true if dict contains s[i...j] and dp[i] == true
     func wordBreak(_ s: String, _ wordDict: [String]) -> Bool {
         var dp = Array(repeating:false, count:s.count)
         
@@ -6513,7 +6513,6 @@ class Solution {
                 return memo[r][c]
             }
             
-            let num = matrix[r][c]
             var count = 1
             
             for co in coodinate {
