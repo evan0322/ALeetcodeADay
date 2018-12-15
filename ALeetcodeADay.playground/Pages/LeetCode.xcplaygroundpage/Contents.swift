@@ -7095,6 +7095,28 @@ class Solution {
         
     }
     
+    //204. Count Primes
+    func countPrimes(_ n: Int) -> Int {
+        guard n > 2 else {
+            return 0
+        }
+        
+        var count = 0
+        var notPrime = [Int:Bool]()
+        
+        for i in 2..<n {
+            if notPrime[i] == nil {
+                count += 1
+                var j = 2
+                while j * i < n {
+                    notPrime[j * i] = true
+                    j += 1
+                }
+            }
+        }
+        return count
+    }
+    
 }
 
 
