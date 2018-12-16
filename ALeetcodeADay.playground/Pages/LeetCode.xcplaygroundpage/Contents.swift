@@ -7117,6 +7117,75 @@ class Solution {
         return count
     }
     
+    //403. Frog Jump
+    func canCross(_ stones: [Int]) -> Bool {
+        //[0,{1},{3},{5},6,{8},{12}, {17}]
+        //    1   2   2     3   4     5
+        
+        //backtracing
+        //check if it is the last stone, if it is return true
+        //have current index i and pre steps s
+        //check if stones[i] + [s - 1, s + 1] lands any later stone
+        //for all the landed stone
+        //backtrace newIndex, new steps
+        //If no stone available return false
+        
+        guard stones.count > 1 else {
+            return true
+        }
+        
+        var memo = [Int: Int]()
+        
+        for i in 0..<stones.count {
+            if i > 3 && stones[i] > stones[i - 1] * 2 {
+                return false
+            }
+            memo[stones[i]] = i
+        }
+        
+        var deadEnd = [[Bool]](repeating:[Bool](repeating:false, count:stones.count + 1), count: stones.count + 1)
+        
+        
+        
+        func jump(index:Int, preStep:Int) -> Bool {
+            if index == stones.count - 1 {
+                return true
+            }
+            
+            if deadEnd[index][preStep] == true {
+                return false
+            }
+            
+            if let nIndex = memo[stones[index] + preStep - 1], nIndex > index{
+                if jump(index:nIndex ,preStep:preStep - 1) {
+                    return true
+                } else {
+                    deadEnd[nIndex][preStep - 1] = true
+                }
+            }
+            
+            if let nIndex = memo[stones[index] + preStep], nIndex > index {
+                if jump(index:nIndex,preStep:preStep) {
+                    return true
+                } else {
+                    deadEnd[nIndex][preStep] = true
+                }
+            }
+            
+            if let nIndex = memo[stones[index] + preStep + 1], nIndex > index {
+                if jump(index:nIndex,preStep:preStep + 1) {
+                    return true
+                } else {
+                    deadEnd[nIndex][preStep + 1] = true
+                }
+            }
+            
+            return false
+        }
+        
+        return jump(index:0, preStep: 0)
+    }
+    
 }
 
 
