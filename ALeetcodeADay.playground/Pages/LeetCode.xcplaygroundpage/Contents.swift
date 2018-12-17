@@ -7186,6 +7186,49 @@ class Solution {
         return jump(index:0, preStep: 0)
     }
     
+    //297. Serialize and Deserialize Binary Tree
+
+    func serialize(node: TreeNode?) -> String {
+        var stack = [String]()
+        
+        func traverse(node: TreeNode?) {
+            guard let n = node else {
+                stack.append("*")
+                return
+            }
+            
+            stack.append(String(n.val))
+            traverse(node: n.left)
+            traverse(node: n.right)
+        }
+        
+        traverse(node: node)
+        return stack.joined()
+    }
+    
+    
+    func deserialize(string:String) -> TreeNode? {
+        var queue = string.map({ String($0) })
+        
+        func buildTree() -> TreeNode? {
+            if queue.count == 0 {
+                return nil
+            }
+            
+            let val = queue.removeFirst()
+            if val == "*" {
+                return nil
+            }
+            
+            let node = TreeNode(Int(val)!)
+            node.left = buildTree()
+            node.right = buildTree()
+            return node
+        }
+        
+        return buildTree()
+    }
+    
 }
 
 
