@@ -7346,6 +7346,57 @@ func knapsack(weights:[Int], values:[Int], w:Int) -> Int {
         }
     }
     return dp[weights.count][w]
+    
+    
+    //402. Remove K Digits
+    /*
+     Use stack to track the current puted num. Once we detect that a num is larger than the last one in the stack, we keep poping it until k reach 0 or no such num exists.
+     */
+    func removeKdigits(_ num: String, _ k: Int) -> String {
+        guard num.count > 0 && k > 0 else {
+            return num
+        }
+        
+        // 1432219
+        // 123454
+        // 987654321
+        // find the first i so that num[i] > num[i + 1]
+        // if no i is find,  the last digit is to be removed
+        
+        // 14032219
+        
+        var num = num.map{ String($0) }
+        
+        var stack = [String]()
+        var k = k
+        var i = 0
+        while i < num.count  {
+            while stack.count > 0 && num[i] < stack.last! && k > 0 {
+                stack.removeLast()
+                k -= 1
+            }
+            
+            stack.append(num[i])
+            i += 1
+        }
+        
+        //This is very important to ensure that at the end we poped all the required num
+        while k > 0 && stack.count > 0 {
+            stack.removeLast()
+            k -= 1
+        }
+        
+        //remove 0's
+        var j = 0
+        while j < stack.count && stack[j] == "0" {
+            j += 1
+        }
+        
+        let result = Array(stack[j..<stack.count]).joined()
+        
+        return result.count == 0 || k > 0 ? "0" : result
+        
+    }
 }
 
 //let weights = [20, 10, 30]
@@ -7379,6 +7430,9 @@ extension String {
         return String(Array(self)[index...toIndex])
     }
 }
+
+
+[[1,1],[1,1],[2,1],[1,2],[1,2],[2,2],[1,3],[1,3],[2,3]]
 
 // DFS for with a adjcent matrix
 
@@ -7417,6 +7471,75 @@ public class Interval {
         self.start = start
         self.end = end
     }
+}
+
+
+///MARK: Sorting
+func quickSort(nums: inout [Int], low: Int, high: Int) {
+    
+    if (low < high) {
+        let pivot = partition(nums: &nums, low: low, high: high)
+        
+        quickSort(nums: &nums, low: low, high: pivot - 1)
+        quickSort(nums: &nums, low: pivot + 1, high: high)
+    }
+}
+
+func partition(nums:inout [Int], low:Int, high:Int) -> Int {
+    let pivot = nums[high]
+    var i = low
+    for j in low..<high {
+        if nums[j] <= pivot {
+            nums.swapAt(i, j)
+            i += 1
+        }
+    }
+    
+    nums.swapAt(i, high)
+    return i
+}
+
+func mergeSort(nums:[Int]) -> [Int] {
+    guard nums.count > 1 else {
+        return nums
+    }
+    
+    let mid = nums.count/2
+    
+    let left = mergeSort(nums: Array(nums[0..<mid]))
+    let right = mergeSort(nums: Array(nums[mid..<nums.count]))
+    return merge(left: left, right: right)
+}
+
+func merge(left:[Int], right: [Int]) -> [Int] {
+    var temp = [Int]()
+    var i = 0
+    var j = 0
+    while i < left.count && j < right.count {
+        if left[i] < right[j] {
+            temp.append(left[i])
+            i += 1
+        } else if left[i] > right[j] {
+            temp.append(right[j])
+            j += 1
+        } else {
+            temp.append(left[i])
+            temp.append(right[i])
+            i += 1
+            j += 1
+        }
+    }
+    
+    while i < left.count {
+        temp.append(left[i])
+        i += 1
+    }
+    while j < right.count {
+        temp.append(right[j])
+        j += 1
+    }
+    
+    return temp
 }
 
 
