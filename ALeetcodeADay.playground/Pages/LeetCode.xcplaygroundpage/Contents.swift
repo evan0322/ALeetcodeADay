@@ -3251,6 +3251,8 @@ class Solution {
         return result
     }
     
+    // Use stack
+    
     //926. Flip String to Monotone Increasing
     //Calculate how many 1's one the left plus how many 0's one the right for each char. Then choose the one
     // with minimum zeros + ones
@@ -7396,6 +7398,52 @@ func knapsack(weights:[Int], values:[Int], w:Int) -> Int {
         
         return result.count == 0 || k > 0 ? "0" : result
         
+    }
+    
+    
+    //739. Daily Temperatures
+    func dailyTemperatures(_ T: [Int]) -> [Int] {
+        //The distance between T[i] and the next right element in the array that larger than T[i]
+        var result = [Int](repeating:0, count: T.count)
+        var stack = [Int]()
+        
+        for i in 0..<T.count {
+            if i == 0 || stack.count == 0 {
+                stack.append(i)
+            } else {
+                while stack.count != 0 && T[i] > T[stack.last!]  {
+                    let index = stack.removeLast()
+                    result[index] = i - index
+                }
+                stack.append(i)
+            }
+        }
+        return result
+    }
+    
+    //856. Score of Parentheses 
+    //When we meet a ( ,that means we encounter a new cluster, we append 0 to the stack.
+    //If we meet a ), we meet a closure of the cluster. We pop the last element of stack, then check if it is 0. If it is 0, plus 1 to the previous cluster, other wise, the previous cluster will plus the element multiply by 2
+    func scoreOfParentheses(_ S: String) -> Int {
+        
+        var s = S.map{ String($0) }
+        
+        var stack = [0]
+        
+        for char in s {
+            if char == "(" {
+                stack.append(0)
+            } else {
+                let num = stack.removeLast()
+                if num == 0 {
+                    stack[stack.count - 1] += 1
+                } else {
+                    stack[stack.count - 1] += num * 2
+                }
+            }
+        }
+        
+        return stack.last!
     }
 }
 
