@@ -7421,7 +7421,7 @@ func knapsack(weights:[Int], values:[Int], w:Int) -> Int {
         return result
     }
     
-    //856. Score of Parentheses 
+    //856. Score of Parentheses
     //When we meet a ( ,that means we encounter a new cluster, we append 0 to the stack.
     //If we meet a ), we meet a closure of the cluster. We pop the last element of stack, then check if it is 0. If it is 0, plus 1 to the previous cluster, other wise, the previous cluster will plus the element multiply by 2
     func scoreOfParentheses(_ S: String) -> Int {
@@ -7444,6 +7444,47 @@ func knapsack(weights:[Int], values:[Int], w:Int) -> Int {
         }
         
         return stack.last!
+    }
+    
+    //394. Decode String
+    //Use stack to record the characters in current cluster. If [ is found, push the cur string into stack. If ] is found, calculate the current string based on the num stack. then append current string to the previous cluster.
+    func decodeString(_ s: String) -> String {
+        let s = s.map{ String($0) }
+        var numStack = [Int]()
+        var sStack = [""]
+        var cur = ""
+        
+        var i = 0
+        
+        while i < s.count {
+            if let num = Int(s[i]) {
+                // For example 100[something]
+                var temp = ""
+                while Int(s[i]) != nil {
+                    temp.append(s[i])
+                    i += 1
+                }
+                numStack.append(Int(temp)!)
+            } else if s[i] == "[" {
+                sStack.append(cur)
+                cur = ""
+                i += 1
+            } else if s[i] == "]" {
+                let count = numStack.removeLast()
+                var preString = sStack.removeLast()
+                
+                for i in 0..<count {
+                    preString += cur
+                }
+                cur = preString
+                i += 1
+            } else {
+                cur += s[i]
+                i += 1
+            }
+        }
+        
+        return cur
     }
 }
 
