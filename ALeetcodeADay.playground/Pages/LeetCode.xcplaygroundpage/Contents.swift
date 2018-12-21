@@ -7486,6 +7486,63 @@ func knapsack(weights:[Int], values:[Int], w:Int) -> Int {
         
         return cur
     }
+    
+    //743. Network Delay Time
+    // Djikstra's
+    func networkDelayTime(_ times: [[Int]], _ N: Int, _ K: Int) -> Int {
+        guard  times.count > 0 else {
+            return -1
+        }
+        
+        
+        var graph = [[Int]](repeating:[Int](repeating:-1, count:N + 1), count: N + 1)
+        
+        for t in times {
+            graph[t[0]][t[1]] = t[2]
+        }
+        
+        var memo = [Int: Int]()
+        var visited = [Int: Bool]()
+        //We need to use bfs
+        var queue = [Int]()
+        for i in 1...N {
+            queue.append(i)
+            memo[i] = Int.max
+        }
+        
+        memo[K] = 0
+        
+        while queue.count != 0 {
+            queue.sort(by:{ memo[$0]! < memo[$1]!  })
+            let node = queue.removeFirst()
+            visited[node] = true
+            
+            for i in 0..<graph[node].count {
+                if visited[i] == true || graph[node][i] == -1 {
+                    continue
+                } else {
+                    memo[i]! = min(memo[i]!, memo[node]! + graph[node][i])
+                }
+            }
+        }
+        
+        var maxT = 0
+        
+        print(memo)
+        
+        
+        for i in 1...N {
+            if let time = memo[i] {
+                if time == Int.max {
+                    return -1
+                } else {
+                    maxT = max(maxT, time)
+                }
+            }
+        }
+        
+        return maxT
+    }
 }
 
 //let weights = [20, 10, 30]
