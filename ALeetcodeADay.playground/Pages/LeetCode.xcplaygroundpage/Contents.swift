@@ -7578,6 +7578,48 @@ func knapsack(weights:[Int], values:[Int], w:Int) -> Int {
         return result
         
     }
+    
+    /*
+     The trick is to use BFS instead of dfs, to ensure that heigher level is always at the begining of the array
+     */
+    
+    //314. Binary Tree Vertical Order Traversal
+
+    func verticalOrder(_ root: TreeNode?) -> [[Int]] {
+        
+        guard let node = root else {
+            return [[Int]]()
+        }
+        
+        var memo = [Int:[Int]]()
+        
+        typealias MyNode = (node:TreeNode, col:Int)
+        
+        var queue = [MyNode]()
+        queue.append(MyNode(node:node, col:0))
+        
+        while queue.count != 0 {
+            let mNode = queue.removeFirst()
+            memo[mNode.col] = memo[mNode.col, default:[Int]()] + [mNode.node.val]
+            if let left = mNode.node.left {
+                queue.append(MyNode(node:left, col:mNode.col - 1))
+            }
+            
+            if let right = mNode.node.right {
+                queue.append(MyNode(node:right, col:mNode.col + 1))
+            }
+        }
+        
+        var result = [[Int]]()
+        var keys = Array(memo.keys)
+        keys.sort()
+        for key in keys {
+            result.append(memo[key]!)
+        }
+        
+        return result
+        
+    }
 }
 
 //let weights = [20, 10, 30]
