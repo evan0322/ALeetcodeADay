@@ -7543,6 +7543,41 @@ func knapsack(weights:[Int], values:[Int], w:Int) -> Int {
         
         return maxT
     }
+    
+    //128. Longest Consecutive Sequence
+    func longestConsecutive(_ nums: [Int]) -> Int {
+        guard nums.count > 0 else {
+            return 0
+        }
+        
+        var memo = [Int: Int]()
+        var result = 1
+        
+        for i in 0..<nums.count {
+            if memo[nums[i]] == nil {
+                var l = 0
+                var r = 0
+                if let right = memo[nums[i] + 1] {
+                    r = right
+                }
+                
+                if let left = memo[nums[i] - 1] {
+                    l = left
+                }
+                let sum = l + r + 1
+                
+                result = max(result,sum)
+                
+                memo[nums[i]] = sum
+                memo[nums[i] + r] = sum
+                memo[nums[i] - l] = sum
+            }
+        }
+        
+        
+        return result
+        
+    }
 }
 
 //let weights = [20, 10, 30]
