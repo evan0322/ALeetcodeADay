@@ -7679,6 +7679,61 @@ func knapsack(weights:[Int], values:[Int], w:Int) -> Int {
             return count
         }
     }
+    
+    //310. Minimum Height Trees
+    // Keep deleting nodes layer by layer until the number of rest nodes less than 2 (could be 1 or 2)
+    func findMinHeightTrees(_ n: Int, _ edges: [[Int]]) -> [Int] {
+        guard n > 0 else {
+            return [Int]()
+        }
+        
+        if edges.count == 0 {
+            var result = [Int]()
+            for i in 0..<n {
+                result.append(i)
+            }
+            return result
+        }
+        
+        var graph = [Int:[Int]]()
+        
+        var count = n
+        
+        for e in edges {
+            graph[e[0]] = graph[e[0], default:[Int]()] + [e[1]]
+            graph[e[1]] = graph[e[1], default:[Int]()] + [e[0]]
+        }
+        
+        var deleteQ = [Int]()
+        
+        for i in 0..<graph.count {
+            if let ne = graph[i] {
+                if ne.count == 1 {
+                    deleteQ.append(i)
+                }
+            }
+        }
+        
+        while count > 2 {
+            count -= deleteQ.count
+            var newQ = [Int]()
+            for node in deleteQ {
+                let ne = graph[node]!.first!
+                if let nodes = graph[ne] {
+                    graph[ne] = nodes.filter({ $0 != node })
+                    if graph[ne]!.count == 1 {
+                        newQ.append(ne)
+                    }
+                }
+                graph[node] = nil
+            }
+            
+            deleteQ = newQ
+        }
+        
+        
+        return Array(graph.keys)
+    }
 
 
 }
