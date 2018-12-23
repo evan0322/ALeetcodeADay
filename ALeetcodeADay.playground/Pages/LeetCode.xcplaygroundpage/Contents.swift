@@ -7620,6 +7620,32 @@ func knapsack(weights:[Int], values:[Int], w:Int) -> Int {
         return result
         
     }
+    
+    
+    //280. Wiggle Sort
+    
+    func wiggleSort(_ nums: inout [Int]) {
+        /* nums[0] <= nums[1] >= nums[2] <= nums[3]
+         [1, 2, 3, 4, 5, 6]
+         
+         
+         */
+        
+        for i in 0..<nums.count {
+            if i == 0 {
+                continue
+            } else {
+                if i % 2 != 0 && nums[i] < nums[i - 1] {
+                    nums.swapAt(i, i - 1)
+                } else if i % 2 == 0 && nums[i] > nums[i - 1] {
+                    nums.swapAt(i, i - 1)
+                }
+            }
+        }
+        
+        
+    }
+
 }
 
 //let weights = [20, 10, 30]
