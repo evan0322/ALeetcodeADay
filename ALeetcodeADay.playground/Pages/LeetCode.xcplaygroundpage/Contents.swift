@@ -7645,6 +7645,41 @@ func knapsack(weights:[Int], values:[Int], w:Int) -> Int {
         
         
     }
+    
+    //362. Design Hit Counter
+    class HitCounter {
+        var hits: [Int]
+        /** Initialize your data structure here. */
+        init() {
+            self.hits = [Int]()
+        }
+        
+        /** Record a hit.
+         @param timestamp - The current timestamp (in seconds granularity). */
+        func hit(_ timestamp: Int) {
+            hits.append(timestamp)
+        }
+        
+        /** Return the number of hits in the past 5 minutes.
+         @param timestamp - The current timestamp (in seconds granularity). */
+        func getHits(_ timestamp: Int) -> Int {
+            if hits.count == 0 {
+                return 0
+            }
+            var count = 0
+            var i = hits.count - 1
+            while i >= 0 && hits[i] > timestamp - 300 {
+                count += 1
+                i -= 1
+            }
+            if i >= 0 {
+                hits = Array(hits[i..<hits.count])
+            }
+            
+            return count
+        }
+    }
+
 
 }
 
