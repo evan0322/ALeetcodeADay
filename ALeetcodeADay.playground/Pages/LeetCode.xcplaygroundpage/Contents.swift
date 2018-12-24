@@ -7734,6 +7734,40 @@ func knapsack(weights:[Int], values:[Int], w:Int) -> Int {
         
         return Array(graph.keys)
     }
+    
+    
+    //482. License Key Formatting
+    func licenseKeyFormatting(_ S: String, _ K: Int) -> String {
+        guard S.count > 0 else {
+            return ""
+        }
+        
+        var S = S.map{ String($0) }
+        var cleanS = [String]()
+        for i in 0..<S.count {
+            if S[i] != "-" {
+                cleanS.append(S[i])
+            }
+        }
+        var result = [String]()
+        var index = cleanS.count % K
+        if index == 0 {
+            index = K
+        }
+        
+        for i in (0..<cleanS.count) {
+            if i == index {
+                result.append("-")
+            } else if (i - index) % K == 0 && i != 0 {
+                result.append("-")
+            }
+            result.append(cleanS[i].uppercased())
+            
+        }
+        
+        return result.joined()
+    }
+
 
 
 }
