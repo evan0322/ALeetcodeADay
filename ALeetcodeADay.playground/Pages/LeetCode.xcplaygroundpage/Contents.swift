@@ -7767,6 +7767,43 @@ func knapsack(weights:[Int], values:[Int], w:Int) -> Int {
         
         return result.joined()
     }
+    
+    //93. Restore IP Addresses
+    func restoreIpAddresses(_ s: String) -> [String] {
+        guard s.count >= 4 else {
+            return [String]()
+        }
+        var result = [String]()
+        let s = s.map{ String($0) }
+        
+        func dfs(index:Int, path:[String]) {
+            if index >= s.count && path.count == 4 {
+                result.append(path.joined(separator:"."))
+            }
+            
+            if index >= s.count || path.count >= 4 {
+                return
+            }
+            
+            let s1 = s[index]
+            dfs(index:index + 1, path:path + [s1])
+            if index + 1 < s.count && s[index] != "0" {
+                let s2 = Array(s[index...index + 1]).joined()
+                dfs(index:index + 2, path: path + [s2])
+            }
+            
+            if index + 2 < s.count && s[index] != "0" {
+                let s3 = Array(s[index...index + 2]).joined()
+                if s3 < "256" {
+                    dfs(index:index + 3, path: path + [s3])
+                }
+            }
+        }
+        
+        dfs(index:0, path:[String]())
+        
+        return result
+    }
 
 
 
