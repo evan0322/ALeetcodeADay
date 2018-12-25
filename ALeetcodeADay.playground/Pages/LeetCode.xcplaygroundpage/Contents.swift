@@ -7804,6 +7804,111 @@ func knapsack(weights:[Int], values:[Int], w:Int) -> Int {
         
         return result
     }
+    
+    //42. Trapping Rain Water
+    //Approach 1 using stack
+    /*
+     Enqueue the decreasing sequences. While encounter a larger number, dequeue all previews element and calculate the depth
+     */
+    func trap(_ height: [Int]) -> Int {
+        guard height.count > 1 else {
+            return 0
+        }
+        
+        
+        var i = 0
+        var result = 0
+        var queue = [Int]()
+        
+        while i < height.count {
+            if queue.isEmpty ||  height[i] <= height[queue.last!] {
+                queue.append(i)
+                i += 1
+            } else {
+                let pre = queue.removeLast()
+                if !queue.isEmpty {
+                    let minHeight = min(height[i], height[queue.last!])
+                    result += (minHeight - height[pre]) * (i - queue.last! - 1)
+                }
+            }
+        }
+        
+        return result
+    }
+    
+    //Solution 2
+    //DP
+    // First let's take a look at brute force. We calculate te max height of i's left and right
+    // Then we choose the min one, then the water current i can collect is minHeight - height[i]
+    
+    func trapBruteForce(_ height: [Int]) -> Int {
+        guard height.count > 1 else {
+            return 0
+        }
+        
+        var result = 0
+        
+        for i in 0..<height.count {
+            if i == 0 || i == height.count - 1 {
+                continue
+            } else {
+                var leftMax = 0
+                var rightMax = 0
+                for m in 0..<i {
+                    leftMax = max(height[m], leftMax)
+                }
+                
+                for n in i + 1..<height.count {
+                    rightMax = max(height[n], rightMax)
+                }
+                
+                let minHeight = min(leftMax,rightMax)
+                if minHeight > height[i] {
+                    result += minHeight - height[i]
+                }
+            }
+        }
+        
+        return result
+    }
+    
+    // We were calculate left max and right max again and again, we can prepare the date before head to
+    // memorize.
+    func trapDP(_ height: [Int]) -> Int {
+        guard height.count > 1 else {
+            return 0
+        }
+        
+        var result = 0
+        var leftDp = [Int](repeating:0, count:height.count)
+        var rightDp = [Int](repeating:0, count:height.count)
+        var leftMax = 0
+        var rightMax = 0
+        for i in 0..<height.count {
+            leftDp[i] = max(leftMax, height[i])
+            leftMax = leftDp[i]
+        }
+        
+        for i in (0..<height.count).reversed() {
+            rightDp[i] = max(rightMax, height[i])
+            rightMax = rightDp[i]
+        }
+        
+        for i in 0..<height.count {
+            if i == 0 || i == height.count - 1 {
+                continue
+            } else {
+                let minHeight = min(leftDp[i - 1],rightDp[i + 1])
+                if minHeight > height[i] {
+                    result += minHeight - height[i]
+                }
+            }
+        }
+        
+        return result
+    }
+ 
+ 
 
 
 
