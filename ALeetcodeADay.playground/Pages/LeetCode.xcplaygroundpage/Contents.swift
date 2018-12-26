@@ -55,7 +55,7 @@ class Solution {
                 }
             }
             common = common + currentCommon
-            }
+        }
         return common
     }
     
@@ -65,17 +65,17 @@ class Solution {
     /*
      func longestCommonPrefix(_ strs: [String]) -> String {
      
-         guard !strs.isEmpty else {
-             return ""
-         }
-         var prefix = strs[0]
-         for index in 1..<strs.count {
-             while !strs[index].hasPrefix(prefix) {
-                 prefix = String(prefix.dropLast())
-             }
-         }
+     guard !strs.isEmpty else {
+     return ""
+     }
+     var prefix = strs[0]
+     for index in 1..<strs.count {
+     while !strs[index].hasPrefix(prefix) {
+     prefix = String(prefix.dropLast())
+     }
+     }
      
-         return prefix
+     return prefix
      }
      */
     
@@ -430,13 +430,13 @@ class Solution {
     }
     
     /*
-    The follow solustion is the alternative solution for longest increasing subsequence (bottom up)
+     The follow solustion is the alternative solution for longest increasing subsequence (bottom up)
      We dp should be defined as "d[i]" the longest increasing subsequence that ends with num[i]
      Then we go through each num in nums. With each num, we review all the d[j] that j<i. if nums[i] > nums[j] then numbs[i] can be part of the nums[j] LIS. We also need to keep track on the current max LIS with current i. After the result is finished, then we go through each nums again to find the largest LIS.
      
      BigO = 1 + 2 + 3 .... + n = O(n^2)
-    
-    */
+     
+     */
     func lengthOfLIS_V2(_ nums: [Int]) -> Int {
         if nums.count == 0 {
             return 0
@@ -602,7 +602,7 @@ class Solution {
     // 646. Maximum Length of Pair Chain( sort the array first is the key)
     // Greed solution. First we sort the array based on the last number. we only put the num that has the smallest last digit into the chain to make the chain as big as possible.
     // O(n) = nlogn (The complexity of sort)
-
+    
     func findLongestChain(_ pairs: [[Int]]) -> Int {
         if pairs.count <= 1 {
             return pairs.count
@@ -712,13 +712,13 @@ class Solution {
     
     //416. Partition Equal Subset Sum
     /*
-    This problem is essentially let us to find whether there are several numbers in a set which are able to sum to a specific value (in this problem, the value is sum/2).
-    
-    Actually, this is a 0/1 knapsack problem, for each number, we can pick it or not. Let us assume dp[i][j] means whether the specific sum j can be gotten from the first i numbers. If we can pick such a series of numbers from 0-i whose sum is j, dp[i][j] is true, otherwise it is false.
-    
-    Base case: dp[0][0] is true; (zero number consists of sum 0 is true)
-    
-    Transition function: For each number, if we don’t pick it, dp[i][j] = dp[i-1][j], which means if the first i-1 elements has made it to j, dp[i][j] would also make it to j (we can just ignore nums[i]). If we pick nums[i]. dp[i][j] = dp[i-1][j-nums[i]], which represents that j is composed of the current value nums[i] and the remaining composed of other previous numbers. Thus, the transition function is dp[i][j] = dp[i-1][j] || dp[i-1][j-nums[i]]
+     This problem is essentially let us to find whether there are several numbers in a set which are able to sum to a specific value (in this problem, the value is sum/2).
+     
+     Actually, this is a 0/1 knapsack problem, for each number, we can pick it or not. Let us assume dp[i][j] means whether the specific sum j can be gotten from the first i numbers. If we can pick such a series of numbers from 0-i whose sum is j, dp[i][j] is true, otherwise it is false.
+     
+     Base case: dp[0][0] is true; (zero number consists of sum 0 is true)
+     
+     Transition function: For each number, if we don’t pick it, dp[i][j] = dp[i-1][j], which means if the first i-1 elements has made it to j, dp[i][j] would also make it to j (we can just ignore nums[i]). If we pick nums[i]. dp[i][j] = dp[i-1][j-nums[i]], which represents that j is composed of the current value nums[i] and the remaining composed of other previous numbers. Thus, the transition function is dp[i][j] = dp[i-1][j] || dp[i-1][j-nums[i]]
      */
     func canPartition(_ nums: [Int]) -> Bool {
         var sum = 0
@@ -889,7 +889,7 @@ class Solution {
         return dp[nums.count][target]
     }
     
-   // 859. Buddy Strings
+    // 859. Buddy Strings
     func buddyStrings(_ A: String, _ B: String) -> Bool {
         
         if A.count != B.count {
@@ -931,7 +931,7 @@ class Solution {
     
     //368. Largest Divisible Subset
     /* Similar to #LIS problem
- 
+     
      */
     func largestDivisibleSubset(_ nums: [Int]) -> [Int] {
         if nums.count == 0 {
@@ -1003,7 +1003,7 @@ class Solution {
     
     
     //387. First Unique Character in a String
-
+    
     func firstUniqChar(_ s: String) -> Int {
         var countDict = [String: Int]()
         var stringArray = s.map{ String($0) }
@@ -1151,7 +1151,7 @@ class Solution {
     
     //572. Subtree of Another Tree
     func isSubtree(_ s: TreeNode?, _ t: TreeNode?) -> Bool {
-
+        
         func isSameTree(t1: TreeNode?, t2: TreeNode?) -> Bool {
             if t1 == nil && t2 == nil {
                 return true
@@ -1385,7 +1385,7 @@ class Solution {
     
     //543. Diameter of Binary Tree
     //For this question, we calculate the max depth of a tree as normal. The difference is that we use             ans = max(ans, maxL + maxR) to memorize the max length between the max depth of the node's left child and its right child.
-
+    
     func diameterOfBinaryTree(_ root: TreeNode?) -> Int {
         
         var ans = 0
@@ -1441,7 +1441,7 @@ class Solution {
     
     //113. Path Sum II
     // Note the sum is not neccessarily positive
-
+    
     func pathSum(_ root: TreeNode?, _ sum: Int) -> [[Int]] {
         var result = [[Int]]()
         
@@ -1473,7 +1473,7 @@ class Solution {
     // dp[4] = dp[0] * dp[3] + dp[1] * dp[2] + dp[2] * dp[1] + dp[3] * dp[0] = 14
     // dp[n] = dp[0] * dp[n - 1] + ... + dp[n-1] * dp[1]
     func numTrees(_ n: Int) -> Int {
-       
+        
         
         var dp = [Int:Int]()
         
@@ -1658,7 +1658,7 @@ class Solution {
     
     //328. Odd Even Linked List
     // The node convention is very complex. Note "even != nil && even!.next != nil"
-
+    
     func oddEvenList(_ head: ListNode?) -> ListNode? {
         guard let headNode = head else {
             return nil
@@ -2071,7 +2071,7 @@ class Solution {
     }
     
     //784. Letter Case Permutation
-
+    
     func letterCasePermutation(_ S: String) -> [String] {
         var result = [""]
         var number = "0123456789"
@@ -2103,7 +2103,7 @@ class Solution {
     }
     
     //766. Toeplitz Matrix
-
+    
     func isToeplitzMatrix(_ matrix: [[Int]]) -> Bool {
         guard matrix.count > 0 else {
             return true
@@ -2142,7 +2142,7 @@ class Solution {
         return true
     }
     //153. Find Minimum in Rotated Sorted Array
-
+    
     func findMin(_ nums: [Int]) -> Int {
         
         var begin = 0
@@ -2167,7 +2167,7 @@ class Solution {
     }
     
     //383. Ransom Note
-
+    
     func canConstruct(_ ransomNote: String, _ magazine: String) -> Bool {
         var memo = [Character: Int]()
         for char in magazine {
@@ -2249,7 +2249,7 @@ class Solution {
     }
     
     //200. Number of Islands
-
+    
     func numIslands(_ grid: [[Character]]) -> Int {
         guard grid.count > 0 else {
             return 0
@@ -2286,7 +2286,7 @@ class Solution {
     }
     
     //13. Roman to Integer
-
+    
     func romanToInt(_ s: String) -> Int {
         var sArray = s.map{String($0)}
         
@@ -2316,11 +2316,11 @@ class Solution {
         return result
     }
     
-   // 15. 3Sum
+    // 15. 3Sum
     /*
      We want traverse the array, for each element, we look for uniqu num[j] + num[k] = -num[i]
      The tricky part is we use two pointer to go through the candicate for num[i], ignore the duplicate nums, then append them to the result
- */
+     */
     func threeSum(_ nums: [Int]) -> [[Int]] {
         if nums.count < 3 {
             return []
@@ -2398,7 +2398,7 @@ class Solution {
         return result
         
     }
-   // 139. Word Break
+    // 139. Word Break
     //Dp solution. we assume dp[i] is if a word ends at index i. then dp is true if dict contains s[i...j] and dp[i] == true
     func wordBreak(_ s: String, _ wordDict: [String]) -> Bool {
         var dp = Array(repeating:false, count:s.count)
@@ -2499,7 +2499,7 @@ class Solution {
     }
     
     //23. Merge k Sorted Lists
-
+    
     func mergeKLists(_ lists: [ListNode?]) -> ListNode? {
         var lists = lists.flatMap({ $0 })
         var result = ListNode(-1)
@@ -2574,7 +2574,7 @@ class Solution {
     }
     //127. Word Ladder
     //BFS
-
+    
     func ladderLength(_ beginWord: String, _ endWord: String, _ wordList: [String]) -> Int {
         var set = Set(wordList)
         var az = "abcdefghijklmnopqrstuvwxyz"
@@ -2833,7 +2833,7 @@ class Solution {
     }
     
     //268. Missing Number
-
+    
     func missingNumber(_ nums: [Int]) -> Int {
         //Calculate 1 + 2 + ... + n then mins sum(nums). The difference is the missing number
         return nums.count*(nums.count+1)/2 - nums.reduce(0, +)
@@ -2931,7 +2931,7 @@ class Solution {
     }
     
     //215. Kth Largest Element in an Array
-
+    
     func findKthLargest(_ nums: [Int], _ k: Int) -> Int {
         var sortedNums = nums.sorted()
         return sortedNums[sortedNums.count - k]
@@ -2955,7 +2955,7 @@ class Solution {
         
     }
     //700. Search in a Binary Search Tree
-
+    
     func searchBST(_ root: TreeNode?, _ val: Int) -> TreeNode? {
         guard let node = root else {
             return nil
@@ -2970,7 +2970,7 @@ class Solution {
         return nil
     }
     
-   // 245. Shortest Word Distance III
+    // 245. Shortest Word Distance III
     func shortestWordDistance(_ words: [String], _ word1: String, _ word2: String) -> Int {
         var index1 = [Int]()
         var index2 = [Int]()
@@ -2999,7 +2999,7 @@ class Solution {
     }
     
     // 437. Path Sum III
-
+    
     func pathSum(_ root: TreeNode?, _ sum: Int) -> Int {
         guard let n = root else {
             return 0
@@ -3013,7 +3013,7 @@ class Solution {
             
             return (n.val == target ? 1: 0) + findPath(root: n.left, target: target - n.val) + findPath(root:n.right, target:target - n.val)
         }
-
+        
         return findPath(root: n, target: sum) + pathSum(n.left, sum) + pathSum(n.right, sum)
     }
     
@@ -3366,7 +3366,7 @@ class Solution {
     
     
     //567. Permutation in String
-
+    
     /*
      Sliding window soluion. We use memo to track the chars in s1. Then use count to judge if
      All chars in s1 can be find in current window
@@ -3527,7 +3527,7 @@ class Solution {
     }
     
     //771. Jewels and Stones
-
+    
     func numJewelsInStones(_ J: String, _ S: String) -> Int {
         var result = 0
         var memo = [String:Int]()
@@ -3604,7 +3604,7 @@ class Solution {
         return fakeNode.next
     }
     //557. Reverse Words in a String III
-
+    
     func reverseWords(_ s: String) -> String {
         var words = s.map({ String($0) })
         var temp = ""
@@ -3674,7 +3674,7 @@ class Solution {
         
         return result
     }
-   
+    
     //674. Longest Continuous Increasing Subsequence
     func findLengthOfLCIS(_ nums: [Int]) -> Int {
         var result = 0
@@ -3924,7 +3924,7 @@ class Solution {
         
     }
     //448. Find All Numbers Disappeared in an Array
-
+    
     func findDisappearedNumbers(_ nums: [Int]) -> [Int] {
         guard nums.count > 0 else {
             return [Int]()
@@ -3980,7 +3980,7 @@ class Solution {
     }
     
     //114. Flatten Binary Tree to Linked List
-
+    
     func flatten(_ root: TreeNode?) {
         var stack = [TreeNode]()
         
@@ -4013,7 +4013,7 @@ class Solution {
         fTree(root)
     }
     //287. Find the Duplicate Number
-
+    
     func findDuplicate(_ nums: [Int]) -> Int {
         var sNums = nums.sorted()
         for i in 0..<sNums.count {
@@ -4097,7 +4097,7 @@ class Solution {
     }
     
     //279. Perfect Squares
-
+    
     func numSquares(_ n: Int) -> Int {
         //Time exceeded
         //         var dp = Array(repeating:Int.max, count:n + 1)
@@ -4383,8 +4383,8 @@ class Solution {
     
     //547. Friend Circles
     /*
-    The relationship between friend consists a graph with adjcent matrix.
-    In order to find how many isolated group in the matrix, we need to traver from each people.
+     The relationship between friend consists a graph with adjcent matrix.
+     In order to find how many isolated group in the matrix, we need to traver from each people.
      if a people is visited, means he is friend of some previous person, we skip. otherwise a new
      friend circle is found.
      */
@@ -4738,7 +4738,7 @@ class Solution {
     
     
     //238. Product of Array Except Self
-
+    
     func productExceptSelf(_ nums: [Int]) -> [Int] {
         guard nums.count > 0 else {
             return [Int]()
@@ -4864,10 +4864,10 @@ class Solution {
         
         return pre
     }
-
+    
     
     //179. Largest Number
-
+    
     func largestNumber(_ nums: [Int]) -> String {
         guard nums.count > 0 else {
             return ""
@@ -4890,7 +4890,7 @@ class Solution {
     
     //124. Binary Tree Maximum Path Sum
     /*
-    In the maxiumDown, each input node has two responsibility.
+     In the maxiumDown, each input node has two responsibility.
      First calculate the max value starting from this node. The second
      is to provide a path (either right or left), including itself, for the upper
      node to use.
@@ -5030,7 +5030,7 @@ class Solution {
         
         board = result
     }
-
+    
     //412. Fizz Buzz
     func fizzBuzz(_ n: Int) -> [String] {
         guard n > 0 else {
@@ -5055,7 +5055,7 @@ class Solution {
     }
     
     //91. Decode Ways
-
+    
     func numDecodings(_ s: String) -> Int {
         if s.count == 0 {
             return 0
@@ -5752,7 +5752,7 @@ class Solution {
     }
     
     //628. Maximum Product of Three Numbers
-
+    
     func maximumProduct(_ nums: [Int]) -> Int {
         guard nums.count > 2 else {
             return 0
@@ -5811,7 +5811,7 @@ class Solution {
     }
     
     //331. Verify Preorder Serialization of a Binary Tree
-
+    
     /*
      all non-null node provides 2 outdegree and 1 indegree (2 children and 1 parent), except root
      all null node provides 0 outdegree and 1 indegree (0 child and 1 parent).
@@ -6133,18 +6133,18 @@ class Solution {
         }
         
     }
-
-
+    
+    
     //276. Paint Fence
     /*
-    For each fence with index i, assum the color is c[i]
-    we have two scenario,
-    c[i] != c[i - 1]
-    Then we have k-1 ways to paint
-    c[i] == c[i - 1]
-    Then c[i - 1] must not be the same as c[i - 2]. Then we have
-    k - 1 ways to paint i - 1.
-    dp[i] = (k - 1) * dp[i - 1] + (k - 1) * dp[i - 2]
+     For each fence with index i, assum the color is c[i]
+     we have two scenario,
+     c[i] != c[i - 1]
+     Then we have k-1 ways to paint
+     c[i] == c[i - 1]
+     Then c[i - 1] must not be the same as c[i - 2]. Then we have
+     k - 1 ways to paint i - 1.
+     dp[i] = (k - 1) * dp[i - 1] + (k - 1) * dp[i - 2]
      */
     func numWays(_ n: Int, _ k: Int) -> Int {
         guard n > 0, k > 0 else {
@@ -6351,7 +6351,7 @@ class Solution {
     }
     
     //266. Palindrome Permutation
-
+    
     func canPermutePalindrome(_ s: String) -> Bool {
         guard s.count > 0 else {
             return false
@@ -6582,7 +6582,7 @@ class Solution {
     }
     
     //377. Combination Sum IV
-
+    
     /*
      This is different from sum III/II/I as it only requires the numbers of the
      combination instead of combination itself.
@@ -6728,7 +6728,7 @@ class Solution {
     }
     
     //929. Unique Email Addresses
-
+    
     func numUniqueEmails(_ emails: [String]) -> Int {
         guard emails.count > 0 else {
             return 0
@@ -6828,7 +6828,7 @@ class Solution {
         return result
     }
     //1. Two Sum
-
+    
     /*
      Should be easy but we need to ask a few questions.
      Do we have multiple answers?
@@ -6900,7 +6900,7 @@ class Solution {
     
     
     //261. Graph Valid Tree
-
+    
     
     /*
      How to determin is a bidirectional graph has circles:
@@ -6955,7 +6955,7 @@ class Solution {
     }
     
     //417. Pacific Atlantic Water Flow
-
+    
     /*
      DFS from the side to the middle.
      Do the boundary check at the begining of the dfs function instead of during the loop.
@@ -7068,7 +7068,7 @@ class Solution {
             return nums[ran]
         }
     }
-
+    
     //73. Set Matrix Zeroes
     func setZeroes(_ matrix: inout [[Int]]) {
         guard matrix.count > 0, matrix[0].count > 0 else {
@@ -7189,7 +7189,7 @@ class Solution {
     }
     
     //297. Serialize and Deserialize Binary Tree
-
+    
     func serialize(node: TreeNode?) -> String {
         var stack = [String]()
         
@@ -7230,125 +7230,6 @@ class Solution {
         
         return buildTree()
     }
-    
-}
-
-
-
-//Extra
-
-//Eight queen problem The eight queens puzzle is the problem of placing eight chess queens on an 8×8 chessboard so that no two queens threaten each other. Thus, a solution requires that no two queens share the same row, column, or diagonal. The eight queens puzzle is an example of the more general n queens problem of placing n non-attacking queens on an n×n chessboard, for which solutions exist for all natural numbers n with the exception of n=2 and n=3
-typealias chess = (r:Int, c:Int)
-
-let totalSize = 8
-
-var result = [[chess]]()
-
-func isPlacable(chesses:[chess], row: Int) -> Bool {
-    for i in 0..<chesses.count {
-        if row == chesses[i].r - chesses.count + i ||
-            row == chesses[i].r + chesses.count - i ||
-            row == chesses[i].r {
-            return false
-        }
-    }
-    return true
-}
-
-
-func placeChess(placedChessses:[chess], c: Int) {
-    if placedChessses.count == totalSize {
-        result.append(placedChessses)
-    } else {
-        for i in 0..<totalSize {
-            if isPlacable(chesses: placedChessses, row: i) {
-                let newChesses = placedChessses + [chess(i, c)]
-                placeChess(placedChessses: newChesses, c: c + 1)
-            }
-        }
-    }
-}
-
-
-// knapsack. Give n item with values and weights, a backpack with capacity weightLimit. Try to figure out the best solution to pack the backpack with bigest value
-// Each item has two states: packed and not packed. If it is packed, the new weight limit will be weightLimit  - weights[index] but value will be increased by values[index]. We need to find the maximum between these two senario
-
-
-// Following is DP without memo. Complexity 2^n
-//func knapsack(weightLimit:Int, weights:[Int], values:[Int], index: Int) -> Int {
-//
-//    if weightLimit <= 0 || index == 0 {
-//        return 0
-//    } else {
-//        return max(knapsack(weightLimit: weightLimit,
-//                            weights: weights,
-//                            values: values,
-//                            index: index - 1), knapsack(weightLimit: weightLimit  - weights[index],
-//                                                        weights: weights,
-//                                                        values: values,
-//                                                        index: index - 1) + values[index])
-//    }
-//
-//}
-
-
-//Here is the solustion with memo. complexity Wn
-func knapsack(W:Int,ws:[Int],vs:[Int]) -> Int {
-    var memo = Array(repeating: Array(repeating:-1, count:ws.count), count: W + 1)
-    
-    func knapsackDP(weightLimit:Int, weights:[Int], values:[Int], index: Int) -> Int {
-        
-        if weightLimit <= 0 || index == 0 {
-            return 0
-        } else if memo[weightLimit][index] != -1 {
-            print("return mmo")
-            return memo[weightLimit][index]
-        } else {
-            memo[weightLimit][index] = max(knapsackDP(weightLimit: weightLimit,
-                                                      weights: weights,
-                                                      values: values,
-                                                      index: index - 1), knapsackDP(weightLimit: weightLimit  - weights[index],
-                                                                                    weights: weights,
-                                                                                    values: values,
-                                                                                    index: index - 1) + values[index])
-            return memo[weightLimit][index]
-        }
-        
-        
-        
-    }
-    
-    return knapsackDP(weightLimit: W, weights: ws, values: vs, index: ws.count - 1)
-    
-    
-}
-
-//iteratively solution
-func knapsack(weights:[Int], values:[Int], w:Int) -> Int {
-    guard weights.count > 0, values.count > 0, w > 0 else {
-        return 0
-    }
-    
-    //dp: the maxium value can be archived using first ith item and not exceeding j
-    //dp[i][j] = max(dp[i - 1][j], dp[i][j - weights[i]] + values[i])
-    var dp = [[Int]](repeating: [Int](repeating: 0, count: w + 1), count: weights.count + 1)
-    
-    for i in 0..<dp.count {
-        for j in 0..<dp[0].count {
-            if i == 0 || j == 0 {
-                dp[i][j] = 0
-            } else {
-                if j - weights[i - 1] >= 0 {
-                    //Note here using dp[i - 1] instead of dp[i] to avoid using the same item again.
-                    dp[i][j] = max(dp[i - 1][j], dp[i - 1][j - weights[i - 1]] + values[i - 1])
-                } else {
-                    dp[i][j] = dp[i - 1][j]
-                }
-            }
-        }
-    }
-    return dp[weights.count][w]
-    
     
     //402. Remove K Digits
     /*
@@ -7584,7 +7465,7 @@ func knapsack(weights:[Int], values:[Int], w:Int) -> Int {
      */
     
     //314. Binary Tree Vertical Order Traversal
-
+    
     func verticalOrder(_ root: TreeNode?) -> [[Int]] {
         
         guard let node = root else {
@@ -7985,24 +7866,137 @@ func knapsack(weights:[Int], values:[Int], w:Int) -> Int {
             memo[key] = node
         }
     }
-
-
+    
+    class Node {
+        var val: Int
+        let key: Int
+        var pre: Node?
+        var next: Node?
+        
+        init(key:Int, val: Int) {
+            self.key = key
+            self.val = val
+            self.pre = nil
+            self.next = nil
+        }
+    }
+    
 }
 
-class Node {
-    var val: Int
-    let key: Int
-    var pre: Node?
-    var next: Node?
-    
-    init(key:Int, val: Int) {
-        self.key = key
-        self.val = val
-        self.pre = nil
-        self.next = nil
+//Extra
+
+//Eight queen problem The eight queens puzzle is the problem of placing eight chess queens on an 8×8 chessboard so that no two queens threaten each other. Thus, a solution requires that no two queens share the same row, column, or diagonal. The eight queens puzzle is an example of the more general n queens problem of placing n non-attacking queens on an n×n chessboard, for which solutions exist for all natural numbers n with the exception of n=2 and n=3
+typealias chess = (r:Int, c:Int)
+
+let totalSize = 8
+
+var result = [[chess]]()
+
+func isPlacable(chesses:[chess], row: Int) -> Bool {
+    for i in 0..<chesses.count {
+        if row == chesses[i].r - chesses.count + i ||
+            row == chesses[i].r + chesses.count - i ||
+            row == chesses[i].r {
+            return false
+        }
+    }
+    return true
+}
+
+
+func placeChess(placedChessses:[chess], c: Int) {
+    if placedChessses.count == totalSize {
+        result.append(placedChessses)
+    } else {
+        for i in 0..<totalSize {
+            if isPlacable(chesses: placedChessses, row: i) {
+                let newChesses = placedChessses + [chess(i, c)]
+                placeChess(placedChessses: newChesses, c: c + 1)
+            }
+        }
     }
 }
 
+
+// knapsack. Give n item with values and weights, a backpack with capacity weightLimit. Try to figure out the best solution to pack the backpack with bigest value
+// Each item has two states: packed and not packed. If it is packed, the new weight limit will be weightLimit  - weights[index] but value will be increased by values[index]. We need to find the maximum between these two senario
+
+
+// Following is DP without memo. Complexity 2^n
+//func knapsack(weightLimit:Int, weights:[Int], values:[Int], index: Int) -> Int {
+//
+//    if weightLimit <= 0 || index == 0 {
+//        return 0
+//    } else {
+//        return max(knapsack(weightLimit: weightLimit,
+//                            weights: weights,
+//                            values: values,
+//                            index: index - 1), knapsack(weightLimit: weightLimit  - weights[index],
+//                                                        weights: weights,
+//                                                        values: values,
+//                                                        index: index - 1) + values[index])
+//    }
+//
+//}
+
+
+//Here is the solustion with memo. complexity Wn
+func knapsack(W:Int,ws:[Int],vs:[Int]) -> Int {
+    var memo = Array(repeating: Array(repeating:-1, count:ws.count), count: W + 1)
+    
+    func knapsackDP(weightLimit:Int, weights:[Int], values:[Int], index: Int) -> Int {
+        
+        if weightLimit <= 0 || index == 0 {
+            return 0
+        } else if memo[weightLimit][index] != -1 {
+            print("return mmo")
+            return memo[weightLimit][index]
+        } else {
+            memo[weightLimit][index] = max(knapsackDP(weightLimit: weightLimit,
+                                                      weights: weights,
+                                                      values: values,
+                                                      index: index - 1), knapsackDP(weightLimit: weightLimit  - weights[index],
+                                                                                    weights: weights,
+                                                                                    values: values,
+                                                                                    index: index - 1) + values[index])
+            return memo[weightLimit][index]
+        }
+        
+        
+        
+    }
+    
+    return knapsackDP(weightLimit: W, weights: ws, values: vs, index: ws.count - 1)
+    
+    
+}
+
+//iteratively solution
+func knapsack(weights:[Int], values:[Int], w:Int) -> Int {
+    guard weights.count > 0, values.count > 0, w > 0 else {
+        return 0
+    }
+    
+    //dp: the maxium value can be archived using first ith item and not exceeding j
+    //dp[i][j] = max(dp[i - 1][j], dp[i][j - weights[i]] + values[i])
+    var dp = [[Int]](repeating: [Int](repeating: 0, count: w + 1), count: weights.count + 1)
+    
+    for i in 0..<dp.count {
+        for j in 0..<dp[0].count {
+            if i == 0 || j == 0 {
+                dp[i][j] = 0
+            } else {
+                if j - weights[i - 1] >= 0 {
+                    //Note here using dp[i - 1] instead of dp[i] to avoid using the same item again.
+                    dp[i][j] = max(dp[i - 1][j], dp[i - 1][j - weights[i - 1]] + values[i - 1])
+                } else {
+                    dp[i][j] = dp[i - 1][j]
+                }
+            }
+        }
+    }
+    return dp[weights.count][w]
+}
 //let weights = [20, 10, 30]
 //let values = [100, 110, 120]
 //let weightLimit = 55

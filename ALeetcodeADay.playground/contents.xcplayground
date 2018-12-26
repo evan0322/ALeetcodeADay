@@ -3,5 +3,6 @@
     <pages>
         <page name='LeetCode'/>
         <page name='CrackingTheCodeInterview'/>
+        <page name='311 Sparse Matrix Multiplication '/>
     </pages>
 </playground>
