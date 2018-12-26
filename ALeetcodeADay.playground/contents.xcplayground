@@ -4,5 +4,6 @@
         <page name='LeetCode'/>
         <page name='CrackingTheCodeInterview'/>
         <page name='311 Sparse Matrix Multiplication '/>
+        <page name='378. Kth Smallest Element in a Sorted Matrix '/>
     </pages>
 </playground>
