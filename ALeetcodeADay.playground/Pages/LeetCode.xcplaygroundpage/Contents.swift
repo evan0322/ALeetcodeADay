@@ -7907,11 +7907,100 @@ func knapsack(weights:[Int], values:[Int], w:Int) -> Int {
         
         return result
     }
- 
- 
+    
+    //146. LRU Cache
+    //Use a bidirectional linked list with hash table for purging and quick search
+    //The trick is to use a fake nodes for both head and tail so that will do not have to deal with empty nodes
+    class LRUCache {
+        var count: Int
+        var capacity: Int
+        var head: Node
+        var tail: Node
+        var memo: [Int: Node]
+        
+        init(_ capacity: Int) {
+            self.capacity = capacity
+            self.count = 0
+            self.head = Node(key: 0, val: 0)
+            self.tail = Node(key: 0, val: 0)
+            self.memo = [Int: Node]()
+        }
+        
+        func get(_ key: Int) -> Int {
+            guard let node = memo[key] else {
+                return -1
+            }
+            
+            //Remove node
+            moveNodeToHead(node: node)
+            memo[key] = node
+            return node.val
+        }
+        
+        func moveNodeToHead(node:Node) {
+            if let pre = node.pre {
+                pre.next = node.next
+            }
+            
+            if let next = node.next {
+                next.pre = node.pre
+            }
+            
+            node.next = self.head.next
+            head.next?.pre = node
+            
+            self.head.next = node
+            node.pre = head
+        }
+        
+        func put(_ key: Int, _ value: Int) {
+            if let node = memo[key] {
+                node.val = value
+                moveNodeToHead(node: node)
+                return
+            }
+            
+            let node = Node(key:key, val: value)
+            head.next?.pre = node
+            node.next = head.next
+            
+            node.pre = head
+            head.next = node
+            
+            if count == 0 {
+                tail.pre = node
+                node.next = tail
+            }
+            
+            count += 1
+            if count > capacity {
+                if let pre = tail.pre {
+                    memo[pre.key] = nil
+                    tail.pre = pre.pre
+                    pre.pre?.next = tail
+                    count -= 1
+                }
+            }
+            
+            memo[key] = node
+        }
+    }
 
 
+}
 
+class Node {
+    var val: Int
+    let key: Int
+    var pre: Node?
+    var next: Node?
+    
+    init(key:Int, val: Int) {
+        self.key = key
+        self.val = val
+        self.pre = nil
+        self.next = nil
+    }
 }
 
 //let weights = [20, 10, 30]
