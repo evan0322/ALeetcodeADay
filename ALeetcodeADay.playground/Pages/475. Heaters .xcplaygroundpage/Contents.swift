@@ -4,6 +4,7 @@ import Foundation
 
 
 //Use binary search. For each house, perform binary search to find the closest heater. Keep track of a maximum distance you will get the answer
+//Time complexity O(mlog(n)) m is the number of the house. n is the number of the heater.
 func findRadius(_ houses: [Int], _ heaters: [Int]) -> Int {
     
     var heaters = heaters.sorted()
