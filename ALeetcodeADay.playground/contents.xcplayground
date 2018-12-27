@@ -6,5 +6,7 @@
         <page name='311 Sparse Matrix Multiplication '/>
         <page name='378. Kth Smallest Element in a Sorted Matrix '/>
         <page name='PriorityQueue'/>
+        <page name='947. Most Stones Removed with Same Row or Column '/>
+        <page name='475. Heaters '/>
     </pages>
 </playground>
