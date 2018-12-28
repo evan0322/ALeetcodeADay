@@ -8,5 +8,7 @@
         <page name='PriorityQueue'/>
         <page name='947. Most Stones Removed with Same Row or Column '/>
         <page name='475. Heaters '/>
+        <page name='694. Number of Distinct Islands '/>
+        <page name='84. Largest Rectangle in Histogram'/>
     </pages>
 </playground>
