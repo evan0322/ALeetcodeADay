@@ -10,5 +10,6 @@
         <page name='475. Heaters '/>
         <page name='694. Number of Distinct Islands '/>
         <page name='84. Largest Rectangle in Histogram'/>
+        <page name='85. Maximal Rectangle'/>
     </pages>
 </playground>

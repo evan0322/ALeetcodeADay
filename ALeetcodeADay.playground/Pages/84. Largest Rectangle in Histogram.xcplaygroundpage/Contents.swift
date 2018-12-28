@@ -3,7 +3,6 @@ import Foundation
 
 
 //84. Largest Rectangle in Histogram
-class Solution {
     //Use dynamic programming
     //     func largestRectangleArea(_ heights: [Int]) -> Int {
     //         guard heights.count > 0 else {
@@ -37,25 +36,27 @@ class Solution {
     //stack solution
     /*
      For the problem of the graph with a bar, we need to first think what the problem can be translated to. For example, in this problem, we can translate this to: for each bar, find the max rectagle can be formed with current bar as the smallest. Then we can further translate the problem to: for each bar i, find the first bar that smaller thant current bar on the left, and find the first bar that are smaller than current bar on the right, then area = (right - left - 1) * height[i]. So we keep a stack of bars, if we have h[i] < stack.last, then the first bar on the right that small er than i has been found, apparently the left boundary is next item in the stack as the bar is in ascending order. If the stack is empty, then that means thers is no previous bar that lower than stack.last, then we have width of i, otherwise width = i - stack.last - 1.
+     
+     Time complexity: O(n) since one bar only popout/in  once
      */
     func largestRectangleArea(_ heights: [Int]) -> Int {
-        guard heights.count > 0 else {
-            return 0
-        }
-        
-        let heights = [0] + heights + [0]
-        
-        var stack = [Int]()
-        var mh = 0
-        
-        for i in 0..<heights.count {
-            while stack.count > 0 && heights[stack.last!] > heights[i] {
-                let cur = stack.removeLast()
-                let width = i - stack.last! - 1
-                mh = max(width * heights[cur], mh)
+            guard heights.count > 0 else {
+                return 0
             }
-            stack.append(i)
-        }
-        
-        return mh
-}
+            
+            let heights = [0] + heights + [0]
+            
+            var stack = [Int]()
+            var mh = 0
+            
+            for i in 0..<heights.count {
+                while stack.count > 0 && heights[stack.last!] > heights[i] {
+                    let cur = stack.removeLast()
+                    let width = i - stack.last! - 1
+                    mh = max(width * heights[cur], mh)
+                }
+                stack.append(i)
+            }
+            
+            return mh
+    }
