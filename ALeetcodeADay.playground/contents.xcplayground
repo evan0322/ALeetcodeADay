@@ -14,5 +14,6 @@
         <page name='621. Task Scheduler '/>
         <page name='496. Next Greater Element I '/>
         <page name='332. Reconstruct Itinerary '/>
+        <page name='907. Sum of Subarray Minimums '/>
     </pages>
 </playground>
