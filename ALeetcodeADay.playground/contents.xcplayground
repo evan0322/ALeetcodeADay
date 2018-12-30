@@ -11,5 +11,7 @@
         <page name='694. Number of Distinct Islands '/>
         <page name='84. Largest Rectangle in Histogram'/>
         <page name='85. Maximal Rectangle'/>
+        <page name='621. Task Scheduler '/>
+        <page name='496. Next Greater Element I '/>
     </pages>
 </playground>
