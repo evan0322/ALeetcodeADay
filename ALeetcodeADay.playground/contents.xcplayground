@@ -16,5 +16,6 @@
         <page name='332. Reconstruct Itinerary '/>
         <page name='907. Sum of Subarray Minimums '/>
         <page name='130. Surrounded Regions '/>
+        <page name='131. Palindrome Partitioning'/>
     </pages>
 </playground>
