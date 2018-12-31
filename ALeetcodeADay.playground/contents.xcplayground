@@ -15,5 +15,6 @@
         <page name='496. Next Greater Element I '/>
         <page name='332. Reconstruct Itinerary '/>
         <page name='907. Sum of Subarray Minimums '/>
+        <page name='130. Surrounded Regions '/>
     </pages>
 </playground>
