@@ -17,5 +17,7 @@
         <page name='907. Sum of Subarray Minimums '/>
         <page name='130. Surrounded Regions '/>
         <page name='131. Palindrome Partitioning'/>
+        <page name='269. Alien Dictionary '/>
+        <page name='44. Wildcard Matching '/>
     </pages>
 </playground>
