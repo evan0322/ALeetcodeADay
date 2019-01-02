@@ -19,5 +19,6 @@
         <page name='131. Palindrome Partitioning'/>
         <page name='269. Alien Dictionary '/>
         <page name='44. Wildcard Matching '/>
+        <page name='155. Min Stack '/>
     </pages>
 </playground>
