@@ -2,6 +2,7 @@
 
 import Foundation
 
+//496. Next Greater Element I 
 /*
  The problem can be translate into "find the next largest element for each of the elements in array array nums2"
  Then we can use stack to keep the decreasing order, then once an element is found we can pop the stack until a larger element in the stack is found

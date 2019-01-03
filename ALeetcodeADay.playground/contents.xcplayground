@@ -24,5 +24,6 @@
         <page name='654. Maximum Binary Tree '/>
         <page name='540. Single Element in a Sorted Array '/>
         <page name='325. Maximum Size Subarray Sum Equals k'/>
+        <page name='238. Product of Array Except Self '/>
     </pages>
 </playground>
