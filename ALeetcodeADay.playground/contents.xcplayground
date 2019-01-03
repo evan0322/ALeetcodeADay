@@ -25,5 +25,6 @@
         <page name='540. Single Element in a Sorted Array '/>
         <page name='325. Maximum Size Subarray Sum Equals k'/>
         <page name='238. Product of Array Except Self '/>
+        <page name='450. Delete Node in a BST '/>
     </pages>
 </playground>
