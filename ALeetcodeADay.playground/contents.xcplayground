@@ -22,5 +22,7 @@
         <page name='155. Min Stack '/>
         <page name='650. 2 Keys Keyboard '/>
         <page name='654. Maximum Binary Tree '/>
+        <page name='540. Single Element in a Sorted Array '/>
+        <page name='325. Maximum Size Subarray Sum Equals k'/>
     </pages>
 </playground>
