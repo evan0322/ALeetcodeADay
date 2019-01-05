@@ -6434,63 +6434,6 @@ class Solution {
         return true
     }
     
-    // 210. Course Schedule II
-    /*
-     The difference between 210. Course Schedule II and 207. Course Schedule is that we need to print out the result not only detect if loop exists. In this case we need to do the same thing as Course Schedule I. However, we need to dps with post order, meaning that we need to visit all the prerequisites of the node (e.g. all node connected to current node) then visit node itself when the prerequisite is finished.
-     Samilarly, we keep track of current visited node and the node visited in current dfs. If a visited node appears then a loop if detected.
-     Note tha we always ask the dfs function to return false if a loop is detected and true if the taverse is compeleted successfully.
-     Time: O(n) since we only visit each node once
-     Space: O(n) graph
-     */
-    func findOrder(_ numCourses: Int, _ prerequisites: [[Int]]) -> [Int] {
-        guard numCourses > 0 else {
-            return [Int]()
-        }
-        
-        var result = [Int]()
-        var graph = [Int: [Int]]()
-        
-        for p in prerequisites {
-            graph[p[0]] = graph[p[0], default:[Int]()] + [p[1]]
-        }
-        
-        var memo = [Int: Bool]()
-        
-        func dfs(index:Int, path:[Int:Bool]) -> Bool {
-            if path[index] == true {
-                return false
-            }
-            
-            if memo[index] == true {
-                return true
-            }
-            var path = path
-            //We need to set the path to true whenever we go through a node.
-            // If we do it after dfs takes action then it is too late as loop is already created
-            path[index] = true
-            
-            if let neighb = graph[index] {
-                for ne in neighb {
-                    if !dfs(index:ne, path: path) {
-                        return false
-                    }
-                }
-            }
-            
-            result.append(index)
-            memo[index] = true
-            return true
-        }
-        
-        for i in 0..<numCourses {
-            if !dfs(index:i, path:[Int:Bool]()) {
-                return [Int]()
-            }
-        }
-        
-        return result
-        
-    }
     
     //329. Longest Increasing Path in a Matrix
     /*
