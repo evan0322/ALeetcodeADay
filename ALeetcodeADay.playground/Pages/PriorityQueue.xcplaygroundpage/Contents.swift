@@ -93,31 +93,88 @@ struct PriorityQueue<Element>
     mutating func swapElement(at firstIndex: Int, with secondIndex: Int) {
         guard firstIndex != secondIndex
             else { return }
-        swap(&elements[firstIndex], &elements[secondIndex])
+        elements.swapAt(firstIndex, secondIndex)
     }
 }
 
-// A bonus extra for you: two extra functions, if the Element type is Equatable
-extension Heap where Element : Equatable {
-    
-    // This function allows you to remove an element from the heap, in a similar way to how you would dequeue the root element.
-    mutating func remove(_ element: Element) {
-        guard let index = elements.index(of: element)
-            else { return }
-        swapElement(at: index, with: count - 1)
-        elements.remove(at: count - 1)
-        siftDown(elementAtIndex: index)
-    }
-    
-    // This function allows you to 'boost' an element, by sifting the element up the heap. You might do this if the element is already in the heap, but its priority has increased since it was enqueued.
-    mutating func boost(_ element: Element) {
-        guard let index = elements.index(of: element)
-            else { return }
-        siftUp(elementAtIndex: index)
-    }
-}
 
-var heap = Heap<Int>(elements: [3, 2, 8, 5, 0], priorityFunction: >)
+public class PriorityQueueSimple<Element> {
+    var elements: [Element]
+    var priorityFunction: (Element, Element) -> Bool
+    var count: Int { return elements.count }
+    
+    init(priorityFunction:@escaping (Element, Element) -> Bool) {
+        self.elements = [Element]()
+        self.priorityFunction = priorityFunction
+    }
+    
+    func isHigherPriority(at index:Int,than secondIndex:Int) -> Bool {
+        return self.priorityFunction(elements[index], elements[secondIndex])
+    }
+    
+    func enqueue(element:Element) {
+        elements.append(element)
+        siftUp(index: elements.count - 1)
+    }
+    
+    func dequeue() -> Element? {
+        if elements.count == 0 {
+            return nil
+        }
+        
+        elements.swapAt(0, elements.count - 1)
+        let element = elements.removeLast()
+        siftDown(index: 0)
+        return element
+    }
+    
+    func peek() -> Element? {
+        return elements.last
+    }
+    
+    func siftUp(index:Int) {
+        if index == 0 {
+            return
+        }
+        
+        let parent = parentIndex(for: index)
+        if isHigherPriority(at: index, than: parent) {
+            elements.swapAt(index, parent)
+            siftUp(index: parent)
+        }
+    }
+    
+    func siftDown(index:Int) {
+        var highIndex = index
+        let leftIndex = leftChildIndex(for: index)
+        let rightIndex = rightChildIndex(for: index)
+        if leftIndex < count && isHigherPriority(at: leftIndex, than: index) {
+            highIndex = leftIndex
+        }
+        if rightIndex < count && isHigherPriority(at: rightIndex, than: highIndex) {
+            highIndex = rightIndex
+        }
+        if highIndex == index {
+            return
+        } else {
+            elements.swapAt(highIndex, index)
+            siftDown(index: highIndex)
+        }
+    }
+    
+    func parentIndex(for index:Int) -> Int {
+        return (index - 1)/2
+    }
+    
+    func leftChildIndex(for index:Int) -> Int {
+        return index * 2 + 1
+    }
+    
+    func rightChildIndex(for index:Int) -> Int {
+        return index * 2 + 2
+    }
+
+var heap = PriorityQueue<Int>(elements: [3, 2, 8, 5, 0], priorityFunction: >)
 heap.enqueue(6)
 heap.enqueue(1)
 heap.enqueue(4)
