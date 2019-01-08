@@ -12,7 +12,6 @@ class Solution {
         
         func fillResult(i:Int, j:Int) {
             var sum = 0
-            var m = 0
             
             for m in 0..<A[i].count {
                 sum += A[i][m] * B[m][j]

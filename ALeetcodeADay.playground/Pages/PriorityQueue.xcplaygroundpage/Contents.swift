@@ -129,7 +129,7 @@ public class PriorityQueueSimple<Element> {
     }
     
     func peek() -> Element? {
-        return elements.last
+        return elements.first
     }
     
     func siftUp(index:Int) {
@@ -173,7 +173,7 @@ public class PriorityQueueSimple<Element> {
     func rightChildIndex(for index:Int) -> Int {
         return index * 2 + 2
     }
-
+}
 var heap = PriorityQueue<Int>(elements: [3, 2, 8, 5, 0], priorityFunction: >)
 heap.enqueue(6)
 heap.enqueue(1)

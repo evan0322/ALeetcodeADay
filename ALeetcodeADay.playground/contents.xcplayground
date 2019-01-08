@@ -28,5 +28,6 @@
         <page name='450. Delete Node in a BST '/>
         <page name='347. Top K Frequent Elements '/>
         <page name='210. Course Schedule II'/>
+        <page name='373. Find K Pairs with Smallest Sums '/>
     </pages>
 </playground>
