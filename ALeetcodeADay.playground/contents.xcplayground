@@ -29,5 +29,7 @@
         <page name='347. Top K Frequent Elements '/>
         <page name='210. Course Schedule II'/>
         <page name='373. Find K Pairs with Smallest Sums '/>
+        <page name='295.Find Median from Data Stream'/>
+        <page name='777. Swap Adjacent in LR String '/>
     </pages>
 </playground>
