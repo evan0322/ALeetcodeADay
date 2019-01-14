@@ -31,5 +31,7 @@
         <page name='373. Find K Pairs with Smallest Sums '/>
         <page name='295.Find Median from Data Stream'/>
         <page name='777. Swap Adjacent in LR String '/>
+        <page name='438. Find All Anagrams in a String'/>
+        <page name='523. Continuous Subarray Sum'/>
     </pages>
 </playground>
