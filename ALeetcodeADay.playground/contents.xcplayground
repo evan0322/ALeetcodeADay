@@ -35,5 +35,7 @@
         <page name='523. Continuous Subarray Sum'/>
         <page name='298. Binary Tree Longest Consecutive Sequence'/>
         <page name='678. Valid Parenthesis String'/>
+        <page name='301. Remove Invalid Parentheses'/>
+        <page name='543. Diameter of Binary Tree'/>
     </pages>
 </playground>
