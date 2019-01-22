@@ -2,8 +2,6 @@
 
 import Foundation
 
-var str = "Hello, playground"
-
 /*
 Samilar to any problem that involve traverse from left to right leaf (cross the node).
  

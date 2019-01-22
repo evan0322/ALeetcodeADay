@@ -8065,7 +8065,7 @@ func merge(left:[Int], right: [Int]) -> [Int] {
             j += 1
         } else {
             temp.append(left[i])
-            temp.append(right[i])
+            temp.append(right[j])
             i += 1
             j += 1
         }
@@ -8081,6 +8081,67 @@ func merge(left:[Int], right: [Int]) -> [Int] {
     }
     
     return temp
+}
+
+/*
+ 
+ 2. 给一个0和1的string， "1101011011"打印arc， 打印的方法给了drawArc（location：Int，length： Int）直接调用就行，location是起始位置，length是连续的1的长度
+ 自己写一个方法drawCode(str: String) 要求打印“1”的位置，要注意的是如果开始和结束都是"1"，要从右边开始打印右侧加左次的长度，左边的就不用重复打印了
+ "1101011011"
+ drawArc（location：8，length： 4）
+ drawArc（location：3，length： 1）. 1point3acres
+ drawArc（location：5，length： 2）
+ 一开始没想出来，后来先看左右是否都是1，如果都是就先把左右print，然后在打印中间的subarray。不知道能不能过
+ */
+
+func drawArc(input:[Int]) -> [[Int]]{
+    guard input.count > 0 else {
+        return [[Int]]()
+    }
+    
+    var result = [[Int]]()
+    
+    var i = 0
+    var input = input
+    
+    while i < input.count && input[i] == 1 {
+        i += 1
+    }
+    
+    if i == input.count {
+        return [[0, input.count]]
+    }
+    
+    var offset = 0
+    
+    if i > 0 {
+        offset = i
+        input = Array(input[i..<input.count] + input[0..<i])
+    }
+    
+    var count = 0
+    
+    for j in 0..<input.count {
+        if input[j] == 0 && count > 0 {
+            result.append([j - count + offset, count])
+            count = 0
+        } else if input[j] == 1 {
+            count += 1
+        }
+    }
+    
+    if count > 0 {
+        //[1,0,0,1,1]
+        // 3 3
+        //[0,0,1,1,1]
+        // 2 3
+        result.append([input.count - count + offset, count])
+    }
+    
+    
+    
+    return result
+    
 }
 
 
