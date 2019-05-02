@@ -39,4 +39,20 @@ class Solution:
         perm([], nums)
         return result
 
+    #53. Maximum Subarray
+    def maxSubArray(self, nums: List[int]) -> int:
+        # dp: max subarray that ends with nums[i]
+        if len(nums) == 0:
+            return 0
+        dp = [0]*len(nums)
+        maxNum = nums[0]
+        for i, num in enumerate(nums):
+            if i == 0:
+                dp[i] = num
+            else:
+                dp[i] = num + (dp[i - 1] if dp[i - 1] > 0 else 0)
+            maxNum = max(maxNum, dp[i])
+        return maxNum
+
+
 
