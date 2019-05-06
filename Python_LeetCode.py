@@ -54,5 +54,17 @@ class Solution:
             maxNum = max(maxNum, dp[i])
         return maxNum
 
+    #206. Reverse Linked List
+    #Draw a graph and everything will be clean
+    def reverseList(self, head: ListNode) -> ListNode:
+        pre = None
+        cur = head
+        nextN = head
+        while cur:
+            nextN = cur.next
+            cur.next = pre
+            pre = cur
+            cur = nextN
+        return pre
 
 
