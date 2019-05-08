@@ -68,3 +68,15 @@ class Solution:
         return pre
 
 
+    #121. Best Time to Buy and Sell Stock
+    def maxProfit(self, prices: List[int]) -> int:
+        if len(prices) == 0:
+            return 0
+        result = 0
+        min_price = prices[0]
+        for price in prices:
+            if price > min_price:
+                result = max(price - min_price, result)
+            min_price = min(price, min_price)
+        return result
+
