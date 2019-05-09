@@ -80,3 +80,14 @@ class Solution:
             min_price = min(price, min_price)
         return result
 
+
+    #9. Palindrome Number
+    def isPalindrome(self, x: int) -> bool:
+        if x < 0:
+            return False
+        rev, x_copy = 0, x
+        while x != 0:
+            rev *= 10
+            rev += x % 10
+            x = int(x/10)
+        return x_copy == rev
