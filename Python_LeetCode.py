@@ -96,3 +96,34 @@ class Solution:
     def reverseString(self, s: List[str]) -> None:
         for i in range(int(len(s)/2)):
             s[i], s[len(s) - i - 1] = s[len(s) - i - 1], s[i]
+
+    #155. Min Stack
+    class MinStack:
+
+        def __init__(self):
+            self.stack = []
+            self.min_stack = []
+            """
+            initialize your data structure here.
+            """
+
+
+        def push(self, x: int) -> None:
+            self.stack.append(x)
+            if not self.min_stack:
+                self.min_stack.append(x)
+            elif x <= self.min_stack[-1]:
+                self.min_stack.append(x)
+
+        def pop(self) -> None:
+            last_val = self.stack.pop()
+            if last_val == self.min_stack[-1]:
+                self.min_stack.pop()
+
+
+        def top(self) -> int:
+            return None if not self.stack else self.stack[-1]
+
+
+        def getMin(self) -> int:
+            return None if not self.min_stack else self.min_stack[-1]
