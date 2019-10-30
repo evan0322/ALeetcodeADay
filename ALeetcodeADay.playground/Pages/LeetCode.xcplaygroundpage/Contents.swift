@@ -7629,6 +7629,48 @@ class Solution {
         return result
     }
     
+    //953. Verifying an Alien Dictionary
+    func isAlienSorted(_ words: [String], _ order: String) -> Bool {
+        if words.count < 2 {
+            return true
+        }
+        var orderMap = [String:Int]()
+        let orderArray = order.map{ String($0) }
+        for i in 0..<orderArray.count {
+            orderMap[orderArray[i]] = i
+        }
+
+        
+        for i in 0..<words.count {
+            if i == 0 {
+                continue
+            }
+            
+            let pre = words[i - 1].map{String($0)}
+            let cur = words[i].map{String($0)}
+            
+            let maxLen = max(pre.count, cur.count)
+            
+            for i in 0..<maxLen {
+                if i >= cur.count {
+                    return false
+                }
+                
+                if i >= pre.count {
+                    break
+                }
+                
+                if orderMap[cur[i]]! < orderMap[pre[i]]! {
+                    return false
+                } else if orderMap[cur[i]]! > orderMap[pre[i]]! {
+                    break
+                }
+            }
+        }
+        
+        return true
+    }
+    
     //42. Trapping Rain Water
     //Approach 1 using stack
     /*
