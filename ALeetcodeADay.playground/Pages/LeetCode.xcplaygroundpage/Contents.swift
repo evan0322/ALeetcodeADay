@@ -7866,9 +7866,62 @@ class Solution {
         }
     }
     
+    //986. Interval List Intersections
+    func intervalIntersection(_ A: [[Int]], _ B: [[Int]]) -> [[Int]] {
+          if A.count == 0 || B.count == 0 {
+               return [[Int]]()
+           }
+           
+           var i = 0
+           var j = 0
+           
+           
+           var result = [[Int]]()
+           
+           while i < A.count && j < B.count {
+    
+               if A[i][0] >= B[j][0] {
+                   if (A[i][0] > B[j][1]) {
+                       //    ****
+                       //***
+                       j += 1
+                   } else if ( A[i][1] <= B[j][1]) {
+                       // ***
+                       //*****
+                       result.append([A[i][0], A[i][1]])
+                       i += 1
+                   } else {
+                       // *****
+                       //*****
+                       result.append([A[i][0], B[j][1]])
+                       j += 1
+                   }
+               } else {
+                   if (A[i][1] < B[j][0] ) {
+                       //***
+                       //    ***
+                       i += 1
+                   } else if ( A[i][1] <= B[j][1]) {
+                       // ***
+                       //  ***
+                       result.append([B[j][0], A[i][1]])
+                       i += 1
+                   } else {
+                       // *****
+                       //  ***
+                       result.append([B[j][0], B[j][1]])
+                       j += 1
+                   }
+               }
+           }
+           
+           return result
+       }
+    
 }
 
-//Extra
+
+//MARK: Extra
 
 //Eight queen problem The eight queens puzzle is the problem of placing eight chess queens on an 8×8 chessboard so that no two queens threaten each other. Thus, a solution requires that no two queens share the same row, column, or diagonal. The eight queens puzzle is an example of the more general n queens problem of placing n non-attacking queens on an n×n chessboard, for which solutions exist for all natural numbers n with the exception of n=2 and n=3
 typealias chess = (r:Int, c:Int)
