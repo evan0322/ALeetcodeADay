@@ -3624,53 +3624,38 @@ class Solution {
     }
     //463. Island Perimeter
     func islandPerimeter(_ grid: [[Int]]) -> Int {
-        guard grid.count > 0 else {
-            return 0
-        }
-        var result = 0
-        
-        //Return the potention perimeter for grid (i,j)
-        func findPerimeter(i:Int, j:Int) -> Int {
-            //Do no forget about this
-            if grid[i][j] == 0 {
-                return 0
-            }
-            var p = 0
-            if j + 1 >= grid[0].count {
-                p += 1
-            } else if grid[i][j + 1] == 0 {
-                p += 1
-            }
-            
-            if j - 1 < 0 {
-                p += 1
-            } else if grid[i][j - 1] == 0 {
-                p += 1
-            }
-            
-            if i + 1 >= grid.count {
-                p += 1
-            } else if grid[i + 1][j] == 0 {
-                p += 1
-            }
-            
-            if i - 1 < 0 {
-                p += 1
-            } else if grid[i - 1][j] == 0 {
-                p += 1
-            }
-            
-            return p
-        }
-        
-        for i in 0..<grid.count {
-            for j in 0..<grid[0].count {
-                result += findPerimeter(i:i, j:j)
-            }
-        }
-        
-        return result
-    }
+          guard grid.count > 0, grid[0].count > 0 else {
+              return 0
+          }
+          
+          var peri = 0
+          var memo = Array(repeating: Array(repeating: false, count: grid[0].count), count: grid.count)
+          
+          func traverse(i:Int, j:Int) -> Int {
+              
+              if i >= grid.count || i < 0 || j >= grid[i].count || j < 0 || grid[i][j] == 0 {
+                  return 1
+              }
+              
+              if memo[i][j] {
+                  return 0
+              }
+
+              memo[i][j] = true
+              
+              return traverse(i:i + 1, j:j) + traverse(i:i - 1, j:j) + traverse(i:i, j:j + 1) + traverse(i:i, j:j - 1)
+          }
+                  
+          for i in 0..<grid.count {
+              for j in 0..<grid[i].count {
+                  if grid[i][j] == 1 {
+                     return traverse(i:i, j:j)
+                  }
+              }
+          }
+          
+          return 0
+      }
     
     //674. Longest Continuous Increasing Subsequence
     func findLengthOfLCIS(_ nums: [Int]) -> Int {
