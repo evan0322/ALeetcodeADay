@@ -1409,34 +1409,31 @@ class Solution {
     }
     
     //199. Binary Tree Right Side View
-    // The trick here is that with preorder traverse, the right node is always visited last. So that if you overwirte the value, it will be the right side view.
+    // The trick here is that with in order traverse, the right node is always visited last. So that if you overwirte the value, it will be the right side view.
+    var result = [Int]()
     func rightSideView(_ root: TreeNode?) -> [Int] {
-        var memo = [Int: Int]()
-        var maxLevel = 0
-        
-        
-        func traverse(node:TreeNode?, cLevel: Int) {
-            guard let n = node else {
-                return
-            }
-            
-            memo[cLevel] = n.val
-            maxLevel = max(maxLevel, cLevel)
-            traverse(node:n.left,cLevel:cLevel + 1)
-            traverse(node:n.right,cLevel:cLevel + 1)
+        guard let node = root else {
+            return [Int]()
         }
         
-        traverse(node:root, cLevel:0)
-        
-        var result = [Int]()
-        
-        for i in 0...maxLevel {
-            if let val = memo[i] {
-                result.append(val)
-            }
-        }
+        self.inOrderTraverse(root: node, level:0)
         
         return result
+    }
+    
+    func inOrderTraverse(root: TreeNode?, level:Int) {
+        guard let node = root else {
+            return
+        }
+        
+        if level >= result.count {
+            result.append(node.val)
+        } else {
+            result[level] = node.val
+        }
+        
+        inOrderTraverse(root:node.left, level:level + 1)
+        inOrderTraverse(root:node.right, level:level + 1)
     }
     
     //113. Path Sum II
