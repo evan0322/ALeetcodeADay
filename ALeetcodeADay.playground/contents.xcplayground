@@ -39,5 +39,7 @@
         <page name='543. Diameter of Binary Tree'/>
         <page name='215. Kth Largest Element in an Array'/>
         <page name='Extra'/>
+        <page name='Binary Search'/>
+        <page name='34. Find First and Last Position of Element in Sorted Array '/>
     </pages>
 </playground>
