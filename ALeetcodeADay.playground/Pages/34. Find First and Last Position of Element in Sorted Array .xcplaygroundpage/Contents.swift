@@ -4,7 +4,7 @@ import Foundation
 //34. Find First and Last Position of Element in Sorted Array
 func searchRange(_ nums: [Int], _ target: Int) -> [Int] {
     guard nums.count > 0 else {
-        return [Int]()
+        return [-1,-1]
     }
     
     let low = binarySearchLower(nums: nums, target: target)
