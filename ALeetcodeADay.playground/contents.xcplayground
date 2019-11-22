@@ -46,5 +46,6 @@
         <page name='76. Minimum Window Substring '/>
         <page name='339. Nested List Weight Sum '/>
         <page name='297. Serialize and Deserialize Binary Tree '/>
+        <page name='721. Accounts Merge '/>
     </pages>
 </playground>
