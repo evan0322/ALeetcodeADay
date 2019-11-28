@@ -47,5 +47,8 @@
         <page name='339. Nested List Weight Sum '/>
         <page name='297. Serialize and Deserialize Binary Tree '/>
         <page name='721. Accounts Merge '/>
+        <page name='737. Sentence Similarity II'/>
+        <page name='684. Redundant Connection '/>
+        <page name='547	 Friend Circles '/>
     </pages>
 </playground>
