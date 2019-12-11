@@ -58,5 +58,6 @@
         <page name='31. Next Permutation '/>
         <page name='22. Generate Parentheses '/>
         <page name='1027. Longest Arithmetic Sequence '/>
+        <page name='128. Longest Consecutive Sequence '/>
     </pages>
 </playground>
