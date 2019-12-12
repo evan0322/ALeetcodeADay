@@ -49,7 +49,6 @@
         <page name='721. Accounts Merge '/>
         <page name='737. Sentence Similarity II'/>
         <page name='684. Redundant Connection '/>
-        <page name='547	 Friend Circles '/>
         <page name='340. Longest Substring with At Most K Distinct Characters '/>
         <page name='Untitled Page'/>
         <page name='767. Reorganize String '/>
@@ -59,5 +58,7 @@
         <page name='22. Generate Parentheses '/>
         <page name='1027. Longest Arithmetic Sequence '/>
         <page name='128. Longest Consecutive Sequence '/>
+        <page name='547	 Friend Circles '/>
+        <page name='791. Custom Sort String '/>
     </pages>
 </playground>
