@@ -3,6 +3,9 @@
 import Foundation
 
 func canVisitAllRooms(_ rooms: [[Int]]) -> Bool {
+    //Only visit each room once
+    //O(Vertex + Edge) time complexity
+    //O(n) space complexity (visited)
     guard rooms.count > 0 else {
         return true
     }
