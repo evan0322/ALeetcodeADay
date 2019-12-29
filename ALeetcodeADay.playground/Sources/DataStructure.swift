@@ -44,3 +44,36 @@ public class UnionFindSet<T: Hashable> {
         }
     }
 }
+
+public class ListNode: CustomStringConvertible {
+    public var val: Int
+    public var next: ListNode?
+    public init(_ val: Int) {
+        self.val = val
+        self.next = nil
+    }
+    
+    public var description: String {
+        var des = "\(self.val)"
+        var next = self.next
+        
+        while next != nil {
+            des += "->\(next!.val)"
+            next = next!.next
+        }
+        
+        return des
+    }
+    
+    public class func createListNode(_ values:[Int]) -> ListNode {
+        let dummy = ListNode(-1)
+        var head = dummy
+        for val in values {
+            let node = ListNode(val)
+            head.next = node
+            head = head.next!
+        }
+        
+        return dummy.next ?? ListNode(-1)
+    }
+}

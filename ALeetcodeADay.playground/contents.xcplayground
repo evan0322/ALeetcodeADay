@@ -50,7 +50,7 @@
         <page name='737. Sentence Similarity II'/>
         <page name='684. Redundant Connection '/>
         <page name='340. Longest Substring with At Most K Distinct Characters '/>
-        <page name='Untitled Page'/>
+        <page name='alienOrder'/>
         <page name='767. Reorganize String '/>
         <page name='1007. Minimum Domino Rotations For Equal Row '/>
         <page name='42. Trapping Rain Water '/>
@@ -68,5 +68,6 @@
         <page name='1166. Design File System '/>
         <page name='547	 Friend Circles '/>
         <page name='57. Insert Interval '/>
+        <page name='1171. Remove Zero Sum Consecutive Nodes from Linked List '/>
     </pages>
 </playground>
