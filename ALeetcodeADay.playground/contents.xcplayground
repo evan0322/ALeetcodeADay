@@ -74,5 +74,6 @@
         <page name='106. Construct Binary Tree from Inorder and Postorder Traversal '/>
         <page name='1054. Distant Barcodes '/>
         <page name='435. Non-overlapping Intervals '/>
+        <page name='72. Edit Distance '/>
     </pages>
 </playground>
