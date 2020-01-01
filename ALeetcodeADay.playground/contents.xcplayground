@@ -71,5 +71,7 @@
         <page name='1171. Remove Zero Sum Consecutive Nodes from Linked List '/>
         <page name='124. Binary Tree Maximum Path Sum '/>
         <page name='1047. Remove All Adjacent Duplicates In String '/>
+        <page name='106. Construct Binary Tree from Inorder and Postorder Traversal '/>
+        <page name='1054. Distant Barcodes '/>
     </pages>
 </playground>
