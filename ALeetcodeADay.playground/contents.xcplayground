@@ -73,5 +73,6 @@
         <page name='1047. Remove All Adjacent Duplicates In String '/>
         <page name='106. Construct Binary Tree from Inorder and Postorder Traversal '/>
         <page name='1054. Distant Barcodes '/>
+        <page name='435. Non-overlapping Intervals '/>
     </pages>
 </playground>
