@@ -66,7 +66,6 @@
         <page name='1135. Connecting Cities With Minimum Cost'/>
         <page name='229. Majority Element II '/>
         <page name='1166. Design File System '/>
-        <page name='547	 Friend Circles '/>
         <page name='57. Insert Interval '/>
         <page name='1171. Remove Zero Sum Consecutive Nodes from Linked List '/>
         <page name='124. Binary Tree Maximum Path Sum '/>
@@ -75,5 +74,8 @@
         <page name='1054. Distant Barcodes '/>
         <page name='435. Non-overlapping Intervals '/>
         <page name='72. Edit Distance '/>
+        <page name='547	 Friend Circles '/>
+        <page name='369. Plus One Linked List '/>
+        <page name='1319. Number of Operations to Make Network Connected '/>
     </pages>
 </playground>
