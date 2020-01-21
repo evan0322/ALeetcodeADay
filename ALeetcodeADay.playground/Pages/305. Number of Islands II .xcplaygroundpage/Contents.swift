@@ -55,6 +55,10 @@ struct UnionFindSet<T: Hashable> {
  For each island we put on the map, we first add to the ufs, then check its surrounding. If we find any other island, union them.
  
  Note we need an extra parameter in the ufs to keep track of the total number of clusters we have so far.
+ 
+ Time complexity: union operation takes O(logmn) (worst case)
+ 
+ The total complexity: KlogMN 
  */
 func numIslands2(_ m: Int, _ n: Int, _ positions: [[Int]]) -> [Int] {
     var ufs = UnionFindSet<String>()
