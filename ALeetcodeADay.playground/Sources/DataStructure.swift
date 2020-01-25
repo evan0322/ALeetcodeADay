@@ -1,47 +1,52 @@
 import Foundation
 
-public class UnionFindSet<T: Hashable> {
-     var index = [T:Int]()
-     var parent = [Int]()
-     var size = [Int]()
+struct UnionFindSet<T: Hashable> {
+    private var indexMap = [T:Int]()
+    private var parent = [Int]()
+    private var size = [Int]()
+    private var count = 0
     
-    
-    public func addSetWith(_ element:T) {
-        self.index[element] = self.parent.count
-        self.parent.append(parent.count)
-        self.size.append(1)
+    mutating func add(_ element:T) {
+        indexMap[element] = parent.count
+        parent.append(parent.count)
+        size.append(1)
+        count += 1
     }
     
-    public func findSetByIndex(_ index:Int) -> Int {
-        if index != parent[index] {
-            parent[index] = self.findSetByIndex(parent[index])
+    internal mutating func findByIndex(_ index:Int) ->Int {
+        if parent[index] == index {
+            return parent[index]
         }
         
+        parent[index] = findByIndex(parent[index])
         return parent[index]
     }
     
-    public func findSetByElement(_ element:T) -> Int? {
-        guard let i = self.index[element] else {
+    mutating func find(_ element:T) -> Int? {
+        guard let index = indexMap[element] else {
             return nil
         }
         
-        return self.findSetByIndex(i)
+        return findByIndex(index)
     }
     
-    public func union(_ firstElement:T, secondElement:T) {
-        if
-            let firstSet = self.findSetByElement(firstElement),
-            let secondSet = self.findSetByElement(secondElement) {
-            if firstSet != secondSet {
-                if self.size[firstSet] < self.size[secondSet] {
-                    parent[firstSet] = secondSet
-                    size[secondSet] += size[firstSet]
-                } else {
-                    parent[secondSet] = firstSet
-                    size[firstSet] += size[secondSet]
-                }
-            }
+    mutating func union(_ first:T, _ second:T) {
+        guard let fIndex = find(first), let sIndex = find(second) else {
+            return
         }
+        
+        if fIndex == sIndex {
+            return
+        }
+        
+        if size[fIndex] >= size[sIndex] {
+            parent[sIndex] = fIndex
+            size[fIndex] += size[sIndex]
+        } else {
+            parent[fIndex] = sIndex
+            size[sIndex] += size[fIndex]
+        }
+        count -= 1
     }
 }
 

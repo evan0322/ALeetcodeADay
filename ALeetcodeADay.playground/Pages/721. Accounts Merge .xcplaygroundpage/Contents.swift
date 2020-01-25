@@ -54,7 +54,6 @@ func accountsMerge(_ accounts: [[String]]) -> [[String]] {
     return result
 }
 
-
 class UnionFind<T: Hashable> {
      var index = [T:Int]()
      var parent = [Int]()
