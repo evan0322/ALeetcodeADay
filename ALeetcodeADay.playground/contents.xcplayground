@@ -92,5 +92,7 @@
         <page name='143. Reorder List '/>
         <page name='705. Design HashSet '/>
         <page name='670. Maximum Swap '/>
+        <page name='994. Rotting Oranges '/>
+        <page name='642. Design Search Autocomplete System '/>
     </pages>
 </playground>
