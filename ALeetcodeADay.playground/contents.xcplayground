@@ -88,11 +88,12 @@
         <page name='122. Best Time to Buy and Sell Stock II '/>
         <page name='1101. The Earliest Moment When Everyone Become Friends '/>
         <page name='990. Satisfiability of Equality Equations '/>
-        <page name='547	 Friend Circles '/>
         <page name='143. Reorder List '/>
         <page name='705. Design HashSet '/>
         <page name='670. Maximum Swap '/>
         <page name='994. Rotting Oranges '/>
         <page name='642. Design Search Autocomplete System '/>
+        <page name='547	 Friend Circles '/>
+        <page name='937. Reorder Data in Log Files '/>
     </pages>
 </playground>
