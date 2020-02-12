@@ -95,7 +95,8 @@
         <page name='642. Design Search Autocomplete System '/>
         <page name='937. Reorder Data in Log Files '/>
         <page name='127. Word Ladder '/>
-        <page name='547	 Friend Circles '/>
         <page name='134. Gas Station '/>
+        <page name='547	 Friend Circles '/>
+        <page name='763. Partition Labels '/>
     </pages>
 </playground>
