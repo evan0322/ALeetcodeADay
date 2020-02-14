@@ -97,7 +97,8 @@
         <page name='127. Word Ladder '/>
         <page name='134. Gas Station '/>
         <page name='763. Partition Labels '/>
-        <page name='547	 Friend Circles '/>
         <page name='115. Distinct Subsequences '/>
+        <page name='547	 Friend Circles '/>
+        <page name='322. Coin Change '/>
     </pages>
 </playground>
