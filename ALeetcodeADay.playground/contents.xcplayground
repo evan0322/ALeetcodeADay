@@ -98,8 +98,10 @@
         <page name='134. Gas Station '/>
         <page name='763. Partition Labels '/>
         <page name='115. Distinct Subsequences '/>
-        <page name='547	 Friend Circles '/>
         <page name='322. Coin Change '/>
         <page name='931. Minimum Falling Path Sum '/>
+        <page name='547	 Friend Circles '/>
+        <page name='1049. Last Stone Weight II '/>
+        <page name='221. Maximal Square '/>
     </pages>
 </playground>
