@@ -104,5 +104,6 @@
         <page name='1049. Last Stone Weight II '/>
         <page name='221. Maximal Square '/>
         <page name='174. Dungeon Game '/>
+        <page name='673. Number of Longest Increasing Subsequence '/>
     </pages>
 </playground>
