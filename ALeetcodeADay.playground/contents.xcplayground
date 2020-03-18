@@ -116,8 +116,9 @@
         <page name='524. Longest Word in Dictionary through Deleting '/>
         <page name='75. Sort Colors '/>
         <page name='939. Minimum Area Rectangle '/>
-        <page name='547	 Friend Circles '/>
         <page name='1055. Shortest Way to Form String '/>
         <page name='1029. Two City Scheduling '/>
+        <page name='547	 Friend Circles '/>
+        <page name='71. Simplify Path '/>
     </pages>
 </playground>
