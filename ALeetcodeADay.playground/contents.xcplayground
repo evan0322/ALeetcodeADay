@@ -123,7 +123,9 @@
         <page name='Untitled Page 3'/>
         <page name='First Unique Number'/>
         <page name='212. Word Search II '/>
-        <page name='547	 Friend Circles '/>
         <page name='1192. Critical Connections in a Network'/>
+        <page name='547	 Friend Circles '/>
+        <page name='763. Partition Labels'/>
+        <page name='1167. Minimum Cost to Connect Sticks'/>
     </pages>
 </playground>
