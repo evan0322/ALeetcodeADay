@@ -1179,6 +1179,38 @@ class Solution {
         return isSubtree(sTree.left, tTree) || isSubtree(sTree.right, tTree)
     }
     
+    func isSubtree2(_ s: TreeNode?, _ t: TreeNode?) -> Bool {
+          var sString = ""
+          var tString = ""
+          
+          func traverse(_ node: TreeNode?, isSTree:Bool) {
+              guard let n = node else {
+                  if isSTree {
+                      sString += ",*"
+                  } else {
+                      tString += ",*"
+                  }
+                  return
+              }
+              
+              if isSTree {
+                  sString += ",\(n.val)"
+              } else {
+                  tString += ",\(n.val)"
+              }
+              
+              traverse(n.left, isSTree:isSTree)
+              traverse(n.right, isSTree:isSTree)
+          }
+          
+          traverse(s, isSTree:true)
+          traverse(t, isSTree:false)
+          
+          return sString.contains(tString)
+      }
+      
+      
+    
     //100. Same Tree
     func isSameTree(_ p: TreeNode?, _ q: TreeNode?) -> Bool {
         if p == nil && q == nil {
@@ -4328,39 +4360,33 @@ class Solution {
     }
     
     //240. Search a 2D Matrix II
-    func searchMatrix(_ matrix: [[Int]], _ target: Int) -> Bool {
-        guard matrix.count > 0 && matrix[0].count > 0 else {
-            return false
-        }
-        //Practice binary search more
-        func bSearch(nums:[Int], target: Int) -> Bool {
-            var l = 0
-            var h = nums.count - 1
-            
-            while l <= h {
-                let m = l + (h - l)/2
-                if target < nums[m] {
-                    h = m - 1
-                } else if target > nums[m] {
-                    l = m + 1
-                } else {
-                    return true
-                }
-            }
-            
-            return false
-        }
-        
-        for column in matrix {
-            if target > column.last! || target < column.first! {
-                continue
-            }
-            if bSearch(nums:column, target:target) {
-                return true
-            }
-        }
-        
-        return false
+    /*
+     Approach one: do binary search for each row. Time Complexity: mlogn
+     Approach two: similar to BST. We eliminate one row/column at a time.
+     starting from right top corner. if target > num, then the entire row starting from num cannot contain
+     the target as all nums are less than num. if target < num, then the entire colomn starting from num can not contain the target as all other numbers are larger than num
+     Time complexity O(M + N)
+     */
+     func searchMatrix(_ matrix: [[Int]], _ target: Int) -> Bool {
+         guard matrix.count > 0, matrix[0].count > 0 else {
+             return false
+         }
+         
+         var i  = 0
+         var j = matrix[i].count - 1
+         
+         while i < matrix.count && j >= 0 {
+             if target == matrix[i][j] {
+                 return true
+             } else if target > matrix[i][j] {
+                 i += 1
+             } else {
+                 j -= 1
+             }
+         }
+         
+         return false
+     }
     }
     
     //547. Friend Circles
