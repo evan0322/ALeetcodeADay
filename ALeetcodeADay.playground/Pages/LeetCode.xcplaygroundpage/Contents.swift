@@ -4146,44 +4146,45 @@ class Solution {
     //5. Longest Palindromic Substring
     // O(n^2)
     func longestPalindrome(_ s: String) -> String {
-        guard s.count > 0 else {
-            return ""
-        }
-        /*
-         dp[i][j]: whether the sub string between index i and j is a palindrome.
-         dp[i][j] is true if the s[i] == s[j] dp[i + 1][j - 1] is a palindrome.
-         Also consider the senario that j - i < s (e.g.'aba' or 'aa') then as long as s[i] == s[j]
-         dp[i][j] is true.
-         Thus dp[i][j] = (s[i] == s[j]) && (j - i < 3 || dp[i + 1][j - 1])
-         */
-        
-        var dp = Array(repeating:Array(repeating:false,count:s.count),count:s.count)
-        
-        var sArray = s.map({ String($0) })
-        
-        var low = 0
-        var high = 0
-        
-        for j in 0..<sArray.count{
-            for i in 0...j {
-                if i == j {
-                    dp[i][j] = true
-                    continue
-                } else {
-                    //Note j - i < 3
-                    dp[i][j] = (sArray[i] == sArray[j]) && (j - i < 3 || dp[i + 1][j - 1])
-                    if dp[i][j] == true && j - i > high - low {
-                        low = i
-                        high = j
-                    }
-                }
-            }
-        }
-        
-        return Array(sArray[low...high]).joined()
-        
-        
-    }
+           /* j
+              0 1 2 3 4
+         i 0  *
+           1    *
+           2      *
+           3        *
+           4          *
+           
+           dp[i][j]: if the substring between i and j is a palindrome
+           dp[i][j] is related to dp[i + 1][j - 1] so i must be decreasing, j must be increasing
+           
+           */
+           guard s.count > 0 else {
+               return ""
+           }
+       
+           
+           let s = s.map{String($0)}
+           
+           var dp = Array(repeating:Array(repeating:false, count:s.count), count:s.count)
+           var start = 0
+           var end = 0
+           
+           for i in (0..<s.count).reversed() {
+               for j in i..<s.count {
+                   if i == j {
+                       dp[i][j] = true
+                   } else {
+                       dp[i][j] = (s[i] == s[j]) && (dp[i + 1][j - 1] || j - i < 3)
+                       if dp[i][j] && j - i > end - start {
+                           end = j
+                           start = i
+                       }
+                   }
+               }
+           }
+           
+           return s[start...end].joined()
+       }
     
     //152. Maximum Product Subarray
     //O(n)
