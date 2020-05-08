@@ -49,6 +49,9 @@ struct UnionFindSet<T: Hashable> {
         }
         count -= 1
     }
+    
+    var temp = "Hello world     ni hao"
+    let arr  = temp.components(separatedBy: .whitespacesAndNewlines)
 }
 
 /*
