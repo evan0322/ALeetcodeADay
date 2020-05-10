@@ -6813,42 +6813,48 @@ class Solution {
     /*
      Paint the node into two colors with dfs, each node should be different from its parent node If a node is painted alreay and the color is the same as its parent, then return false. If the whole graph is painted successfully. Return true.
      */
-    func isBipartite(_ graph: [[Int]]) -> Bool {
-        guard graph.count > 0 else {
-            return false
-        }
-        let black = 0
-        let white = 1
-        var visited = [Int:Int]()
+func isBipartite(_ graph: [[Int]]) -> Bool {
+    guard graph.count > 0 else {
+       return false
+    }
+    
+    var color = Array(repeating:"", count:graph.count)
+    
+    func dfs(index:Int, parentColor:String) -> Bool {
+        var curColor = color[index]
         
-        func bfs(node:Int, pColor:Int) -> Bool {
-            if let color = visited[node] {
-                return color != pColor
+        if curColor != "" {
+            if curColor == parentColor {
+                return false
             }
-            
-            visited[node] = pColor == white ? black : white
-            
-            let neighb = graph[node]
-            for n in neighb {
-                if !bfs(node:n, pColor:visited[node]!) {
-                    return false
-                }
-            }
-            return true
-        }
-        
-        //Note here we need to loop through all the nodes just in case we have
-        //isolated node
-        for i in 0..<graph.count {
-            if visited[i] == nil {
-                if !bfs(node:i, pColor:white) {
-                    return false
-                }
+        } else {
+            curColor = parentColor == "black" ? "red" : "black"
+            color[index] = curColor
+            let neighbs = graph[index]
+            for n in neighbs {
+               if dfs(index:n, parentColor:curColor) == false {
+                   return false
+               }
             }
         }
         
         return true
     }
+    
+    if !dfs(index:0, parentColor:"") {
+        return false
+    }
+    
+    for i in 0..<graph.count {
+        if color[i] == "" {
+            if !dfs(index:i, parentColor:"") {
+                return false
+            }
+        }
+    }
+    
+    return true
+}
     
     
     //261. Graph Valid Tree
