@@ -131,5 +131,6 @@
         <page name='415. Add Strings '/>
         <page name='56. Merge Intervals '/>
         <page name='199. Binary Tree Right Side View '/>
+        <page name='23. Merge k Sorted Lists '/>
     </pages>
 </playground>
