@@ -7881,57 +7881,7 @@ func isBipartite(_ graph: [[Int]]) -> Bool {
         }
     }
     
-    //986. Interval List Intersections
-    func intervalIntersection(_ A: [[Int]], _ B: [[Int]]) -> [[Int]] {
-          if A.count == 0 || B.count == 0 {
-               return [[Int]]()
-           }
-           
-           var i = 0
-           var j = 0
-           
-           
-           var result = [[Int]]()
-           
-           while i < A.count && j < B.count {
-    
-               if A[i][0] >= B[j][0] {
-                   if (A[i][0] > B[j][1]) {
-                       //    ****
-                       //***
-                       j += 1
-                   } else if ( A[i][1] <= B[j][1]) {
-                       // ***
-                       //*****
-                       result.append([A[i][0], A[i][1]])
-                       i += 1
-                   } else {
-                       // *****
-                       //*****
-                       result.append([A[i][0], B[j][1]])
-                       j += 1
-                   }
-               } else {
-                   if (A[i][1] < B[j][0] ) {
-                       //***
-                       //    ***
-                       i += 1
-                   } else if ( A[i][1] <= B[j][1]) {
-                       // ***
-                       //  ***
-                       result.append([B[j][0], A[i][1]])
-                       i += 1
-                   } else {
-                       // *****
-                       //  ***
-                       result.append([B[j][0], B[j][1]])
-                       j += 1
-                   }
-               }
-           }
-           
-           return result
-       }
+
     
 }
 

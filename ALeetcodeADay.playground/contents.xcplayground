@@ -133,5 +133,7 @@
         <page name='199. Binary Tree Right Side View '/>
         <page name='23. Merge k Sorted Lists '/>
         <page name='273. Integer to English Words '/>
+        <page name='1249. Minimum Remove to Make Valid Parentheses'/>
+        <page name='986. Inverval List Intersections'/>
     </pages>
 </playground>
