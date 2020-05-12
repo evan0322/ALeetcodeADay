@@ -58,3 +58,44 @@ import Foundation
      n = decode()
      return n
  */
+
+
+func serialize(_ root: TreeNode?) -> String {
+    var string = [String]()
+    
+    func traverse(_ node:TreeNode?) {
+        guard let node = node else {
+            string.append("*")
+            return
+        }
+        
+        string.append(String(node.val))
+        traverse(node.left)
+        traverse(node.right)
+    }
+    
+    traverse(root)
+    return string.joined(separator:" ")
+}
+
+func deserialize(_ data: String) -> TreeNode? {
+    var string = data.components(separatedBy:" ")
+    var index = 0
+    
+    func buildTree() -> TreeNode? {
+        if index >= string.count || string[index] == "*" {
+            //Important
+            index += 1
+            return nil
+        }
+        
+        var node = TreeNode(Int(string[index])!)
+        index += 1
+        node.left = buildTree()
+        node.right = buildTree()
+        return node
+    }
+    
+    let root = buildTree()
+    return root
+}
