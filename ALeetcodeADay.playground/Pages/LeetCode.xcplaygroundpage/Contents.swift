@@ -5510,35 +5510,19 @@ class Solution {
     }
     //938. Range Sum of BST
     // Traverse the tree inorder and get the path between L and R
-    func rangeSumBST(_ root: TreeNode?, _ L: Int, _ R: Int) -> Int {
-        
-        var result = 0
-        var shouldAdd = false
-        
-        func traverse(node:TreeNode?) {
-            guard let n = node else {
-                return
-            }
-            
-            traverse(node:n.left)
-            
-            if shouldAdd {
-                result += n.val
-            }
-            
-            if n.val == L {
-                result = n.val
-                shouldAdd = true
-            } else if n.val == R {
-                shouldAdd = false
-            }
-            
-            traverse(node:n.right)
-        }
-        
-        traverse(node:root)
-        return result
-    }
+func rangeSumBST(_ root: TreeNode?, _ L: Int, _ R: Int) -> Int {
+       guard let root = root else {
+           return 0
+       }
+       
+       if root.val > R {
+           return rangeSumBST(root.left, L, R)
+       } else if root.val < L {
+           return rangeSumBST(root.right, L, R)
+       }
+       
+       return root.val + rangeSumBST(root.left, L, R) + rangeSumBST(root.right, L, R)
+   }
     
     //611. Valid Triangle Number
     //For any triangle, longest side < small side + small side.
