@@ -127,7 +127,6 @@
         <page name='763. Partition Labels'/>
         <page name='1167. Minimum Cost to Connect Sticks'/>
         <page name='286. Walls and Gates '/>
-        <page name='547  Friend Circles '/>
         <page name='415. Add Strings '/>
         <page name='56. Merge Intervals '/>
         <page name='199. Binary Tree Right Side View '/>
@@ -136,5 +135,7 @@
         <page name='1249. Minimum Remove to Make Valid Parentheses'/>
         <page name='986. Inverval List Intersections'/>
         <page name='528. Random Pick with Weight '/>
+        <page name='547	 Friend Circles '/>
+        <page name='211. Add and Search Word - Data structure design '/>
     </pages>
 </playground>
