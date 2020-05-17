@@ -2369,6 +2369,7 @@ class Solution {
                 while low < high {
                     if sortedNum[low] + sortedNum[high] == sum {
                         result.append([sortedNum[i], sortedNum[low], sortedNum[high]])
+                        
                         while low < high && sortedNum[low] == sortedNum[low + 1] {
                             low += 1
                         }
