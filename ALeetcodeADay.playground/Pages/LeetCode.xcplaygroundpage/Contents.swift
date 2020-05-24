@@ -3029,22 +3029,32 @@ class Solution {
     }
     
     // 437. Path Sum III
-    
     func pathSum(_ root: TreeNode?, _ sum: Int) -> Int {
-        guard let n = root else {
-            return 0
-        }
+        var result = 0
         
-        func findPath(root: TreeNode?, target: Int) -> Int {
-            guard let n = root else {
-                return 0
+        func traverse(_ node:TreeNode?, _ memo:[Int:Int], _ curSum:Int) {
+            guard let node = node else {
+                return
             }
             
+            let curSum = curSum + node.val
             
-            return (n.val == target ? 1: 0) + findPath(root: n.left, target: target - n.val) + findPath(root:n.right, target:target - n.val)
+            if let count = memo[curSum - sum] {
+                result += count
+            }
+            
+            var memo = memo
+            memo[curSum, default:0] += 1
+            
+            
+            traverse(node.left, memo, curSum)
+            traverse(node.right,memo, curSum)
+            
         }
         
-        return findPath(root: n, target: sum) + pathSum(n.left, sum) + pathSum(n.right, sum)
+        traverse(root, [0:1], 0)
+        
+        return result
     }
     
     // 260. Single Number III
