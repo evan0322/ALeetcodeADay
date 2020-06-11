@@ -8,6 +8,12 @@ func missingElement(_ nums: [Int], _ k: Int) -> Int {
      }
     
      //Total count of missing num between n[i] and n[j] is n[j] - n[i] - 1 - (j - i - 1) = n[j] - n[i] - (j - i)
+    
+    let n = nums.count
+    let missing = nums[n - 1] - nums[0] + 1 - n;
+    if missing < k {
+        return nums.last! + k - missing
+    }
      
      var low = 0
      var high = nums.count
