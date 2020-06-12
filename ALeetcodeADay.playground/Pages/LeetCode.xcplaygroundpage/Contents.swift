@@ -5891,7 +5891,39 @@ func rangeSumBST(_ root: TreeNode?, _ L: Int, _ R: Int) -> Int {
         
         return result
     }
+
+func closestValueIteral(_ root: TreeNode?, _ target: Double) -> Int {
+    guard let root = root else {
+        return -1
+    }
     
+    var cur: TreeNode? = root
+    var result = root.val
+    
+    
+    
+    while cur != nil {
+        let val = cur!.val
+        let doubleVal = Double(val)
+        
+        if doubleVal == target {
+            return val
+        } else {
+            if abs(doubleVal - target) < abs(Double(result) - target) {
+                result = val
+            }
+            
+            if doubleVal < target {
+                cur = cur!.right
+            } else {
+                cur = cur!.left
+            }
+        }
+    }
+    
+    return result
+}
+
     
     //259. 3Sum Smaller
     func threeSumSmaller(_ nums: [Int], _ target: Int) -> Int {
