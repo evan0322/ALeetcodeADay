@@ -6775,36 +6775,77 @@ func closestValueIteral(_ root: TreeNode?, _ target: Double) -> Int {
     
     
     //45. Jump Game II
-    func jump(_ nums: [Int]) -> Int {
-        guard nums.count > 0 else {
+     func jump(_ nums: [Int]) -> Int {
+        /*
+        [2,3,1,1,4]
+        
+        2->j1->3->j3->4
+        
+        dp[i]: minNum of jumps to reach i
+        
+        m
+        for i in m..<m+nums[m]
+            update the dp[i] = min(dp[i], dp[m] + 1)
+        
+        [2,3,1,1,4]
+        [0,0,0,0,0]
+        
+        [2,3,1,1,4]
+        [0,1,2,2,2]
+        
+        
+        */
+        /*
+        dp
+        
+        
+        
+        var dp = Array(repeating:Int.max, count:nums.count)
+        dp[0] = 0
+        
+        for i in 0..<nums.count {
+            for j in i + 1..<min(nums.count, i + nums[i] + 1) {
+                dp[j] = min(dp[j], dp[i] + 1)
+            }
+        }
+        
+        return dp.last!
+        */
+        //bfs
+        
+        /*
+        [2,3,1,1,4]
+           
+        i        0  1   2
+        curFur   2  4   4
+        preFur   2  1
+        step     1  1
+        */
+        guard nums.count > 1 else {
             return 0
         }
         
-        var result = 0
+        //The furthest location can reach in current step
+        var curFur = 0
+        //The furthest location can reach in previous step
+        var preFur = 0
         
-        var index = 0
-        while index < nums.count - 1 {
-            result += 1
-            let range = index + nums[index]
-            if range >= nums.count - 1 {
-                break
-            }
-            var nIndex = index
-            for i in index...range {
-                if nums[i] + i > nums[nIndex] + nIndex {
-                    nIndex = i
-                }
+        var step = 0
+        
+        for i in 0..<nums.count {
+            curFur = max(curFur, i + nums[i])
+            
+            if curFur >= nums.count - 1 {
+                return step + 1
             }
             
-            if nIndex + nums[nIndex] <= range {
-                result = 0
-                break
+            if i == preFur {
+                step += 1
+                preFur = curFur
             }
-            
-            index = nIndex
         }
         
-        return result
+        return -1
     }
     //1. Two Sum
     
